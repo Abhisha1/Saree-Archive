@@ -1,0 +1,25 @@
+#submit{
+    color: white;
+    font-weight: 600;
+    background-color: rgb(97, 22, 32);
+    border-color: rgb(97, 22, 32);
+    text-transform: uppercase;
+    padding: 0.4em 2em 0.4em 2em;
+}
+#submit:active, #submit:hover{
+    color: rgb(97, 22, 32);
+    font-weight: 600;
+    font-weight: 600;
+    background-color: white;
+    border-color: rgb(97, 22, 32);
+    text-transform: uppercase;
+    padding: 0.4em 2em 0.4em 2em;
+}
+.form-check{
+    margin-bottom: 1em;
+}
+
+.form-group{
+    width: 50%;
+    text-align: -webkit-center;
+}

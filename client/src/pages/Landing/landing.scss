@@ -1,0 +1,48 @@
+@media (max-width: 768px) {
+    #landingOuter{
+        background-image: url('../../assets/background.jpg');
+        background-size: 100em;
+        height: 100vh;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .landingMessage{
+        text-transform: uppercase;
+        text-align: left;
+        font-size: larger !important;
+        float:left;
+    }
+
+}
+@media (max-width: 4000px) {
+    #landingOuter{
+        background-image: url('../../assets/background.jpg');
+        background-size: 100em;
+        min-height: 100vw;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .landingMessage{
+        font-size: 70px;
+        text-transform: uppercase;
+        text-align: left;
+        float:left;
+    }
+}
+.boundingTextBox{
+    background-color: rgba(255, 255, 255, 0.7) !important;
+    border-radius: 0.4em;
+    border: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    padding: 5vw 5vw 5vw 5vw;
+}

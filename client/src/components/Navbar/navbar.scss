@@ -1,0 +1,42 @@
+#customNavBar{
+    background-color: transparent !important;
+}
+
+.navbar-brand{
+    font-weight: 800;
+    color: rgb(39, 39, 46);
+}
+.btn-outline-primary{
+    color: rgb(39, 39, 46);;
+    font-weight: 600;
+    text-emphasis-color: white;
+    background-color: transparent;
+    border-color: transparent;
+    text-transform: uppercase;
+    margin-left: 1em;
+    margin-right: 1em;
+    padding-left: 1.2em;
+    padding-right: 1.2em;
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:active{
+    color: rgb(97, 22, 32);
+    font-weight: 600;
+    text-emphasis-color: white;
+    background-color: white;
+    border-color: transparent;
+    text-transform: uppercase;
+    margin-left: 1em;
+    margin-right: 1em;
+    padding-left: 1.2em;
+    padding-right: 1.2em;
+}
+
+.w-100{
+    justify-content: space-between;
+}
+
+
+.mr-auto{
+    justify-content: space-evenly;
+}
