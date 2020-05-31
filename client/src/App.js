@@ -18,7 +18,7 @@ function App() {
         <PrivateRoute path="/view" component={Home} exact={true} />
         <PrivateRoute path="/discover" component={Home} exact={true} />
         <Route path="/user" component={Home} exact={true} /> */}
-        <Route path="/login" component={Login} exact={true} />
+        <Route path="/login" exact component={Login}/>
        </div>
     </Router>
   );
