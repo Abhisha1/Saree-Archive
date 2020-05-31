@@ -77,40 +77,42 @@ class Login extends Component {
     render() {
         return (
             <div id="loginForm">
-                <h3>Login</h3>
-                <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <label>Email address</label>
-                        <input type="email"
-                            required
-                            className="form-control"
-                            value={this.state.email}
-                            id="email"
-                            onChange={this.onChangeEmail}
-                            placeholder="Email"
-                        />
+                <div id="boundingTextBox">
+                    <h3 id="headingLogin">Login</h3>
+                    <form onSubmit={this.onSubmit}>
+                        <div className="form-group">
+                            <label>Email address</label>
+                            <input type="email"
+                                required
+                                className="form-control"
+                                value={this.state.email}
+                                id="email"
+                                onChange={this.onChangeEmail}
+                                placeholder="Email"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Password</label>
+                            <input type="password"
+                                required
+                                id="password"
+                                className="form-control"
+                                value={this.state.password}
+                                onChange={this.onChangePassword}
+                                placeholder="Password"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <input type="submit" value="Log in" id="submit" className="btn btn-primary" />
+                        </div>
+                        {this.state.showError ?
+                            <div id="error" className="alert alert-danger" role="alert" >
+                                The details you entered are invalid, please try again
                     </div>
-                    <div className="form-group">
-                        <label>Password</label>
-                        <input type="password"
-                            required
-                            id="password"
-                            className="form-control"
-                            value={this.state.password}
-                            onChange={this.onChangePassword}
-                            placeholder="Password"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input type="submit" value="Log in" id="submit" className="btn btn-primary" />
-                    </div>
-                    {this.state.showError ?
-                        <div id="error" className="alert alert-danger" role="alert" >
-                            The details you entered are invalid, please try again
-                    </div>
-                        :
-                        <div></div>}
-                </form>
+                            :
+                            <div></div>}
+                    </form>
+                </div>
             </div>
         );
     }
