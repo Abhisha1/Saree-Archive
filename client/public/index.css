@@ -1,0 +1,26 @@
+#root{
+    background-image: url('/backsilk.jpg');
+    background-size: 100em;
+    min-height: 100vw;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    #root{
+        background-image: url('/backsilk.jpg');
+        background-size: 100em;
+        min-height: 100vh;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+        align-items: center;
+    }
+
+}

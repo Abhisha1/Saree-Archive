@@ -4,7 +4,6 @@
     background-color: rgb(37, 36, 37);
     border-color: rgb(37, 36, 37);
     padding: 0.4em 2em 0.4em 2em;
-    font-family: 'DM Serif Display', serif;
 }
 #submit:active, #submit:hover{
     color: rgb(37, 36, 37);
@@ -12,51 +11,33 @@
     font-weight: 600;
     background-color: white;
     border-color: rgb(37, 36, 37);
-    font-family: 'DM Serif Display', serif;
     padding: 0.4em 2em 0.4em 2em;
 }
 @media (max-width: 768px) {
-    #loginForm{
-        background-image: url('../../assets/bg2.jpg');
-        background-size: 100em;
-        height: 100vh;
-        background-attachment: fixed;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        text-align: -webkit-center;
-        font-family: 'DM Serif Display', serif;
-    }
     #headingLogin{
         font-size: 30px !important;
+        // text-transform: uppercase;
+        font-family: PlaylistScript;
+        color: white;
     }
 
 }
 @media (max-width: 4000px) {
-    #loginForm{
-        background-image: url('../../assets/bg2.jpg');
-        background-size: 100em;
-        min-height: 100vw;
-        background-attachment: fixed;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        text-align: -webkit-center;
-        font-family: 'DM Serif Display', serif;
-    }
     #headingLogin{
         font-size: 50px;
+        // text-transform: uppercase;
+        font-family: PlaylistScript;
+        color: white;
+
     }
 }
 #boundingTextBox{
-    background-color: rgba(255, 255, 255, 0.7) !important;
-    border-radius: 0.4em;
-    border: rgba(255, 255, 255, 0.7);
+    background-color: transparent !important;
     margin: 0;
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 50%;
+    top: 50vh;
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
@@ -67,6 +48,8 @@
 .form-group{
     width: 100%;
     padding: 1vw;
+    color: white;
+    text-transform: uppercase;
     
 }
 input{

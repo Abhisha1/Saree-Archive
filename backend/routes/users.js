@@ -10,14 +10,12 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
+    console.log("hello")
     const email = req.body.email;
     const password = req.body.password;
     const newUser = new User({
         email: email,
-        password: password,
-        mobile: req.body.mobile,
-        home:req.body.home,
-        work:req.body.work
+        password: password
     });
     newUser.save()
         .then(() => {
