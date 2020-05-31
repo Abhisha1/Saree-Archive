@@ -19,9 +19,12 @@
     padding-right: 1.2em;
     font-family: 'DM Serif Display', serif;
 }
-
+#logo-image{
+    max-width: 100px;
+    max-height: 100px;
+  }
 .btn-outline-primary:hover, .btn-outline-primary:active{
-    color: rgb(97, 22, 32);
+    color: rgb(121,41,79);
     font-weight: 600;
     text-emphasis-color: white;
     background-color: white;

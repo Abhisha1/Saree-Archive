@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SignOut from '../Signout';
 import './navbar.scss';
+import logo from "../../assets/logo.png";
 
 const AuthNav = 
 <ul className="navbar-nav nav-fill w-100">
@@ -55,7 +56,8 @@ function Navbar() {
 
     return (
         <nav id="customNavBar" className="navbar navbar-expand-lg navbar-light bg-light">
-            <Link to="/" className="navbar-brand">Geetha's Sarees</Link>
+            <a href="/" className="navbar-left" id="homepage-logo"><img src={logo} id="logo-image" alt="Logo"></img></a>
+            {/* <Link to="/" className="navbar-brand">Geetha's Sarees</Link> */}
             <div className="collapse navbar-collapse">
                 {isLoading ? null :
                     isAuth ? (AuthNav) : UnAuthNavBar}
