@@ -58,7 +58,7 @@ class Login extends Component {
             email: this.state.email,
             password: this.state.password
         };
-        axios('https://jjfresh.herokuapp.com/users/login', { method: "post", data: user })
+        axios('https://geethasaree.herokuapp.com/users/login', { method: "post", data: user })
             .then(res => {
                 // console.log(res);
                 setCookie("authorised", "userIsAuthorised", 0.02);
