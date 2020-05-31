@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SignOut from '../Signout';
 import './navbar.scss';
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo3.png";
 
 const AuthNav = 
 <ul className="navbar-nav nav-fill w-100">
