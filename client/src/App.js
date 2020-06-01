@@ -14,10 +14,13 @@ function App() {
     <Router>
       <div className="App">
         <NavBar />
-        <Route path="/" exact component={LandingPage} />
-        <Route path="/login" exact component={Login}/>
-        {/* {/* <PrivateRoute path="/home" component={Home} exact={true} /> */}
-        <PrivateRoute path="/add" component={Add} exact={true} /> 
+        <div className="unAuthPages">
+          <Route path="/" exact component={LandingPage} />
+          <Route path="/login" exact component={Login}/>
+        </div>
+        
+        <PrivateRoute path="/home" component={Home} exact={true} />
+        {/* <PrivateRoute path="/add" component={Add} exact={true} />  */}
         {/* <PrivateRoute path="/view" component={Home} exact={true} />
         <PrivateRoute path="/discover" component={Home} exact={true} />
         <Route path="/user" component={Home} exact={true} /> */}
