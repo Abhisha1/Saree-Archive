@@ -49,3 +49,18 @@ p{
     text-transform: uppercase;
     font-weight: 600;
 }
+
+
+#landingOuter{
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+    background-image: url('../../assets/backsilk-2.jpg');
+      background-size: 100em;
+      min-height: 100vw;
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: relative;
+      align-items: center;
+  }

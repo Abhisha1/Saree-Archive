@@ -16,6 +16,7 @@ const HistorySchema = new Schema({
     description: {type: String}
 });
 const sareeSchema = new Schema({
+        owner: {type: String, required: true},
         // Is the blouse already stitched
         blouseStitched: {type: Boolean, index:true},
         // Type of saree fabric
@@ -37,6 +38,8 @@ const sareeSchema = new Schema({
         },
         // Any additional general notes about saree
         notes: {type: String},
+        imgs: [
+            { data: Buffer, contentType: String }],
         worn: [HistorySchema]
         
 })

@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const multer = require('multer');
 require('dotenv').config();
 
 const app = express();
@@ -23,6 +24,13 @@ connection.once('open', () => {
 // Set routers
 const usersRouter = require('./routes/users');
 const sareeRouter = require('./routes/sarees');
+
+app.use(multer({ dest: './uploads/',
+rename: function (fieldname, filename){
+    return filename;
+},
+}));
+
 
 app.use('/users', usersRouter);
 app.use('/sarees', sareeRouter);

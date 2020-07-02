@@ -13,17 +13,15 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <NavBar />
-        <div className="unAuthPages">
-          <Route path="/" exact component={LandingPage} />
-          <Route path="/login" exact component={Login}/>
-        </div>
-        
-        <PrivateRoute path="/home" component={Home} exact={true} />
-        {/* <PrivateRoute path="/add" component={Add} exact={true} />  */}
+        {/* <NavBar /> */}
+          <Route path="/" exact={true} component={LandingPage} />
+          <Route path="/login" exact={true} component={Login}/>
+          <PrivateRoute path="/home" component={Home} exact={true}></PrivateRoute>
+        <PrivateRoute path="/add" component={Add} exact={true} /> 
         {/* <PrivateRoute path="/view" component={Home} exact={true} />
         <PrivateRoute path="/discover" component={Home} exact={true} />
         <Route path="/user" component={Home} exact={true} /> */}
+        
        </div>
     </Router>
   );

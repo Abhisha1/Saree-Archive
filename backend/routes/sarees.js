@@ -7,18 +7,16 @@ router.route('/').get((req, res) => {
         .then(users => res.json(users))
         .catch(err => res.status(400).json('Error: ' + err));
 });
-
 router.route('/add').post((req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
-    const newUser = new User({
-        email: email,
-        password: password,
-        mobile: req.body.mobile,
-        home:req.body.home,
-        work:req.body.work
+    let newItem = new Item();
+    const newSaree = new Saree({
+        owner: req.body.userId,
+        imgs: [ {data: fs.readFileSync(req.files.userPhoto.path),
+            contentType = 'image/png'
+        }],
+        location: req.body.location
     });
-    newUser.save()
+    newSaree.save()
         .then(() => {
             res.status(200).json({msg: "User added!", id: newUser._id});
         })
