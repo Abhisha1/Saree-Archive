@@ -25,11 +25,6 @@ connection.once('open', () => {
 const usersRouter = require('./routes/users');
 const sareeRouter = require('./routes/sarees');
 
-app.use(multer({ dest: './uploads/',
-rename: function (fieldname, filename){
-    return filename;
-},
-}));
 
 
 app.use('/users', usersRouter);
