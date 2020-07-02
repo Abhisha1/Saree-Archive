@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import LandingPage from "./pages/Landing";
 import Login from "./pages/Login";
 import PrivateRoute from "./components/protectedRoutes";
-import NavBar from "./components/Navbar";
 import Home from "./pages/Home";
 import Add from "./pages/Add";
 import './App.css';
