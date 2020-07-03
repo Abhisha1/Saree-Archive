@@ -1,8 +1,7 @@
 #firstHeading{
     font-size: 50px;
-    // text-transform: uppercase;
     font-family: PlaylistScript;
-    color: white;
+    color: rgb(121,41,79);
     text-align: left;
 }
 .headings{
@@ -12,20 +11,47 @@
     width: 50%;
     margin-bottom: 2em;
     margin-top: 1em;
-    margin-left: 1em;
     margin-right: 1em;
     
+}
+.mandala{
+    width: 32vw;
+    height: 32vw;
+}
+.mandala:hover{
+    // width: 32.1em;
+    // height: 32.1em;
+    // .mandalaAni{
+    //  fill: rgb(121,41,79);}
+     .mandalaAni {
+        fill: white;
+        stroke-dasharray: 3000;
+        stroke-dashoffset: 3000;
+        animation: dash 5s ease-in forwards;
+    }
+}
+
+
+
+@keyframes dash {
+    from {
+    stroke-dashoffset: 3000;
+    }
+    to {
+    stroke-dashoffset: 0;
+    }
 }
 #intromessage1{
     text-transform: none !important;
     font-size: medium;
+    color: black;
     text-align: left;
 }
 .cards{
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
     margin-left: 1em;
     margin-right: 1em;
 }
@@ -41,9 +67,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 1em;
-    max-width: 50%;;
-    margin-top:1em;
+    // margin-right: 1em;
+    // max-width: 50%;
+    // margin-top:1em;
+
 }
 @media (max-width: 768px) {
     img{
@@ -77,14 +104,20 @@
 
 }
 img{
-    width: 25em;
-    height: auto;
+    width: auto;
+    height: 30em;
     border-radius: 0.2em;
+    opacity: 1;
+}
+img:hover{
+     width: auto;
+    height: 30em;
+    opacity: 0.4;
 }
 
 #header-home{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-direction: row;
     margin-bottom: 6em;
 }
@@ -92,7 +125,7 @@ img{
     color: rgb(121,41,79);
 }
 .homeContainer{
-    background-color: #ca9589;
+    // background-color: black;
     text-align: center;
     font-family: 'Raleway', sans-serif;
     background-size: 100em;
