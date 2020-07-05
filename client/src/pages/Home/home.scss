@@ -16,12 +16,7 @@
 }
 .home-button:hover{
     padding: 0.2em;
-    .mandalaAni {
-        fill: white;
-        stroke-dasharray: 3000;
-        stroke-dashoffset: 3000;
-        animation: dash 2s ease-in forwards;
-    }
+    
 }
 .home-button{
     color: rgb(121,41,79);
@@ -131,14 +126,14 @@
     // background-color: black;
     text-align: center;
     font-family: 'Raleway', sans-serif;
-    background-size: 100em;
-    min-height: 100vw;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-    align-items: center; 
+    // background-size: 100em;
+    // min-height: 100vw;
+    // background-attachment: fixed;
+    // background-position: center;
+    // background-repeat: no-repeat;
+    // background-size: cover;
+    // position: relative;
+    // align-items: center; 
 }
 .elephant{
     width: 35vw;

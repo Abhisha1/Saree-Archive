@@ -24,15 +24,15 @@ export default class Home extends Component {
                 <div className="cards">
                     <div className="card1">
                          <Mandala></Mandala>
-                        <p className="home-button">Add</p>
+                        <p type="button" className="home-button" onClick={() => this.props.history.push("/add")}>Add</p>
                     </div>
                     <div className="card1">
                         <Mandala />
-                        <p className="home-button">View</p>
+                        <p type="button" className="home-button" onClick={() => this.props.history.push("/view")}>View</p>
                     </div>
                     <div className="card1">
                          <Mandala />
-                         <p className="home-button">Discover</p>
+                         <p type="button" className="home-button" onClick={() => this.props.history.push("/discover")}>Discover</p>
                     </div>
                 </div>
             </div>
