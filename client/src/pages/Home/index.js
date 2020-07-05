@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import "./home.scss";
 import {ReactComponent as Mandala} from '../../assets/homepage.svg';
+import {ReactComponent as Elephant} from '../../assets/elephant.svg';
 import Navbar from "../../components/Navbar"
 
 export default class Home extends Component {
@@ -17,20 +18,21 @@ export default class Home extends Component {
                     </p>
                     </div>
                     <div className="image">
+                        <Elephant></Elephant>
                     </div>
                 </div>
                 <div className="cards">
                     <div className="card1">
-                         <Mandala />
-                        <button type="button" className="btn btn-outline-primary home-button">Add new saree</button>
+                         <Mandala></Mandala>
+                        <p className="home-button">Add</p>
                     </div>
                     <div className="card1">
                         <Mandala />
-                        <button type="button" className="btn btn-outline-primary home-button">View my sarees</button>
+                        <p className="home-button">View</p>
                     </div>
                     <div className="card1">
                          <Mandala />
-                        <button type="button" className="btn btn-outline-primary home-button">Discover</button>
+                         <p className="home-button">Discover</p>
                     </div>
                 </div>
             </div>
