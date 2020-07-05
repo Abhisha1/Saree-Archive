@@ -52,9 +52,6 @@
 
 
 @keyframes dash {
-    from {
-    stroke-dashoffset: 3000;
-    }
     to {
     stroke-dashoffset: 0;
     fill: rgb(121,41,79);
