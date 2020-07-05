@@ -14,6 +14,28 @@
     margin-right: 1em;
     
 }
+.home-button:hover{
+    padding: 0.2em;
+    .mandalaAni {
+        fill: white;
+        stroke-dasharray: 3000;
+        stroke-dashoffset: 3000;
+        animation: dash 2s ease-in forwards;
+    }
+}
+.home-button{
+    color: rgb(121,41,79);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 3vw;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 19vw;
+    border-top: 1px solid rgb(121,41,79);
+    border-bottom: 1px solid rgb(121,41,79);
+    transition: padding 0.2s linear;
+}
 .mandala{
     width: 32vw;
     height: 32vw;
@@ -35,6 +57,7 @@
     }
     to {
     stroke-dashoffset: 0;
+    fill: rgb(121,41,79);
     }
 }
 #intromessage1{
@@ -106,28 +129,7 @@
     margin-left: 2vw;
     margin-right: 2vw;
 }
-.home-button:hover{
-    padding: 0.2em;
-    .mandalaAni {
-        fill: white;
-        stroke-dasharray: 3000;
-        stroke-dashoffset: 3000;
-        animation: dash 5s ease-in forwards;
-    }
-}
-.home-button{
-    color: rgb(121,41,79);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    font-size: 3vw;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    width: 19vw;
-    border-top: 1px solid rgb(121,41,79);
-    border-bottom: 1px solid rgb(121,41,79);
-    transition: padding 0.2s linear;
-}
+
 .homeContainer{
     // background-color: black;
     text-align: center;
