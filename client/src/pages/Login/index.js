@@ -58,11 +58,10 @@ class Login extends Component {
             email: this.state.email,
             password: this.state.password
         };
-        axios('httplocalhost:5000/auth/login', { method: "post", data: user })
+        axios('http://localhost:5000/auth/login', { method: "post", data: user })
             .then(res => {
                 // console.log(res);
-                setCookie("authorised", "userIsAuthorised", 0.02);
-                setCookie("uId", res.data.id, 0.02);
+                localStorage.setItem('token', res.token);
                 window.location.href = "/home";
             })
             .catch(err => {

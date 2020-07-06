@@ -25,7 +25,7 @@ function Add() {
         setHideAskPurchase(true);
     }
     return (
-        <div className="homeContainer">
+        <div className="addContainer">
             <Navbar></Navbar>
         
         <form className="form">

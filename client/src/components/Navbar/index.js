@@ -39,13 +39,13 @@ function Navbar() {
     useEffect(() => {
         setLoading(true);
         async function fetchData() {
-            if (document.cookie) {
+            if (!localStorage.getItem('token')) {
                 setLoading(false);
-                setAuth("Authorised");
+                setAuth(null);
             }
             else {
                 setLoading(false);
-                setAuth(null);
+                setAuth("Authorised");
             }
 
 

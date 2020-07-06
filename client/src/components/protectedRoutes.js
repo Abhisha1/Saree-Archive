@@ -9,7 +9,7 @@ function PrivateRoute(props) {
         setLoading(true);
         async function fetchData() {
 
-            if (!document.cookie) {
+            if (!localStorage.getItem('token')) {
                 setLoading(false);
                 setAuth(null);
             }
