@@ -61,8 +61,8 @@ function Navbar() {
                 isAuth ?
                     <nav id="customNavBar" className="navbar navbar-expand-lg navbar-light bg-light">
                         <a href="/" className="navbar-left" id="homepage-logo">
-                            {/* <img src={logo} id="logo-image" alt="Logo"></img> */}
-                            Hello</a>
+                            <img src={logo} id="logo-image" alt="Logo"></img>
+                            </a>
                         <div className="collapse navbar-collapse">
                             {AuthNav}
                         </div>

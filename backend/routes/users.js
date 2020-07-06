@@ -24,6 +24,28 @@ router.route('/add').post((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+
+router.route('/addLocation').post((req,res) => {
+    const locations = req.body.locations;
+    User.findOneAndUpdate({"_id": ObjectId(req.body.id)}, {locations: locations}).then(user => {
+        res.status(200).json({msg: "Successfully added location"});
+    })
+    .catch(err => {
+        res.status(400).json({msg: "Could not add location"});
+    })
+})
+
+router.route('/addCrowd').post((req,res) => {
+    const crowd = req.body.crowd;
+    User.findOneAndUpdate({"_id": ObjectId(req.body.id)}, {crowd: crowd}).then(user => {
+        res.status(200).json({msg: "Successfully added crowd"});
+    })
+    .catch(err => {
+        res.status(400).json({msg: "Could not add crowd"});
+    })
+})
+
+
 router.route('/login').post((req, res) => {
     const email = req.body.email;
     const password = req.body.password;

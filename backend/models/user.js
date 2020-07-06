@@ -13,15 +13,14 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    mobile: {
-        type: String
-    },
-    home: {
-        type: String
-    },
-    work: {
-        type: String
-    }
+    locations: [{
+        type: String,
+        required: false
+    }],
+    crowd: [{
+        type: String,
+        required: false
+    }],
 
 
 
