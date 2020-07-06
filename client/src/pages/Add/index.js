@@ -105,7 +105,7 @@ function Add() {
                     </div>
                     <div className="leftField split">
                         Stitched blouse?
-                        <div id="blouseCheck" className="btn-group btn-group-toggle eventCheck" data-toggle="buttons" hidden={showHasEvent}>
+                        <div id="blouseCheck" className="btn-group btn-group-toggle eventCheck" data-toggle="buttons">
                         
                         <label className="btn btn-secondary active firstActive">
                             <input type="radio" name="options" id="option1" autoComplete="off" /> No
