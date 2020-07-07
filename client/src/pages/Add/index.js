@@ -29,7 +29,7 @@ function Add() {
     }
 
     useEffect(() => {
-        axios.post('http://geethasaree.herokuapp.com/auth/getCurrentUser', {token: localStorage.getItem("token")})
+        axios.post('https://geethasaree.herokuapp.com/auth/getCurrentUser', {token: localStorage.getItem("token")})
         .then(user => {
             console.log(user);
             setLocationOptions(user.locations);
