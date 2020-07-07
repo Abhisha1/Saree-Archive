@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import ToggleButton from 'react-bootstrap/ToggleButton';
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import "./add.scss";
 import Navbar from "../../components/Navbar";
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
+import PreferenceModal from '../../components/PreferenceModal';
+import 'react-toastify/dist/ReactToastify.css';
 import "react-datepicker/dist/react-datepicker.css";
+
 
 function Add() {
     const [lastWorn, setLastWorn] = useState(false);
@@ -18,6 +19,8 @@ function Add() {
     const [purchaseDate, setPurchaseDate] = useState(new Date());
     const [locationOptions, setLocationOptions] = useState([]);
     const [crowdOptions, setCrowdOptions] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [showModal, setShowModal] = useState(false);
 
     const hasEventToAdd = () => {
         setLastWorn(true);
@@ -27,24 +30,28 @@ function Add() {
         setShowPurchase(true);
         setHideAskPurchase(true);
     }
-
+    
     useEffect(() => {
         axios.post('https://geethasaree.herokuapp.com/auth/getCurrentUser', {token: localStorage.getItem("token")})
         .then(user => {
-            console.log(user);
-            setLocationOptions(user.locations);
-            setCrowdOptions(user.crowd);
+            setLocationOptions(user.data.locations);
+            console.log(user.data);
+            setCrowdOptions(user.data.crowd);
+            setLoading(false);
+        })
+        .then(() => {
+            if(locationOptions.length == 0 || crowdOptions.length == 0){
+                setShowModal(true);
+            }
         })
         .catch(err => {
             console.log("Couldn't get user's records");
         })
-    }) 
-
+    }, []) 
 
     return (
         <div className="addContainer">
             <Navbar></Navbar>
-        
         <form className="form">
             <div className="leftAdd">
                 <h1 id="addHeading">
@@ -112,7 +119,10 @@ function Add() {
                         Location of saree*
                         <div className="form-group dropdown">
                             <select className="form-control" id="exampleFormControlSelect1">
-                            {locationOptions.map((item, index) => (
+                            {loading 
+                            ? <option>Nothing yet</option> 
+                            :
+                            locationOptions.map((item, index) => (
                                 <option key={index}> {item} </option>
                             ))}
                             </select>
@@ -177,6 +187,7 @@ function Add() {
             
 
         </form>
+        <PreferenceModal hidden={!showModal} crowdOptions={crowdOptions} locationOptions={locationOptions}></PreferenceModal>
         </div>
     )
 }

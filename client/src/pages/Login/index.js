@@ -58,10 +58,10 @@ class Login extends Component {
             email: this.state.email,
             password: this.state.password
         };
+        console.log("hello");
         axios('https://geethasaree.herokuapp.com/auth/login', { method: "post", data: user })
             .then(res => {
-                // console.log(res);
-                localStorage.setItem('token', res.token);
+                localStorage.setItem('token', res.data.token);
                 window.location.href = "/home";
             })
             .catch(err => {
