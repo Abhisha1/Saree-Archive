@@ -1,15 +1,12 @@
 const jwt = require("jsonwebtoken");
 
 verifyToken = (token) => {
-  if (!token) {
-    return res.status(403).send({ message: "No token provided!" });
+  try {
+    return jwt.verify(token, process.env.SECRET).id;
+  } catch(err) {
+      console.log(err);
+      return null;
   }
-
-  jwt.verify(token, process.env.SECRET, (err, decoded)).then(user => {
-    return user.id;
-  }).catch( err => {
-    return res.status(401).send({ message: "Unauthorized!" });
-  })
 };
 
 const authJwt = {

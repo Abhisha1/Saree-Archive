@@ -4,6 +4,7 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import "./add.scss";
 import Navbar from "../../components/Navbar";
 import DatePicker from 'react-datepicker';
+import axios from 'axios';
 import "react-datepicker/dist/react-datepicker.css";
 
 function Add() {
@@ -15,6 +16,8 @@ function Add() {
     const [showPurchase, setShowPurchase] = useState(false);
     const [hideAskPurchase, setHideAskPurchase] = useState(false);
     const [purchaseDate, setPurchaseDate] = useState(new Date());
+    const [locationOptions, setLocationOptions] = useState([]);
+    const [crowdOptions, setCrowdOptions] = useState([]);
 
     const hasEventToAdd = () => {
         setLastWorn(true);
@@ -24,6 +27,20 @@ function Add() {
         setShowPurchase(true);
         setHideAskPurchase(true);
     }
+
+    useEffect(() => {
+        axios.post('http://geethasaree.herokuapp.com/auth/getCurrentUser', {token: localStorage.getItem("token")})
+        .then(user => {
+            console.log(user);
+            setLocationOptions(user.locations);
+            setCrowdOptions(user.crowd);
+        })
+        .catch(err => {
+            console.log("Couldn't get user's records");
+        })
+    }) 
+
+
     return (
         <div className="addContainer">
             <Navbar></Navbar>
@@ -49,7 +66,7 @@ function Add() {
                 <h2 className="addSubHeading">
                     Last Worn History
                 </h2>
-                <h6 hidden={showHasEvent}>Do you have an event that you want to add?</h6>
+                <p className="descriptionText" hidden={showHasEvent}>Do you have an event that you want to add?</p>
                 <div className="btn-group btn-group-toggle eventCheck" data-toggle="buttons" hidden={showHasEvent}>
                     
                     <label className="btn btn-secondary active firstActive">
@@ -95,11 +112,9 @@ function Add() {
                         Location of saree*
                         <div className="form-group dropdown">
                             <select className="form-control" id="exampleFormControlSelect1">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                            {locationOptions.map((item, index) => (
+                                <option key={index}> {item} </option>
+                            ))}
                             </select>
                         </div>
                     </div>
@@ -120,7 +135,7 @@ function Add() {
                 <h2 className="addSubHeading">
                     Purchase history
                 </h2>
-                <h6 hidden={hideAskPurchase}>Do you remember details about the saree's purchasing?</h6>
+                <p className="descriptionText" hidden={hideAskPurchase}>Do you remember details about the saree's purchasing?</p>
                 <div className="btn-group btn-group-toggle eventCheck" data-toggle="buttons" hidden={hideAskPurchase}>
                     
                     <label className="btn btn-secondary active firstActive">
@@ -154,7 +169,7 @@ function Add() {
                 }
                 <h2 className="addSubHeading">
                     Additional notes
-                    <h6>Any other comments or notes you want to make about this saree</h6>
+                    <p className="descriptionText">Any other comments or notes you want to make about this saree</p>
                     <textarea className="form-control" aria-label="Additional notes"></textarea>
                 </h2>
                 

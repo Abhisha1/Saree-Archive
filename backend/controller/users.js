@@ -11,7 +11,8 @@ function getAllUsers(request, response){
 function addLocation(request, response){
     const uid = authJwt.verifyToken(request.body.token);
     const locations = request.body.locations;
-    User.findOneAndUpdate({"_id": ObjectId(uid)}, {locations: locations}).then(user => {
+    User.findOneAndUpdate({"_id": ObjectId(uid)}, {locations: locations})
+    .then(() => {
         response.status(200).json({msg: "Successfully added location"});
     })
     .catch(err => {
@@ -22,8 +23,11 @@ function addLocation(request, response){
 function addCrowd(request, response){
     const crowd = request.body.crowd;
     const uid = authJwt.verifyToken(request.body.token);
-    console.log(uid)
-    User.findOneAndUpdate({"_id": ObjectId(uid)}, {crowd: crowd}).then(user => {
+    User.findOneAndUpdate({"_id": ObjectId(uid)}, {crowd: crowd}, {new: true})
+    .then((user) => {
+       console.log(user);
+    })
+    .then(() => {
         response.status(200).json({msg: "Successfully added crowd"});
     })
     .catch(err => {

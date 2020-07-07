@@ -27,8 +27,12 @@ label{
     color: rgb(121,41,79);
     text-align: left;
 }
-
-.addSubHeading, .leftField{
+.leftField{
+    font-family: Raleway;
+    font-size: 20px;
+    text-align: left;
+}
+.addSubHeading{
     font-family: PlaylistScript;
     color: rgb(121,41,79);
     text-align: left;
@@ -41,6 +45,7 @@ label{
 .eventCheck{
     justify-self: left;
     font-family: Raleway;
+    margin-bottom: 1vw;
 }
 .btn-secondary{
     background-color: transparent;
@@ -60,7 +65,7 @@ label{
 .eventTop{
     width: 45vw;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-evenly;
 }
 .split{
     width: 50vw;
@@ -69,25 +74,32 @@ label{
 }
 .customDate{
     font-size: medium;
-    border-radius: 0.2em;
+    border-radius: 0.25rem;
     border: 1px solid rgb(121,41,79);
     margin-top: 0px;
-    height: 35px;
-    padding-left: 6px;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
 }
 #blouseCheck{
     width: 22vw;
 }
 
-.customHeading{
-    margin-bottom: 0.1vw;
-}
 .dropdown{
     font-family: Raleway;
-    width: 22vw;
+    width: 20vw;
+    padding: 0vw;
 }
-h6{
+#exampleFormControlSelect1{
+    border-radius: 0.25rem;
+    border: 1px solid rgb(121,41,79);
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+}
+.descriptionText{
     font-family: Raleway;
+    color: black;
+    text-transform: none;
+    font-size: 15px;
     text-align: left;
 }
 .form-control{
@@ -122,4 +134,7 @@ h6{
 .addContainer{
     text-align: center;
     font-family: 'Raleway', sans-serif;
+}
+.lastWornEvent{
+    margin-bottom: 2vw;
 }

@@ -53,7 +53,9 @@ function getCurrentUser(request,response){
     User.findOne({"_id": ObjectId(uid)})
     .then(user => {
         console.log(user);
-        response.status(200).json({data: user});
+        response.status(200).json({
+            locations: user.locations,
+            crowd: user.crowd});
     })
     .catch(err => {
         console.log(err);
