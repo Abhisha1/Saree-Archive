@@ -3,13 +3,6 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import "./login.scss"
 
-function setCookie(cname, cvalue, exdays) {
-    console.log("Set");
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
 class Login extends Component {
     constructor(props) {
         super(props);

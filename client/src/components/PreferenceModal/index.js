@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { toast, ToastContainer } from 'react-toastify';
 import './preferenceModal.scss';
@@ -9,11 +9,6 @@ export function ModalContent(props){
     const [locations, setLocations] = useState(props.locationOptions);
     const [crowd, setCrowd] = useState(props.crowdOptions);
 
-    const finished = () => {
-        props.locationOptions = locations;
-        props.crowdOptions = crowd;
-        props.hidden = true;
-    }
     const updatePreferences = (value, field) => {
         if (field === "locationFields"){
             if(!locations.includes(value)){
@@ -66,7 +61,7 @@ export function ModalContent(props){
                     <p className="leftField">
                         Before you add your first saree, we need a few details.
                     </p>
-                    <button className="btn btn-secondary" onClick={() => setCurrentScreen(1)}>Get started</button>
+                    <button id="modalButton" className="btn btn-secondary" onClick={() => setCurrentScreen(1)}>Get started</button>
                 </div>
                 <div hidden={currentScreen !== 1} id="firstScreen">
                     <h1 id="addHeading">
@@ -90,7 +85,7 @@ export function ModalContent(props){
                         }
                     </div>
                     
-                    <button className="btn btn-secondary" onClick={() => setCurrentScreen(2)}>Next</button>
+                    <button id="modalButton" className="btn btn-secondary" onClick={() => setCurrentScreen(2)}>Next</button>
                 </div>
                 <div hidden={currentScreen !== 2} id="firstScreen">
                     <h1 id="addHeading">
@@ -115,7 +110,7 @@ export function ModalContent(props){
                         }
                     </div>
                     
-                    <button className="btn btn-secondary" onClick={() => finished()}>Done</button>
+                    <button id="modalButton" className="btn btn-secondary" onClick={() => props.action(locations, crowd)}>Done</button>
                 </div>
                 </div>
     );
@@ -126,13 +121,16 @@ export function ModalContent(props){
 
 const PreferenceModal = (props) => {
     
+    const setPreferences = (newLocations, newCrowd) => {
+        props.action(newLocations, newCrowd);
+    }
 
     return(
         <div>
             <ToastContainer />
         <Modal show={!props.hidden}>
             <Modal.Body>
-            <ModalContent crowdOptions={props.crowdOptions} locationOptions={props.locationOptions} />
+            <ModalContent crowdOptions={props.crowdOptions} locationOptions={props.locationOptions} action={setPreferences}/>
             
             </Modal.Body>
         </Modal>

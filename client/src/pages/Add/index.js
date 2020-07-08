@@ -30,6 +30,12 @@ function Add() {
         setShowPurchase(true);
         setHideAskPurchase(true);
     }
+
+    const finishPreferenceSetting = (newLocations, newCrowd) => {
+        setLocationOptions(newLocations);
+        setCrowdOptions(newCrowd);
+        setShowModal(false);
+    }
     
     useEffect(() => {
         axios.post('https://geethasaree.herokuapp.com/auth/getCurrentUser', {token: localStorage.getItem("token")})
@@ -40,7 +46,7 @@ function Add() {
             setLoading(false);
         })
         .then(() => {
-            if(locationOptions.length == 0 || crowdOptions.length == 0){
+            if(locationOptions.length === 0 || crowdOptions.length === 0){
                 setShowModal(true);
             }
         })
@@ -59,10 +65,10 @@ function Add() {
                 </h1>
                 {
                     showImage ?
-                    <img></img>
+                    <img alt="placeholder"></img>
                     :
                     (saree ? 
-                    <img src={saree}/>
+                    <img alt="your saree"src={saree}/>
                     :
                     <div id="placeholderImage">
                         <label htmlFor="myfile" id="uploadButton">Upload</label>
@@ -99,7 +105,16 @@ function Add() {
                             <div className="customHeading">
                             Crowd
                             </div>
-                        <input type="text" className="form-control" placeholder="Crowd" aria-label="Crowd" aria-describedby="basic-addon1"></input>
+                            <div className="form-group dropdown">
+                            <select className="form-control" id="exampleFormControlSelect1">
+                            {loading 
+                            ? <option>Nothing yet</option> 
+                            :
+                            crowdOptions.map((item, index) => (
+                                <option key={index}> {item} </option>
+                            ))}
+                            </select>
+                        </div>
                         </div>
                     </div>
                     <div className="leftField">
@@ -187,7 +202,7 @@ function Add() {
             
 
         </form>
-        <PreferenceModal hidden={!showModal} crowdOptions={crowdOptions} locationOptions={locationOptions}></PreferenceModal>
+        <PreferenceModal hidden={!showModal} crowdOptions={crowdOptions} locationOptions={locationOptions} action={finishPreferenceSetting}></PreferenceModal>
         </div>
     )
 }
