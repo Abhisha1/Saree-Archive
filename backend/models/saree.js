@@ -39,7 +39,7 @@ const sareeSchema = new Schema({
         // Any additional general notes about saree
         notes: {type: String},
         imgs: [
-            { data: Buffer, contentType: String }],
+            { type: String],
         worn: [HistorySchema]
         
 })

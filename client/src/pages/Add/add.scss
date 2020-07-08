@@ -99,7 +99,7 @@ label{
 }
 .descriptionText{
     font-family: Raleway;
-    color: black;
+    color: black !important;
     text-transform: none;
     font-size: 15px;
     text-align: left;
@@ -113,6 +113,14 @@ label{
     height: 20vw;
     border: 1px solid lightgrey;
     background-color: lightgrey;
+    position: relative;
+    text-align: center;
+    margin-bottom: 4vh;
+}
+.previewImage{
+    width: auto;
+    height: 20vw;
+    border: 1rem solid rgba(121, 41, 78, 0.37);
     position: relative;
     text-align: center;
     margin-bottom: 4vh;
@@ -144,4 +152,22 @@ label{
     float: right;
     font-family: Raleway;
     font-weight: bold;
+}
+.sareeType{
+    display: flex;
+    flex-direction: column;
+}
+[type="submit"]{
+    margin-top: 4vw;
+    background-color: rgb(121,41,79);
+    border: rgb(121,41,79);
+    color: white;
+    font-family: Raleway;
+}
+[type="submit"]:hover,[type="submit"]:active, [type="submit"]:focus{
+    margin-top: 4vw;
+    background-color: transparentize($color: #000000, $amount: 0);
+    color: rgb(121,41,79);
+    border: rgb(121,41,79);
+    font-family: Raleway;
 }

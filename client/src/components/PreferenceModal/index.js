@@ -3,16 +3,22 @@ import Modal from 'react-bootstrap/Modal';
 import { toast, ToastContainer } from 'react-toastify';
 import './preferenceModal.scss';
 import { MdClear} from "react-icons/md";
+import * as Validation from '../../validation/stringSanitising.js';
 
 export function ModalContent(props){
     const [currentScreen, setCurrentScreen] = useState(0);
     const [locations, setLocations] = useState(props.locationOptions);
     const [crowd, setCrowd] = useState(props.crowdOptions);
+    const [showLocationError,setshowLocationError] = useState(false)
+    const [showCrowdError,setShowCrowdError] = useState(false);
 
     const updatePreferences = (value, field) => {
         if (field === "locationFields"){
             if(!locations.includes(value)){
-                setLocations(locations => [...locations, value]);
+                value = Validation.cleanTrailingSpaces(value);
+                if (value.length !== 0){
+                    setLocations(locations => [...locations, value]);
+                }
                 
             }
             else{
@@ -21,7 +27,10 @@ export function ModalContent(props){
         }
         if (field === "crowdFields"){
             if(!crowd.includes(value)){
-                setCrowd(crowd => [...crowd, value]);
+                value = Validation.cleanTrailingSpaces(value);
+                if (value.length !== 0){
+                    setCrowd(crowd => [...crowd, value]);
+                }
             }
             else{
                 toast("You already have entered this crowd")
@@ -54,6 +63,9 @@ export function ModalContent(props){
     }
     return(
         <div>
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossOrigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossOrigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossOrigin="anonymous"></script>
         <div hidden={currentScreen !== 0} id="firstScreen">
                     <h1 id="addHeading">
                         Hi There!
@@ -71,7 +83,7 @@ export function ModalContent(props){
                         Please add at least one location for where your sarees are kept. This can be changed at any time later!
                     </p>
                     <form>
-                    <input type="text" id="locationFields" className="form-control" placeholder="e.g. Blue suitcase" aria-label="Locations sarees are kept in" onKeyDown={handleKeyDown}></input>
+                    <input type="text" id="locationFields" onChange={() => setshowLocationError(false)} className="form-control" placeholder="e.g. Blue suitcase" aria-label="Locations sarees are kept in" onKeyDown={handleKeyDown}></input>
                     </form>
                     <div className="tags">
                         {console.log(locations.length)}
@@ -84,8 +96,19 @@ export function ModalContent(props){
                         ))
                         }
                     </div>
+                    <div hidden={!showLocationError} className="alert alert-danger alert-dismissable fade show" role="alert">
+                        Please enter at least one location!
+                        
+                    </div>
                     
-                    <button id="modalButton" className="btn btn-secondary" onClick={() => setCurrentScreen(2)}>Next</button>
+                    <button id="modalButton" className="btn btn-secondary" onClick={() => {
+                        if (locations.length === 0){
+                            setshowLocationError(true);
+                        }
+                        else{
+                            setCurrentScreen(2);
+                        }
+                        }}>Next</button>
                 </div>
                 <div hidden={currentScreen !== 2} id="firstScreen">
                     <h1 id="addHeading">
@@ -95,7 +118,7 @@ export function ModalContent(props){
                         Please add at least one crowd group to keep track of who sees the sarees you wear. This can be changed at any time later!
                     </p>
                     <form>
-                    <input type="text" id="crowdFields" className="form-control" placeholder="e.g. Old school girls" aria-label="Crowd who sees sarees" onKeyDown={handleKeyDown}></input>
+                    <input type="text" id="crowdFields" onChange={() => setShowCrowdError(false)} className="form-control" placeholder="e.g. Old school girls" aria-label="Crowd who sees sarees" onKeyDown={handleKeyDown}></input>
                     </form>
                     <div className="tags">
                         {console.log(crowd.length)}
@@ -109,8 +132,17 @@ export function ModalContent(props){
                         ))
                         }
                     </div>
-                    
-                    <button id="modalButton" className="btn btn-secondary" onClick={() => props.action(locations, crowd)}>Done</button>
+                    <div hidden={!showCrowdError} className="alert alert-danger" role="alert">
+                        Please enter at least one crowd group!
+                    </div>
+                    <button id="modalButton" className="btn btn-secondary" onClick={() => {
+                        if (locations.length === 0){
+                            setShowCrowdError(true);
+                        }
+                        else{
+                            props.action(locations, crowd)
+                        }
+                        }}>Done</button>
                 </div>
                 </div>
     );

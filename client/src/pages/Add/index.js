@@ -6,13 +6,15 @@ import axios from 'axios';
 import PreferenceModal from '../../components/PreferenceModal';
 import 'react-toastify/dist/ReactToastify.css';
 import "react-datepicker/dist/react-datepicker.css";
-
+import {ButtonGroup, ToggleButton} from 'react-bootstrap';
 
 function Add() {
     const [lastWorn, setLastWorn] = useState(false);
     const [showHasEvent, setShowHasEvent] = useState(false);
     const [eventDate, setEventDate] = useState(new Date());
-    const [showImage, setShowImage] = useState(false);
+    const showImage = false;
+    const typeOptions = ["Kanchipuram", "Soft Silk","Fancy","Georgette","Linen",
+                        "Cotton", "Pattu"];
     const [saree, setSaree] = useState(null);
     const [showPurchase, setShowPurchase] = useState(false);
     const [hideAskPurchase, setHideAskPurchase] = useState(false);
@@ -21,7 +23,45 @@ function Add() {
     const [crowdOptions, setCrowdOptions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
+    const [formFields, setFormFields] = useState({
+        blouseStitched: true,
+        type: typeOptions[0],
+        purchase: {
+            datePurchased: null,
+            wherePurchased: ''
+        },
+        location: '',
+        notes: '',
+        imgs: [
+            ''
+        ],
+        worn: [
+        ]
+    })
 
+    const onChange = (event) => {
+        let existing = formFields;
+        console.log(event.target.value);
+        let field = event.target.getAttribute('field');
+        if (field === "purchase"){
+            existing[event.target.getAttribute('subfield')] = event.target.value;
+            setFormFields(existing);
+        }
+        if (field === "worn"){
+            console.log('leave');
+        }
+        if(field === "blouseStiched"){
+            let blouse;
+            event.target.value === 'yes' ? (blouse = true) : (blouse = false);
+            existing["blouseStitched"] = blouse;
+            setFormFields(existing);
+        }
+        else{
+            existing[field] = event.target.value;
+            setFormFields(existing);
+        }
+        console.log(formFields);
+    }
     const hasEventToAdd = () => {
         setLastWorn(true);
         setShowHasEvent(true);
@@ -35,6 +75,11 @@ function Add() {
         setLocationOptions(newLocations);
         setCrowdOptions(newCrowd);
         setShowModal(false);
+    }
+
+    const uploadSaree = (event) => {
+        event.preventDefault();
+        console.log(formFields);
     }
     
     useEffect(() => {
@@ -68,7 +113,7 @@ function Add() {
                     <img alt="placeholder"></img>
                     :
                     (saree ? 
-                    <img alt="your saree"src={saree}/>
+                    <img className="previewImage" alt="your saree"src={saree}/>
                     :
                     <div id="placeholderImage">
                         <label htmlFor="myfile" id="uploadButton">Upload</label>
@@ -133,9 +178,9 @@ function Add() {
                     <div className="leftField split">
                         Location of saree*
                         <div className="form-group dropdown">
-                            <select className="form-control" id="exampleFormControlSelect1">
+                            <select className="form-control" id="exampleFormControlSelect1" field="location" onChange={onChange}>
                             {loading 
-                            ? <option>Nothing yet</option> 
+                            ? <a />
                             :
                             locationOptions.map((item, index) => (
                                 <option key={index}> {item} </option>
@@ -144,19 +189,29 @@ function Add() {
                         </div>
                     </div>
                     <div className="leftField split">
-                        Stitched blouse?
-                        <div id="blouseCheck" className="btn-group btn-group-toggle eventCheck" data-toggle="buttons">
-                        
-                        <label className="btn btn-secondary active firstActive">
-                            <input type="radio" name="options" id="option1" autoComplete="off" /> No
-                        </label>
-                        <label className="btn btn-secondary">
-                            <input type="radio" name="options" id="option2" autoComplete="off" /> Yes
-                        </label>
-                        
+                    Stitched blouse?
+                        <div className="form-group dropdown">
+                            <select className="form-control" id="exampleFormControlSelect1" field="blouseStitched" onChange={onChange}>
+                            <option> Yes </option>
+                            <option> No </option>
+                            </select>
                         </div>
                      </div>
                 </div>
+                <div className="leftField sareeType">
+                        Saree Type
+                        <div className="btn-group btn-group-toggle eventCheck customHeading" data-toggle="buttons">
+                        
+                        <div className="form-group dropdown">
+                            <select field="type" onChange={onChange} className="form-control" id="exampleFormControlSelect1">
+                            {typeOptions.map((item, index) => (
+                                <option key={index}> {item} </option>
+                            ))}
+                            </select>
+                        </div>
+                        
+                        </div>
+                     </div>
                 <h2 className="addSubHeading">
                     Purchase history
                 </h2>
@@ -186,7 +241,7 @@ function Add() {
                                     <div className="customHeading">
                                     Where saree was bought
                                     </div>
-                                <input type="text" className="form-control" placeholder="e.g. Pothys" aria-label="Where did you purchase?" aria-describedby="basic-addon1"></input>
+                                <input field="purchase" subfield="wherePurchased" onChange={onChange} type="text" className="form-control" placeholder="e.g. Pothys" aria-label="Where did you purchase?" aria-describedby="basic-addon1"></input>
                                 </div>
                             </div>
                         </div>
@@ -195,12 +250,11 @@ function Add() {
                 <h2 className="addSubHeading">
                     Additional notes
                     <p className="descriptionText">Any other comments or notes you want to make about this saree</p>
-                    <textarea className="form-control" aria-label="Additional notes"></textarea>
+                    <textarea field="notes" onChange={onChange} className="form-control" aria-label="Additional notes"></textarea>
                 </h2>
-                
+                <button type="submit" class="btn btn-primary" onClick={uploadSaree}>Add saree</button>    
             </div>
             
-
         </form>
         <PreferenceModal hidden={!showModal} crowdOptions={crowdOptions} locationOptions={locationOptions} action={finishPreferenceSetting}></PreferenceModal>
         </div>
