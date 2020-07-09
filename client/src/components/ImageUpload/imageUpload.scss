@@ -1,0 +1,79 @@
+@media (max-width: 768px) {
+    #placeholderImage{
+        width: 70vw !important;
+        height: 40vw !important;
+    }
+    .previewImage{
+        width: 70vw !important;
+        height: 40vw !important;
+        display: flex !important;
+    }
+}
+
+#placeholderImage{
+    width: 40vw;
+    height: 20vw;
+    border: 1px solid lightgrey;
+    background-color: lightgrey;
+    position: relative;
+    text-align: center;
+    margin-bottom: 4vh;
+}
+.previewImage{
+    width: auto;
+    height: 20vw;
+    border: 1rem solid rgba(255, 255, 255, 0.918);
+    position: relative;
+    text-align: center;
+    margin-bottom: 4vh;
+}
+#myfile{
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+#imagePicker{
+    width: 3vw;
+    height: 3vw;
+}
+#imagePicker:visited{
+    width: 3vw;
+    height: 3vw;
+    color: yellow;
+}
+.imagePreviewGallery{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#addMoreImagesButton{
+    font-size: 5vw;
+}
+.imagePickerGroup{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+#addImageButton{
+    border: 1px solid rgb(121, 41, 78);
+    border-radius: 0.25rem;
+    color: rgb(121, 41, 78);
+    width: auto;
+    align-self: center;
+    padding: 0.25rem;
+    text-transform: uppercase;
+    
+}
+#addImageButton:hover{
+    border: 1px solid rgb(121, 41, 78);
+    border-radius: 0.25rem;
+    background-color: rgb(121, 41, 78);
+    color: white;
+    cursor: pointer;
+    width: auto;
+    align-self: center;
+}
+[customshow='hide']{
+    opacity: 0.4;
+}
