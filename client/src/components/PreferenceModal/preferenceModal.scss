@@ -1,22 +1,25 @@
-.tag{
-    height: calc(1.5em + .75rem + 2px);
-    border: 1px solid rgb(121,41,79);
-    background-color: rgb(121,41,79);
-    border-radius: 0.25rem;
-    font-family: Raleway;
-    color: white;
-    padding: 0.25rem;
-    margin: 0.5rem 0.1rem 0.5rem 0rem;
-}
 .tags{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
-.tagRemove{
-    padding-left: 0.1%;
-    cursor: pointer;
-}
+
 #crowdFields, #locationFields{
     margin-bottom: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.tagLine{
+    display: flex;
+    flex-direction: row;
+}
+#modalButton{
+    height: calc(1.5em + .75rem + 2px);
+}
+
+
+#modalButton:disabled, #modalButton:disabled:hover{
+    background-color: lightgray;
+    color: darkgray !important;
+    border: darkgray;
 }

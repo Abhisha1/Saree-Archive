@@ -4,6 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import './preferenceModal.scss';
 import { MdClear} from "react-icons/md";
 import * as Validation from '../../validation/stringSanitising.js';
+import Tag from '../../components/Tag';
 
 export function ModalContent(props){
     const [currentScreen, setCurrentScreen] = useState(0);
@@ -44,21 +45,21 @@ export function ModalContent(props){
             event.target.value = "";
         }
     }
-    const remove = (event) => {
-        // console.log(event.target.id);
-        if(event.target.id === "locationRemove"){
-            let oldLocations = [...locations];
-            if (event.target.key !== -1){
-                oldLocations.splice(event.target.key,1)
-                setLocations(oldLocations);
-            }
+    const removeCrowd = (event) => {
+        console.log(event.target)
+        let oldLocations = [...locations];
+        if (event.target.key !== -1){
+            oldLocations.splice(event.target.key,1)
+            setLocations(oldLocations);
         }
-        if(event.target.id === "crowdRemove"){
-            let oldCrowd = [...crowd];
-            if (event.target.key !== -1){
-                oldCrowd.splice(event.target.key,1)
-                setCrowd(oldCrowd);
-            }
+    }
+
+    const removeLocation = (event) => {
+        console.log(event.target)
+        let oldLocations = [...locations];
+        if (event.target.key !== -1){
+            oldLocations.splice(event.target.key,1)
+            setLocations(oldLocations);
         }
     }
     return(
@@ -80,19 +81,23 @@ export function ModalContent(props){
                         Location
                     </h1>
                     <p className="leftField">
-                        Please add at least one location for where your sarees are kept. This can be changed at any time later!
+                        Simply add at least one location tag for places that your sarees are kept in. This can be changed at any time later!
                     </p>
                     <form>
-                    <input type="text" id="locationFields" onChange={() => setshowLocationError(false)} className="form-control" placeholder="e.g. Blue suitcase" aria-label="Locations sarees are kept in" onKeyDown={handleKeyDown}></input>
+                        <div className="tagLine">
+                            <input type="text" id="locationFields" onChange={() => setshowLocationError(false)} className="form-control" placeholder="Press enter to add your tag" aria-label="Locations sarees are kept in" onKeyDown={handleKeyDown}></input>
+                    <button id="modalButton" className="btn btn-secondary" onClick={(event) => {
+                        event.preventDefault();
+                        updatePreferences(document.getElementById("locationFields").value, "locationFields");
+                        document.getElementById("locationFields").value = "";
+                    }}>Add</button>
+                        </div>
+                    
                     </form>
                     <div className="tags">
-                        {console.log(locations.length)}
                     {locations.length > 0 &&
                         locations.map((item,index) => (
-                            <div key={index} className="tag">
-                                {item}
-                                <MdClear key={index} onClick={remove} id="locationRemove" className="tagRemove"/>
-                            </div>
+                            <Tag remove={removeLocation} key={index} index={index} item={item}></Tag>
                         ))
                         }
                     </div>
@@ -101,7 +106,7 @@ export function ModalContent(props){
                         
                     </div>
                     
-                    <button id="modalButton" className="btn btn-secondary" onClick={() => {
+                    <button disabled={locations.length === 0} id="modalButton" className="btn btn-secondary" onClick={() => {
                         if (locations.length === 0){
                             setshowLocationError(true);
                         }
@@ -115,27 +120,29 @@ export function ModalContent(props){
                         Crowd
                     </h1>
                     <p className="leftField">
-                        Please add at least one crowd group to keep track of who sees the sarees you wear. This can be changed at any time later!
+                        Simply add at least one crowd tag to keep track of who sees the sarees you wear. This can be changed at any time later!
                     </p>
                     <form>
-                    <input type="text" id="crowdFields" onChange={() => setShowCrowdError(false)} className="form-control" placeholder="e.g. Old school girls" aria-label="Crowd who sees sarees" onKeyDown={handleKeyDown}></input>
+                    <div className="tagLine">
+                    <input type="text" id="crowdFields" onChange={() => setShowCrowdError(false)} className="form-control" placeholder="Press enter to add your tag" aria-label="Crowd who sees sarees" onKeyDown={handleKeyDown}></input>
+                    <button id="modalButton" className="btn btn-secondary" onClick={(event) => {
+                        event.preventDefault();
+                        updatePreferences(document.getElementById("crowdFields").value, "crowdFields");
+                        document.getElementById("crowdFields").value = "";
+                    }}>Add</button>
+                    </div>
                     </form>
                     <div className="tags">
-                        {console.log(crowd.length)}
-                    {crowd.length === 0 ? <h6>Doesn't</h6>
-                    :
+                        {crowd.length > 0 &&
                         crowd.map((item,index) => (
-                            <div key={index} className="tag">
-                                {item}
-                                <MdClear key={index} onClick={remove} id="crowdRemove" className="tagRemove"/>
-                            </div>
+                            <Tag remove={removeCrowd} key={index} index={index} item={item}></Tag>
                         ))
                         }
                     </div>
                     <div hidden={!showCrowdError} className="alert alert-danger" role="alert">
                         Please enter at least one crowd group!
                     </div>
-                    <button id="modalButton" className="btn btn-secondary" onClick={() => {
+                    <button disabled={crowd.length === 0} id="modalButton" className="btn btn-secondary" onClick={() => {
                         if (locations.length === 0){
                             setShowCrowdError(true);
                         }

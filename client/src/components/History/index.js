@@ -34,7 +34,7 @@ function History(props) {
                 (history.map((item, index) => (
                     <div key={index} className="minimisedRow">
                         <p className="eventDescriptionMinimised">EVENT {index}</p>
-                        <p className="trailingDescription" onClick={() => setCurrentEditEvent(index)}>View the details of the event </p>
+                        <p hidden={index===currentEditEvent} className="trailingDescription" onClick={() => setCurrentEditEvent(index)}>View the details of the event </p>
                         {currentEditEvent === index ? 
                         <div>
                         <MdExpandLess className="closeButton" onClick={() => setCurrentEditEvent(null)}></MdExpandLess>
