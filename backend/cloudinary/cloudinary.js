@@ -11,7 +11,6 @@ cloudinary.config({
 })
 
 function uploadStream(fileBuffer, options) {
-    console.log("upload indiividual file")
     return new Promise((resolve, reject) => {
       cloudinary.uploader
         .upload_stream(options, (error, result) => {
@@ -19,7 +18,7 @@ function uploadStream(fileBuffer, options) {
               console.log(error);
             reject(error);
           } else {
-              console.log(result);
+              console.log(result)
             resolve(result);
           }
         })
@@ -29,9 +28,9 @@ function uploadStream(fileBuffer, options) {
 
 exports.uploads = async(res, files, folder) => {
     console.log(files[0].buffer)
-    let res_promises = files.map(file => uploadStream(file.buffer, {public_id: "path_to_image"}))
+    let res_promises = files.map(file => uploadStream(file.buffer, {destpublic_id: new Date().toISOString()+'-'+file.originalname}))
     // Promise.all will fire when all promises are resolved 
     Promise.all(res_promises)
-    .then((result) =>  res.json({'response':result}))
-    .catch((error) => {console.log(error) })
+    .then((result) =>  response.status(200).json({msg: "Success", result: result}))
+    .catch((error) => response.status(200).json({msg: "Failed", error: error} ))
 }
