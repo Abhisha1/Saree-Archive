@@ -28,7 +28,7 @@ function uploadStream(fileBuffer, options) {
 
 exports.uploads = async(res, files, folder) => {
     console.log(files[0].buffer)
-    let res_promises = files.map(file => uploadStream(file.buffer, {destpublic_id: new Date().toISOString()+'-'+file.originalname}))
+    let res_promises = files.map(file => uploadStream(file.buffer, {public_id: new Date().toISOString()+'-'+file.originalname}))
     // Promise.all will fire when all promises are resolved 
     Promise.all(res_promises)
     .then((result) =>  response.status(200).json({msg: "Success", result: result}))
