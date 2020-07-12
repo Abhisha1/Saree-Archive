@@ -13,7 +13,7 @@
 #placeholderImage{
     width: 40vw;
     height: 20vw;
-    border: 1px solid lightgrey;
+    border: 1px dashed lightgrey;
     background-color: lightgrey;
     position: relative;
     text-align: center;
@@ -21,7 +21,8 @@
 }
 .previewImage{
     width: auto;
-    height: 20vw;
+    height: 23vw;
+    object-fit: scale-down;
     border: 1rem solid rgba(255, 255, 255, 0.918);
     position: relative;
     text-align: center;
@@ -46,9 +47,28 @@
     justify-content: center;
     flex-direction: column;
 }
-
+#uploadButton{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3vw;
+    font-weight: 100;
+    cursor: pointer;
+    border: 0.5px solid darkgray;
+    font-family: Raleway;
+    text-transform: uppercase;
+    transition: font-size 0.1s ease-in;
+    -webkit-transition: font-size 0.1s ease-in;
+    -o-transition: font-size 0.1s ease-in;
+    -moz-transition: font-size 0.1s ease-in;
+}
+#uploadButton:hover{
+    font-size: 3.2vw;
+}
 #addMoreImagesButton{
-    font-size: 5vw;
+    font-size: 3vw;
+    padding-right: 0.25rem;
 }
 .imagePickerGroup{
     display: flex;
@@ -59,20 +79,19 @@
     border: 1px solid rgb(121, 41, 78);
     border-radius: 0.25rem;
     color: rgb(121, 41, 78);
-    width: auto;
     align-self: center;
-    padding: 0.25rem;
-    text-transform: uppercase;
-    
+    padding: 0.3rem;
+    display: inline-block;
+    text-transform: none;
+    align-self: center;
+    transition: background-color 0.1s ease-in;
+    -webkit-transition: background-color 0.1s ease-in;
+    -o-transition: background-color 0.1s ease-in;
+    -moz-transition: background-color 0.1s ease-in;
 }
 #addImageButton:hover{
-    border: 1px solid rgb(121, 41, 78);
-    border-radius: 0.25rem;
-    background-color: rgb(121, 41, 78);
     color: white;
-    cursor: pointer;
-    width: auto;
-    align-self: center;
+    background-color: rgb(121, 41, 78);
 }
 [customshow='hide']{
     opacity: 0.4;

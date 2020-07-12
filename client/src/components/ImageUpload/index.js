@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MdAdd } from "react-icons/md";
+import { MdAddCircle } from "react-icons/md";
 import { ReactComponent as Mandala } from '../../assets/homepage.svg';
 import './imageUpload.scss';
 
@@ -29,7 +29,7 @@ export default function ImageUpload(props) {
                         </div>
                         <label htmlFor="myfile">
                             <div id="addImageButton">
-                                <MdAdd id="addMoreImagesButton"></MdAdd>
+                                <MdAddCircle id="addMoreImagesButton"></MdAddCircle>
                                 <span id="addImageTextButton">Upload another</span>
                             </div>
                             <input type="file" id="myfile" accept="image/*" onChange={(event) => {
@@ -41,6 +41,7 @@ export default function ImageUpload(props) {
                         </label>
                     </div>
                     :
+                    
                     <div id="placeholderImage">
                         <label htmlFor="myfile" id="uploadButton">Upload</label>
                         <input type="file" id="myfile" accept="image/*" onChange={(event) => {

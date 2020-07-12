@@ -34,8 +34,13 @@
     font-size: 20px;
     text-align: left;
     overflow: hidden;
+    text-transform: none;
 }
 
 #saveEventButton{
     margin-top: 0.5rem;
+}
+.expandButton:hover, .closeButton:hover{
+    color: white;
+    animation-delay: 2s;
 }

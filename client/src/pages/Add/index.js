@@ -8,6 +8,8 @@ import History from '../../components/History';
 import 'react-toastify/dist/ReactToastify.css';
 import "react-datepicker/dist/react-datepicker.css";
 import ImageUpload from '../../components/ImageUpload';
+import { MdError } from "react-icons/md";
+import { toast } from 'react-toastify';
 
 function Add() {
     const [showHasEvent, setShowHasEvent] = useState(false);
@@ -23,6 +25,7 @@ function Add() {
     const [loading, setLoading] = useState(true);
     const [progress, setProgress] = useState(0);
     const [showModal, setShowModal] = useState(false);
+    const [showError, setShowError] = useState(false);
     const [formFields, setFormFields] = useState({
         blouseStitched: true,
         type: typeOptions[0],
@@ -82,6 +85,20 @@ function Add() {
         form.worn = history;
         setFormFields(form);
         console.log(formFields);
+        console.log(saree)
+        if (saree.length === 0){
+            setShowError(true);
+            console.log(showError);
+            return;
+        }
+        axios.post('http://localhost:5000/api/sarees/add', { token: localStorage.getItem("token"), saree: formFields })
+            .then(user => {
+                console.log(user);
+            })
+            .catch(err => {
+                console.log("Couldn't get user's records");
+            })
+        
     }
     useEffect(() => {
         axios.post('https://geethasaree.herokuapp.com/auth/getCurrentUser', { token: localStorage.getItem("token") })
@@ -100,6 +117,9 @@ function Add() {
             })
     }, [])
 
+    useEffect(() => {
+        setShowError(false);
+    }, [saree]);
     return (
         <div className="addContainer">
             <Navbar></Navbar>
@@ -109,6 +129,9 @@ function Add() {
                         Add a saree
                     </h1>
                     <ImageUpload action={setSaree} saree={saree}></ImageUpload>
+                    {showError && <div id="noImageError">
+                        <MdError size={40}></MdError>
+                        <p id="imageErrorMessage"> Please upload at least one image</p> </div>}
                     <div>
                         <h2 className="addSubHeading">
                             Last Worn History

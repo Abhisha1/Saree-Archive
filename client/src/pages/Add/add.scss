@@ -128,17 +128,6 @@ label{
     border: 1px solid rgb(121,41,79);
     font-family: Raleway;
 }
-#uploadButton{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 3vw;
-    font-weight: 100;
-    cursor: pointer;
-    font-family: Raleway;
-    text-transform: uppercase;
-}
 .addContainer{
     text-align: center;
     font-family: 'Raleway', sans-serif;
@@ -168,4 +157,19 @@ label{
     color: rgb(121,41,79);
     border: 1px solid rgb(121,41,79);
     font-family: Raleway;
+}
+#noImageError{
+    border: 1px solid rgb(249,61,92);
+    color: white;
+    background-color: rgb(249,61,92);
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    width: 70%;
+    display: flex;
+    justify-content: space-evenly;
+}
+#imageErrorMessage{
+    text-transform: none;
+    font-weight: bold;
+    font-size: medium;
 }

@@ -3,8 +3,6 @@ import DatePicker from 'react-datepicker';
 import {MdExpandLess, MdExpandMore} from 'react-icons/md';
 import './history.scss';
 
-
-
 function History(props) {
     const [eventDate, setEventDate] = useState(new Date());
     const [crowd, setCrowd] = useState(props.crowdOptions[0]);

@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const { verifySignUp } = require("../middleware");
+const upload = require('../multer/multer');
 
 const users = require('../controller/users.js');
 const auth = require('../controller/auth.js');
@@ -20,7 +21,7 @@ router.post('/api/users/addLocation', users.addLocation)
 router.get('/api/users/getAllUsers', users.getAllUsers)
 
 // Saree api calls
-router.post('/api/sarees/add')
+router.post('/api/sarees/add',upload.any('image'), sarees.addSaree)
 
 
 module.exports = router;

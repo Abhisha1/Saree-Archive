@@ -45,20 +45,18 @@ export function ModalContent(props){
             event.target.value = "";
         }
     }
-    const removeCrowd = (event) => {
-        console.log(event.target)
+    const removeCrowd = (index) => {
         let oldLocations = [...locations];
-        if (event.target.key !== -1){
-            oldLocations.splice(event.target.key,1)
+        if (index!== -1){
+            oldLocations.splice(index,1)
             setLocations(oldLocations);
         }
     }
 
-    const removeLocation = (event) => {
-        console.log(event.target)
+    const removeLocation = (index) => {
         let oldLocations = [...locations];
-        if (event.target.key !== -1){
-            oldLocations.splice(event.target.key,1)
+        if (index!== -1){
+            oldLocations.splice(index,1)
             setLocations(oldLocations);
         }
     }
