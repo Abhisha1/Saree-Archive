@@ -21,7 +21,7 @@ router.post('/api/users/addLocation', users.addLocation)
 router.get('/api/users/getAllUsers', users.getAllUsers)
 
 // Saree api calls
-router.post('/api/sarees/add',upload.any('image'), sarees.addSaree)
+router.post('/api/sarees/add',upload.array('image', 100), sarees.addSaree)
 
 
 module.exports = router;

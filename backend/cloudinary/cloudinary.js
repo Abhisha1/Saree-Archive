@@ -10,27 +10,23 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 })
 
-function uploadStream(fileBuffer, options) {
+function uploadStream(file) {
     return new Promise((resolve, reject) => {
-      cloudinary.uploader
-        .upload_stream(options, (error, result) => {
+      cloudinary.v2.uploader
+        .upload_stream({}, (error, result) => {
           if (error) {
-              console.log(error);
+              console.log("error")
             reject(error);
           } else {
-              console.log(result)
             resolve(result);
           }
-        })
-        .end(fileBuffer);
+        }).end(file)
     });
   }
 
-exports.uploads = async(res, files, folder) => {
-    console.log(files[0].buffer)
-    let res_promises = files.map(file => uploadStream(file.buffer, {public_id: new Date().toISOString()+'-'+file.originalname}))
+exports.uploads = (files) => {
+    let res_promises = []
+    files.map(file => res_promises.push(uploadStream(file.buffer)))
     // Promise.all will fire when all promises are resolved 
-    Promise.all(res_promises)
-    .then((result) =>  response.status(200).json({msg: "Success", result: result}))
-    .catch((error) => response.status(200).json({msg: "Failed", error: error} ))
+    return Promise.all(res_promises);
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import {MdExpandLess, MdExpandMore} from 'react-icons/md';
+import SinglePopUp from "../SinglePopUp";
 import './history.scss';
 
 function History(props) {
@@ -9,6 +10,7 @@ function History(props) {
     const [description, setDescription] = useState('');
     const [history, setHistory] = useState(props.history);
     const [currentEditEvent, setCurrentEditEvent] = useState(null);
+    const [showPopUp, setPopUp] = useState(false);
 
     useEffect(() => {
         props.action(history);
@@ -24,6 +26,11 @@ function History(props) {
             crowd: crowd,
             description: description
         }])
+    }
+    const updateList = (list) => {
+        console.log(list)
+        props.setcrowd(list);
+        setPopUp(false);
     }
     return (
         <div>
@@ -70,8 +77,11 @@ function History(props) {
                                 }
                             </select>
                         </div>
+                        <a className="link" onClick={() => setPopUp(true)}>Add another crowd group?</a>
                     </div>
                 </div>
+                {showPopUp &&
+                    <SinglePopUp action={updateList} list={props.crowdOptions} fieldName="Crowd"></SinglePopUp>}
                 <div className="leftField">
                     Description
                         <textarea field="eventDescription" className="form-control" aria-label="Description" value={description} onChange={(event) => setDescription(event.target.value)}></textarea>

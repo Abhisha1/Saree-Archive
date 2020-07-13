@@ -1,0 +1,29 @@
+#addHeading{
+    font-size: 50px;
+    font-family: PlaylistScript;
+    color: rgb(121,41,79);
+    text-align: left;
+}
+.tagLine{
+    display: flex;
+    flex-direction: row;
+}
+#modalButton{
+    height: calc(1.5em + .75rem + 2px);
+}
+
+
+#modalButton:disabled, #modalButton:disabled:hover{
+    background-color: lightgray;
+    color: darkgray !important;
+    border: darkgray;
+}
+#listField{
+    margin-bottom: 0.5rem;
+    margin-right: 0.5rem;
+}
+.tags{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

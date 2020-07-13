@@ -2,10 +2,11 @@
 const multer = require('multer');
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
-        cb(null, './uploads/')
+        cb(null, './uploads')
     },
     filename: function (req, file, cb){
-        cb(null, new Date().toISOString()+'-'+file.originalname)
+        cb(null, 
+            new Date().toISOString().replace(/:/g, '-')+file.originalname)
     }
 })
 const fileFilter = (res, file, cb) => {
@@ -19,9 +20,7 @@ const fileFilter = (res, file, cb) => {
 
 const upload = multer({
     storage: multer.memoryStorage(),
-    limits: { fileSize: 1024 * 1024 },
-    fileFilter: fileFilter,
-    dest: './uploads/'
-})
+    fileFilter: fileFilter
+});
 
 module.exports = upload;

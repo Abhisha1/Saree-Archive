@@ -13,7 +13,7 @@
 #placeholderImage{
     width: 40vw;
     height: 20vw;
-    border: 1px dashed lightgrey;
+    border: 2px dashed darkgray;
     background-color: lightgrey;
     position: relative;
     text-align: center;
@@ -55,8 +55,14 @@
     font-size: 3vw;
     font-weight: 100;
     cursor: pointer;
-    border: 0.5px solid darkgray;
+    border: 1px solid rgb(121, 41, 78);
+    background-color: rgb(121, 41, 78);
+    border-radius: 0.25rem;
+    padding: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;;
     font-family: Raleway;
+    font-weight: lighter !important;
     text-transform: uppercase;
     transition: font-size 0.1s ease-in;
     -webkit-transition: font-size 0.1s ease-in;

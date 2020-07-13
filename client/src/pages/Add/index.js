@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import "react-datepicker/dist/react-datepicker.css";
 import ImageUpload from '../../components/ImageUpload';
 import { MdError } from "react-icons/md";
-import { toast } from 'react-toastify';
+import SinglePopUp from "../../components/SinglePopUp";
 
 function Add() {
     const [showHasEvent, setShowHasEvent] = useState(false);
@@ -26,6 +26,7 @@ function Add() {
     const [progress, setProgress] = useState(0);
     const [showModal, setShowModal] = useState(false);
     const [showError, setShowError] = useState(false);
+    const [showPopUp, setShowPopUp] = useState(false);
     const [formFields, setFormFields] = useState({
         blouseStitched: true,
         type: typeOptions[0],
@@ -120,6 +121,12 @@ function Add() {
     useEffect(() => {
         setShowError(false);
     }, [saree]);
+
+    const updateList = (list) => {
+        console.log(list)
+        setLocationOptions(list);
+        setShowPopUp(false);
+    }
     return (
         <div className="addContainer">
             <Navbar></Navbar>
@@ -150,7 +157,7 @@ function Add() {
 
                         </div>
                         {showHasEvent &&
-                        <History crowdOptions={crowdOptions} history={history} action={setHistory}></History>
+                        <History crowdOptions={crowdOptions} history={history} action={setHistory} setcrowd={setCrowdOptions}></History>
                         }
                     </div>
                 </div>
@@ -173,7 +180,10 @@ function Add() {
                                         ))}
                                 </select>
                             </div>
+                            <a className="link" onClick={() => setShowPopUp(true)}>Add another location?</a>
                         </div>
+                        {showPopUp &&
+                    <SinglePopUp action={updateList} list={locationOptions} fieldName="Locations"></SinglePopUp>}
                         <div className="leftField split">
                             Stitched blouse?
                         <div className="form-group dropdown">

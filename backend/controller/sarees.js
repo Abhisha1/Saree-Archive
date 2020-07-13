@@ -4,15 +4,23 @@ const fs = require('fs');
 const { authJwt } = require("../middleware");
 
 function addSaree(request, response){
-    // const uid = authJwt.verifyToken(request.body.token);
-    let saree = request.files;
-    Array.from(saree).map((item) => {
+    const uid = authJwt.verifyToken(request.body.token);
+    let images = request.files;
+    let cloudUrls = []
+    Array.from(images).map((item) => {
         if (item.buffer === null || item.buffer === undefined){
-            return response.send(500)
+            response.sendStatus(500)
+            return;
         }
     })
-    console.log(saree)
-    cloudinary.uploads(response, saree, 'Images');
+    cloudinary.uploads(images).then((results) => {
+        results.forEach((result) => cloudUrls.push(result.secure_url));
+        response.status(200).json({msg: "Successful upload"})
+    })
+    .catch((err) => {
+        response.status(500).json({msg: "Upload failed"});
+        console.log(err);
+    })
     
 };
 module.exports.addSaree = addSaree;
