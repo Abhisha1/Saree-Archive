@@ -1,0 +1,88 @@
+.box {
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 5px 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 0.25rem;
+    font-family: Raleway;
+    font-size: 1rem;
+}
+.leftMonth{
+    display: flex;
+    flex-direction: column;
+    align-self: left;
+}
+.rightYear{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+}
+.currentDate{
+    width: 100%;
+    align-self: center;
+    border-top: 0.1vw solid rgba(0, 0, 0, 0.10196078431372549);
+    border-bottom: 0.1vw solid rgba(0, 0, 0, 0.10196078431372549);
+    text-align: center;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+
+}
+.splitContainer{
+    display: flex;
+    justify-content: space-around;
+    -webkit-transition: max-height 1s; 
+    -moz-transition: max-height 1s; 
+    -ms-transition: max-height 1s; 
+    -o-transition: max-height 1s; 
+    transition: max-height 1s;  
+    background: rgb(241,235,235);
+    background: linear-gradient(24deg, rgba(241,235,235,1) 0%, rgba(210,188,222,0.7460026246826856) 100%);
+    overflow: hidden;
+    // "height: 0" not work with css transitions
+    max-height: 0;
+}
+.splitContainer.collapsed{
+    // .splitContainer{
+        max-height: 50vw;
+        z-index: 1;
+    // }
+}
+
+.splitContainer.visible {
+    transition-delay: 0s;
+    height: fit-content;
+    opacity: 1;
+}
+.splitContainer.hidden {
+    height: 0px;
+    opacity: 0;
+}
+.monthPickerButton{
+    background-color: transparent;
+    border: none
+}
+.monthPickerButton:hover{
+    background-color: white;
+    border: 1px solid white;
+    color: black;
+    width: 100%;
+}
+.monthPickerButton.selected, .monthPickerButton:focus{
+    font-weight: bold;
+}
+#overflowYear{
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    flex-basis: 30vw;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+#scrollUp{
+    cursor: pointer;
+}
+#overflowYear::-webkit-scrollbar{
+    display: none;
+}

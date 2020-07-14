@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import PrivateRoute from "./components/protectedRoutes";
 import Home from "./pages/Home";
 import Add from "./pages/Add";
+import View from './pages/View';
 import './App.css';
 
 function App() {
@@ -17,8 +18,8 @@ function App() {
           <Route path="/login" exact={true} component={Login}/>
           <PrivateRoute path="/home" component={Home} exact={true}></PrivateRoute>
         <PrivateRoute path="/add" component={Add} exact={true} /> 
-        {/* <PrivateRoute path="/view" component={Home} exact={true} />
-        <PrivateRoute path="/discover" component={Home} exact={true} />
+        <PrivateRoute path="/view" component={View} exact={true} />
+        {/* <PrivateRoute path="/discover" component={Home} exact={true} />
         <Route path="/user" component={Home} exact={true} /> */}
         
        </div>

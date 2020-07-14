@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "./add.scss";
 import Navbar from "../../components/Navbar";
-import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import PreferenceModal from '../../components/PreferenceModal';
 import History from '../../components/History';
@@ -10,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import ImageUpload from '../../components/ImageUpload';
 import { MdError } from "react-icons/md";
 import SinglePopUp from "../../components/SinglePopUp";
+import MonthPicker from "../../components/MonthPicker";
 
 function Add() {
     const [showHasEvent, setShowHasEvent] = useState(false);
@@ -18,7 +18,7 @@ function Add() {
     const [saree, setSaree] = useState([]);
     const [showPurchase, setShowPurchase] = useState(false);
     const [hideAskPurchase, setHideAskPurchase] = useState(false);
-    const [purchaseDate, setPurchaseDate] = useState(new Date());
+    const [purchaseDate, setPurchaseDate] = useState(new Date(new Date().getFullYear()+'-'+new Date().getMonth()+'-1'));
     const [locationOptions, setLocationOptions] = useState([]);
     const [crowdOptions, setCrowdOptions] = useState([]);
     const [history, setHistory] = useState([]);
@@ -70,16 +70,16 @@ function Add() {
         setShowModal(false);
         let form = formFields;
         form["location"] = newLocations[0];
-        setFormFields(formFields);
+        setFormFields(form);
     }
 
     const uploadSaree = (event) => {
         event.preventDefault();
         let form = formFields;
-        if (!hideAskPurchase) {
+        if (showPurchase) {
             form.purchase.datePurchased = purchaseDate;
         }
-        if (hideAskPurchase) {
+        if (!showPurchase) {
             form.purchase.datePurchased = null;
         }
         form.imgs = saree;
@@ -92,13 +92,20 @@ function Add() {
             console.log(showError);
             return;
         }
-        axios.post('http://localhost:5000/api/sarees/add', { token: localStorage.getItem("token"), saree: formFields })
-            .then(user => {
-                console.log(user);
-            })
-            .catch(err => {
-                console.log("Couldn't get user's records");
-            })
+        const formData = new FormData();
+        formFields.imgs.map((item) => {
+            formData.append('files', item)
+        })
+        console.log(formFields.purchase)
+        // formData.set("fields", JSON.stringify(formFields));
+        // formData.set("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZDM3YTk5MDRkM2UyNWI5OGY3OTExYyIsImlhdCI6MTU5NDYxNDU1NywiZXhwIjoxNTk0NzAwOTU3LCJpc3MiOiJHZWV0c1NhcmVlcyIsInN1YiI6InNlc3Npb24tdG9rZW4ifQ.wWW3BBXtiPD-doY-G2tTuF5RD6DB_geN2Bst0kMQss0")
+        // axios.post('http://localhost:5000/api/sarees/add', formData)
+        //     .then(user => {
+        //         console.log(user);
+        //     })
+        //     .catch(err => {
+        //         console.log("Couldn't get user's records");
+        //     })
         
     }
     useEffect(() => {
@@ -107,11 +114,10 @@ function Add() {
                 setLocationOptions(user.data.locations);
                 setCrowdOptions(user.data.crowd);
                 setLoading(false);
-            })
-            .then(() => {
-                if (locationOptions.length === 0 || crowdOptions.length === 0) {
+                if (user.data.locations.length === 0 || user.data.crowd.length === 0) {
                     setShowModal(true);
                 }
+                console.log(user)
             })
             .catch(err => {
                 console.log("Couldn't get user's records");
@@ -122,15 +128,44 @@ function Add() {
         setShowError(false);
     }, [saree]);
 
+    useEffect(() => {
+        if (!loading && crowdOptions.length > 0){
+            axios.post('https://geethasaree.herokuapp.com/api/users/addCrowd', { token: localStorage.getItem("token"), crowd: crowdOptions })
+            .then((crowds) => console.log(crowds))
+            .catch(err => {
+                console.log("Couldn't get user's records");
+            })  
+         }  
+    }, [crowdOptions]);
+    useEffect(() => {
+        if (!loading && locationOptions.length > 0){
+            axios.post('https://geethasaree.herokuapp.com/api/users/addLocation', { token: localStorage.getItem("token"), locations: locationOptions })
+            .then((locs) => console.log(locs))
+            .catch(err => {
+                console.log("Couldn't get user's records");
+            })    
+        }
+    }, [locationOptions]);
+
     const updateList = (list) => {
         console.log(list)
         setLocationOptions(list);
         setShowPopUp(false);
     }
+    const setMonth = (monthNumber) => {
+        let tempDate = purchaseDate;
+        tempDate.setMonth(monthNumber);
+        setPurchaseDate(tempDate)
+    }
+    const setYear = (year) => {
+        let tempDate = purchaseDate;
+        tempDate.setFullYear(year);
+        setPurchaseDate(tempDate)
+    }
     return (
         <div className="addContainer">
             <Navbar></Navbar>
-            <form className="form">
+            <form className="form" encType="multipart/form-data">
                 <div className="leftAdd">
                     <h1 id="addHeading">
                         Add a saree
@@ -146,8 +181,8 @@ function Add() {
                         <p className="descriptionText" hidden={showHasEvent}>Do you have an event that you want to add?</p>
                         <div className="btn-group btn-group-toggle eventCheck" data-toggle="buttons" hidden={showHasEvent}>
 
-                            <label className="btn btn-secondary">
-                                <input type="radio" name="options" id="option1" autoComplete="off" /> No
+                            <label className="btn btn-secondary active">
+                                <input type="radio" name="options" id="option1" autoComplete="off"/> No
                     </label>
                             <label className="btn btn-secondary">
                                 <input type="radio" name="options" id="option2" autoComplete="off" onClick={() => {
@@ -227,11 +262,8 @@ function Add() {
                             <div className="eventTop">
                                 <div className="leftField split">
                                     Date saree bought
-                                    <DatePicker
-                                        className="customDate"
-                                        selected={purchaseDate}
-                                        onChange={date => setPurchaseDate(date)}
-                                    />
+                                    <MonthPicker month={purchaseDate.getMonth()} year={purchaseDate.getFullYear()}
+                                    setMonth={setMonth} setYear={setYear} minYear={1940}></MonthPicker>
                                 </div>
                                 <div className="leftField split">
                                     <div className="customHeading">

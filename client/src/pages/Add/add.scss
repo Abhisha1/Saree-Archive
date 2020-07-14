@@ -79,7 +79,7 @@ label{
     border-color: rgb(121,41,79);
     color: white !important;
 }
-.btn-secondary:hover, .btn-secondary:focus{
+.btn-secondary:hover, .btn-secondary:focus, .btn-secondary:not(:disabled):not(.disabled).active{
     background-color: rgb(121,41,79);
     border-color: rgb(121,41,79);
     color: white !important

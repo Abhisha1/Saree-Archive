@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import DatePicker from 'react-datepicker';
+import MonthPicker from "../../components/MonthPicker";
 import {MdExpandLess, MdExpandMore} from 'react-icons/md';
 import SinglePopUp from "../SinglePopUp";
 import './history.scss';
 
 function History(props) {
-    const [eventDate, setEventDate] = useState(new Date());
+    const [eventDate, setEventDate] = useState(new Date(new Date().getFullYear()+'-'+new Date().getMonth()+'-1'));
     const [crowd, setCrowd] = useState(props.crowdOptions[0]);
     const [description, setDescription] = useState('');
     const [history, setHistory] = useState(props.history);
@@ -16,7 +16,7 @@ function History(props) {
         props.action(history);
         setCrowd(props.crowdOptions[0]);
         setDescription('');
-        setEventDate(new Date());
+        setEventDate(new Date(new Date().getFullYear()+'-'+new Date().getMonth()+'-1'));
     }, [history]);
 
     const addAnother = (event) => {
@@ -31,6 +31,16 @@ function History(props) {
         console.log(list)
         props.setcrowd(list);
         setPopUp(false);
+    }
+    const setMonth = (monthNumber) => {
+        let tempDate = eventDate;
+        tempDate.setMonth(monthNumber);
+        setEventDate(tempDate)
+    }
+    const setYear = (year) => {
+        let tempDate = eventDate;
+        tempDate.setFullYear(year);
+        setEventDate(tempDate)
     }
     return (
         <div>
@@ -58,11 +68,8 @@ function History(props) {
                 <div className="eventTop">
                     <div className="leftField split">
                         Event date
-                            <DatePicker
-                            className="customDate"
-                            selected={eventDate}
-                            onChange={date => setEventDate(date)}
-                        />
+                        <MonthPicker month={eventDate.getMonth()} year={eventDate.getFullYear()}
+                                    setMonth={setMonth} setYear={setYear} minYear={1940}></MonthPicker>
                     </div>
                     <div className="leftField split">
                         <div className="customHeading">
