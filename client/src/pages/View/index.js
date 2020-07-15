@@ -23,9 +23,7 @@ function View(){
             .then(() => axios.post('https://geethasaree.herokuapp.com/api/sarees/getUsersSarees', { token: localStorage.getItem("token") }))
             .then(sareesList => {
                 sareesList.data.data.forEach((saree) => {
-                    saree.imgs.forEach((img) => {
-                        setSarees(sarees => [...sarees, img]);
-                    })
+                    setSarees(sarees => [...sarees, saree]);
 
                 })
             })
@@ -126,7 +124,18 @@ function View(){
             </div>
             <div className="sareeGallery">
                 {sarees.length > 0 && sarees.map((item, index) => (
-                    <img className="previewImage" key={index} src={item}></img>
+                    <div key={index} className="sareeItem">
+                        {item.imgs.map((image,imgIndex) => (
+                            <img className="previewImage" key={imgIndex} src={image}></img>
+                        ))
+                        }
+                        <div className="sareeDescription">
+                            <h6>{item.blouseStitched ? 'Stitched': 'Unstitched'}</h6>
+                            {
+                                item.purchase.datePurchased && <h5>{item.purchase.datePurchased.toISOString()}</h5>
+                            }
+                        </div>
+                    </div>
                 ))}
             </div>
         </div>

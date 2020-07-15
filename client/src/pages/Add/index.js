@@ -26,7 +26,6 @@ function Add() {
     const [tagOptions, setTagOptions] = useState([])
     const [tags, setTags] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [progress, setProgress] = useState(0);
     const [showModal, setShowModal] = useState(false);
     const [showError, setShowError] = useState(false);
     const [showPopUp, setShowPopUp] = useState(false);
@@ -46,12 +45,11 @@ function Add() {
     const onChange = (event) => {
         let existing = formFields;
         let field = event.target.getAttribute('field');
-        setProgress(progress + 1);
-        if (field === "purchase") {
-            existing[event.target.getAttribute('subfield')] = event.target.value;
+        if (field === "purchase" && event.target.getAttribute('subfield') === "wherePurchased" ) {
+            existing.purchase.wherePurchased = event.target.value;
             setFormFields(existing);
         }
-        if (field === "blouseStiched") {
+        else if (field === "blouseStiched") {
             let blouse;
             event.target.value === 'yes' ? (blouse = true) : (blouse = false);
             existing["blouseStitched"] = blouse;
@@ -103,12 +101,13 @@ function Add() {
         console.log(formFields.purchase)
         formData.set("fields", JSON.stringify(formFields));
         formData.set("token", localStorage.getItem("token"))
-        axios.post('http://localhost:5000/api/sarees/add', formData)
+        axios.post('https://geethasaree.herokuapp.com/api/sarees/add', formData)
             .then(user => {
                 console.log(user);
             })
             .catch(err => {
-                console.log("Couldn't get user's records");
+                console.log(err);
+                console.log("Couldn't add");
             })
         
     }
