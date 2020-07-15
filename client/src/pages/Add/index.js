@@ -164,8 +164,9 @@ function Add() {
             })
             console.log(newTags)
             if (newTags.length > 0){
-                newTags.push(...tagOptions);
-                setTagOptions(...newTags);
+                newTags.forEach((item)=> {
+                    setTagOptions(tagOptions => [...tagOptions, item])
+                })
             }
         }
     }, [tags]);

@@ -55,7 +55,8 @@ function getCurrentUser(request,response){
         console.log(user);
         response.status(200).json({
             locations: user.locations,
-            crowd: user.crowd});
+            crowd: user.crowd,
+            tags: user.tags});
     })
     .catch(err => {
         console.log(err);

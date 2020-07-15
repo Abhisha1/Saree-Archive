@@ -72,6 +72,17 @@ function View(){
                                 ))}
                             </div>
                         </div>
+                        <div className="filterBlock">
+                            <h6 className="filterTitle">Tags</h6>
+                            <div className="filterRow">
+                                {tags.map((item, index) => (
+                                    <div key={index} className="checkBox">
+                                        <input type="checkbox" id={item} name={item} value={item} />
+                                        <label className="checkboxLabel" htmlFor={item}> {item}</label><br />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

@@ -38,14 +38,11 @@ function addTags(request, response){
     const tags = request.body.tags;
     const uid = authJwt.verifyToken(request.body.token);
     User.findOneAndUpdate({"_id": ObjectId(uid)}, {tags: tags}, {new: true})
-    .then((user) => {
-       console.log(user);
-    })
     .then(() => {
-        response.status(200).json({msg: "Successfully added crowd"});
+        response.status(200).json({msg: "Successfully added tags",user: user});
     })
     .catch(err => {
-        response.status(400).json({msg: "Could not add crowd"});
+        response.status(400).json({msg: "Could not add tags"});
     })
 }
 
