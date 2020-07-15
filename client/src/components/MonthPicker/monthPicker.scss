@@ -27,7 +27,7 @@
     text-align: center;
     height: calc(1.5em + .75rem + 2px);
     padding: .375rem .75rem;
-
+    cursor: pointer;
 }
 .splitContainer{
     display: flex;
@@ -37,8 +37,7 @@
     -ms-transition: max-height 1s; 
     -o-transition: max-height 1s; 
     transition: max-height 1s;  
-    background: rgb(241,235,235);
-    background: linear-gradient(24deg, rgba(241,235,235,1) 0%, rgba(210,188,222,0.7460026246826856) 100%);
+    background: #f1ebeb;
     overflow: hidden;
     // "height: 0" not work with css transitions
     max-height: 0;

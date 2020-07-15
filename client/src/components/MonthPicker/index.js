@@ -6,7 +6,7 @@ function range(lowEnd, highEnd){
     for (let i = lowEnd; i <= highEnd; i++) {
         list.push(i);
     }
-    return list;
+    return list.sort(function(a, b){return b-a});
 }
 
 
@@ -24,32 +24,30 @@ function MonthPicker(props){
           return;
         }
         // outside click
-        if (document.querySelector('.splitContainer').classList.contains('collapsed')){
+        let box = node.current;
+
+        if (box.querySelector('.splitContainer').classList.contains('collapsed')){
             console.log(e.target);
-            document.querySelector('.splitContainer').classList.toggle('collapsed');
+            box.querySelector('.splitContainer').classList.toggle('collapsed');
         }
         
       };
     useEffect(() => {
-    document.addEventListener("mousedown", handleClick);
+        document.addEventListener("mousedown", handleClick);
 
-    return () => {
-        document.removeEventListener("mousedown", handleClick);
-    };
+        return () => {
+            document.removeEventListener("mousedown", handleClick);
+        };
     }, []);
-    useEffect(() => {
-        console.log(month);
-        console.log(year)
-    }, [month, year])
   return(
     <div ref={node} className="box">
         <div className="currentDate" onClick={() => {
-        document.querySelector('.splitContainer').classList.toggle('collapsed');
+        node.current.querySelector('.splitContainer').classList.toggle('collapsed');
     }}> {months[month]+" "+year}</div>
         <div className='splitContainer' >
             <div className="leftMonth">
                 {months.map((item, index) => (
-                <button className={index === month? "monthPickerButton selected": "monthPickerButton"} value={index} onClick={(event) => {
+                <button className="monthPickerButton" value={index} onClick={(event) => {
                     event.preventDefault();
                     setMonth(event.target.value);
                     props.setMonth(event.target.value)
@@ -63,6 +61,7 @@ function MonthPicker(props){
                 <div id="overflowYear">
                 {years.map((item, index) => (
                 <button className={item === year ? "monthPickerButton selected": "monthPickerButton"} value={item} onClick={(event) => {
+                    console.log(item, index);
                     event.preventDefault();
                     setYear(event.target.value);
                     props.setYear(event.target.value)
