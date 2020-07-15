@@ -70,6 +70,9 @@ label{
     border-color: rgb(121,41,79);
     color: rgb(121,41,79) !important;
     font-family: Raleway;
+    box-shadow: 5px 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
 }
 #historyAddButton{
     margin-top: 0.5rem;
@@ -113,9 +116,11 @@ label{
 }
 #exampleFormControlSelect1{
     border-radius: 0.25rem;
-    border: 1px solid rgb(121,41,79);
     height: calc(1.5em + .75rem + 2px);
     padding: .375rem .75rem;
+    box-shadow: 5px 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
 }
 .descriptionText{
     font-family: Raleway;
@@ -125,8 +130,10 @@ label{
     text-align: left;
 }
 .form-control{
-    border: 1px solid rgb(121,41,79);
     font-family: Raleway;
+    box-shadow: 5px 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border: none;
 }
 .addContainer{
     text-align: center;
@@ -172,4 +179,9 @@ label{
     text-transform: none;
     font-weight: bold;
     font-size: medium;
+}
+.btn-primary{
+    box-shadow: 5px 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
 }
