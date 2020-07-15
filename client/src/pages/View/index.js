@@ -1,59 +1,80 @@
-import React, {useRef, useState} from 'react';
-import {MdKeyboardArrowUp, MdKeyboardArrowDown} from 'react-icons/md';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
+import Navbar from "../../components/Navbar";
 import './view.scss';
-function range(lowEnd, highEnd){
-    let list = [];
-    for (let i = lowEnd; i <= highEnd; i++) {
-        list.push(i);
-    }
-    return list;
-}
-
-
-function MonthPicker(){
-    const buttonRef = useRef();
-    const [month, setMonth] = useState('Jan');
-    const [year, setYear] = useState('1990');
-    const months = ["Jan", "Feb", "Mar", "Apr", 
-                    "May", "Jun", "Jul", "Aug",
-                    "Sep", "Oct", "Nov", "Dec"]
-    const years = range(1940, new Date().getFullYear())
-  return(
-    <div className="box">
-        <div className="currentDate" onClick={() => {
-            document.querySelector('.splitContainer').classList.toggle('collapsed');
-        }}> {month+" "+year}</div>
-        <div className='splitContainer' >
-            <div className="leftMonth">
-                {months.map((item, index) => (
-                <button className="monthPickerButton" value={item} onClick={(event) => setMonth(event.target.value)} key={index}> {item}</button>))}
-            </div>  
-            <div className="rightYear">
-                <MdKeyboardArrowUp id="scrollUp" onClick={() => {
-                    document.getElementById("overflowYear").scrollBy({left:0,top: -50, behavior:'smooth'});
-                    console.log("Scroll"); 
-                }}></MdKeyboardArrowUp>
-                <div id="overflowYear">
-                {years.map((item, index) => (
-                <button className="monthPickerButton" value={item} onClick={(event) => setYear(event.target.value)} key={index}> {item}</button> 
-                ))}
-                </div>
-                <MdKeyboardArrowDown id="scrollDown" onClick={() => {
-                    document.getElementById("overflowYear").scrollBy({left:0,top: 50, behavior:'smooth'});
-                    console.log("Scroll"); 
-                }}></MdKeyboardArrowDown>
-            </div>
-            </div>
-    </div>
-  );
-}
-
-
 
 function View(){
+    const [loading, setLoading] = useState(true);
+    const [locations, setLocations] = useState([]);
+    const [crowd, setCrowd] = useState([]);
+    const [tags, setTags] = useState([]);
+
+
+    useEffect(() => {
+        axios.post('https://geethasaree.herokuapp.com/auth/getCurrentUser', { token: localStorage.getItem("token") })
+            .then(user => {
+                setLocations(user.data.locations);
+                setCrowd(user.data.crowd);
+                setTags(user.data.tags)
+                setLoading(false);
+            })
+            .catch(err => {
+                console.log("Couldn't get user's records");
+            })
+    }, [])
+
     return (
         <div className="viewPage">
-        <MonthPicker></MonthPicker>
+            <Navbar />
+            <div className="filterAndSearch">
+                <button id="filterSearchButton">Filter</button>
+                <select name="sortDropDown" id="filterSearchButton" placeholder="Sort">
+                    <option id="dropDownOptions" value="defaultValue">Sort</option>
+                    <option id="dropDownOptions" value="newly-added">Newly Added</option>
+                    <option id="dropDownOptions" value="new-old">Purchase date ascending</option>
+                    <option id="dropDownOptions" value="old-new">Purchase date descending</option>
+                    <option id="dropDownOptions" value="last worn">Last worn</option>
+                </select>
+                <div className="collapsibleFilter">
+                    <form>
+                        <div className="filterBlock">
+                            <h6 className="filterTitle">Blouse stitched</h6>
+                            <div className="filterRow">
+                                <div className="checkBox">
+                                    <input type="checkbox" id="stitched" name="stitched" value="Bike" />
+                                    <label className="checkboxLabel" htmlFor="stitched"> Stitched</label><br />
+                                </div>
+                                <div className="checkBox">
+                                    <input type="checkbox" id="unstitched" name="unstitched" value="Car" />
+                                    <label className="checkboxLabel" htmlFor="unstitched"> Unstitched</label><br />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="filterBlock">
+                            <h6 className="filterTitle">Location</h6>
+                            <div className="filterRow">
+                                {locations.map((item, index) => (
+                                    <div key={index} className="checkBox">
+                                        <input type="checkbox" id={item} name={item} value={item} />
+                                        <label className="checkboxLabel" htmlFor={item}> {item}</label><br />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="filterBlock">
+                            <h6 className="filterTitle">Crowds</h6>
+                            <div className="filterRow">
+                                {crowd.map((item, index) => (
+                                    <div key={index} className="checkBox">
+                                        <input type="checkbox" id={item} name={item} value={item} />
+                                        <label className="checkboxLabel" htmlFor={item}> {item}</label><br />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     )
 }

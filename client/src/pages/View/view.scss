@@ -1,0 +1,48 @@
+.viewPage{
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+}
+#filterSearchButton{
+    width: 40vw;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    background-color: rgb(241, 235, 235);
+    border: 1px solid rgb(241, 235, 235);
+    text-align-last: center;
+    text-align: center;
+}
+#filterSearchButton:hover{
+    background-color: rgb(121,41,79);
+    border: 1px solid rgb(121,41,79);
+    color: white;
+}
+.checkboxLabel{
+    color: black !important;
+}
+.filterBlock{
+    display: flex;
+    width: 80vw;
+    padding-left: 10vw;
+    flex-direction: column;
+}
+.filterRow{
+    display: flex;
+    flex-wrap: wrap;
+}
+.filterTitle{
+    text-align: left;
+}
+.checkBox{
+    margin-right: 1rem
+}
+input[type="checkbox"]{
+    margin-right: 0.375rem;
+}
+input[type="checkbox"]{
+    margin-right: 0.375rem;
+}
+input[type="checkbox"]:checked + label:before {
+    background: #fff !important;
+    color: #333 !important;
+    text-align: center;
+}

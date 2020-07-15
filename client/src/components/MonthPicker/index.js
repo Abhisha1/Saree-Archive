@@ -47,7 +47,7 @@ function MonthPicker(props){
         <div className='splitContainer' >
             <div className="leftMonth">
                 {months.map((item, index) => (
-                <button className="monthPickerButton" value={index} onClick={(event) => {
+                <button className={index.toString() === month.toString() ? "monthPickerButton selected": "monthPickerButton"} value={index} onClick={(event) => {
                     event.preventDefault();
                     setMonth(event.target.value);
                     props.setMonth(event.target.value)
@@ -60,8 +60,7 @@ function MonthPicker(props){
                 }}></MdKeyboardArrowUp>
                 <div id="overflowYear">
                 {years.map((item, index) => (
-                <button className={item === year ? "monthPickerButton selected": "monthPickerButton"} value={item} onClick={(event) => {
-                    console.log(item, index);
+                <button className={item.toString() === year.toString() ? "monthPickerButton selected": "monthPickerButton"} value={item} onClick={(event) => {
                     event.preventDefault();
                     setYear(event.target.value);
                     props.setYear(event.target.value)
