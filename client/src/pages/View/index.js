@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import axios from 'axios';
 import Navbar from "../../components/Navbar";
 import './view.scss';
 
 function View(){
     const [loading, setLoading] = useState(true);
+    const node = useRef();
     const [locations, setLocations] = useState([]);
     const [crowd, setCrowd] = useState([]);
     const [tags, setTags] = useState([]);
@@ -22,12 +23,36 @@ function View(){
                 console.log("Couldn't get user's records");
             })
     }, [])
+    const handleClick = e => {
+        console.log(e.target)
+        if (document.getElementById("filterForm").contains(e.target)) {
+          // inside click
+          return;
+        }
+        // outside click
+        if(e.target.getAttribute('id') === "filterSearchButton"){
+            document.querySelector('#collapsibleFilter').classList.toggle('show');
+            e.target.classList.toggle("active")
+        }
+        else if (document.querySelector('#collapsibleFilter').classList.contains('show')){
+            console.log(e.target);
+            document.querySelector('#collapsibleFilter').classList.toggle('show');
+        }
+         
+      };
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClick);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClick);
+        };
+    }, []);
 
     return (
         <div className="viewPage">
             <Navbar />
             <div className="filterAndSearch">
-                <button id="filterSearchButton">Filter</button>
+                <button ref={node} id="filterSearchButton">Filter</button>
                 <select name="sortDropDown" id="filterSearchButton" placeholder="Sort">
                     <option id="dropDownOptions" value="defaultValue">Sort</option>
                     <option id="dropDownOptions" value="newly-added">Newly Added</option>
@@ -35,8 +60,9 @@ function View(){
                     <option id="dropDownOptions" value="old-new">Purchase date descending</option>
                     <option id="dropDownOptions" value="last worn">Last worn</option>
                 </select>
-                <div className="collapsibleFilter">
-                    <form>
+                
+                    <form id="filterForm">
+                        <div id="collapsibleFilter">
                         <div className="filterBlock">
                             <h6 className="filterTitle">Blouse stitched</h6>
                             <div className="filterRow">
@@ -83,8 +109,9 @@ function View(){
                                 ))}
                             </div>
                         </div>
-                    </form>
+                        <button className="filterButton" type="submit">Filter</button>
                 </div>
+                </form>
             </div>
         </div>
     )

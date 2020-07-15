@@ -102,7 +102,7 @@ function Add() {
         })
         console.log(formFields.purchase)
         formData.set("fields", JSON.stringify(formFields));
-        formData.set("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZDM3YTk5MDRkM2UyNWI5OGY3OTExYyIsImlhdCI6MTU5NDYxNDU1NywiZXhwIjoxNTk0NzAwOTU3LCJpc3MiOiJHZWV0c1NhcmVlcyIsInN1YiI6InNlc3Npb24tdG9rZW4ifQ.wWW3BBXtiPD-doY-G2tTuF5RD6DB_geN2Bst0kMQss0")
+        formData.set("token", localStorage.getItem("token"))
         axios.post('http://localhost:5000/api/sarees/add', formData)
             .then(user => {
                 console.log(user);

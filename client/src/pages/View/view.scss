@@ -11,7 +11,7 @@
     text-align-last: center;
     text-align: center;
 }
-#filterSearchButton:hover{
+#filterSearchButton:hover, #filterSearchButton.active{
     background-color: rgb(121,41,79);
     border: 1px solid rgb(121,41,79);
     color: white;
@@ -22,8 +22,27 @@
 .filterBlock{
     display: flex;
     width: 80vw;
-    padding-left: 10vw;
+    margin-left: 1vw;
     flex-direction: column;
+}
+#filterForm{
+    width: 80vw;
+    margin-left: 10vw;
+}
+
+#collapsibleFilter{
+    -webkit-transition: max-height 1s; 
+    -moz-transition: max-height 1s; 
+    -ms-transition: max-height 1s; 
+    -o-transition: max-height 1s; 
+    transition: max-height 1s;  
+    background: #f1ebeb;
+    overflow: hidden;
+    max-height: 0;
+}
+#collapsibleFilter.show{
+    max-height: 40vh;
+
 }
 .filterRow{
     display: flex;
@@ -31,6 +50,7 @@
 }
 .filterTitle{
     text-align: left;
+    border-bottom: 0.05rem solid black;
 }
 .checkBox{
     margin-right: 1rem
@@ -45,4 +65,13 @@ input[type="checkbox"]:checked + label:before {
     background: #fff !important;
     color: #333 !important;
     text-align: center;
+}
+.filterButton{
+    width: 70vw;
+    box-shadow: 5px 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem
 }

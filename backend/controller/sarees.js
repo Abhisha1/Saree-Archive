@@ -1,9 +1,10 @@
 let User = require('../models/user');
-const cloudinary = require('../cloudinary/cloudinary')
+const cloudinary = require('../cloudinary/cloudinary');
+const { authJwt } = require('../middleware');
 
 let ObjectId = require('mongodb').ObjectID;
 function addSaree(request, response){
-    // const uid = authJwt.verifyToken(request.token);
+    const uid = authJwt.verifyToken(request.body.token);
     let images = request.files;
     let saree = JSON.parse(request.body.fields);
     let cloudUrls = []
@@ -16,7 +17,7 @@ function addSaree(request, response){
     cloudinary.uploads(images).then((results) => {
         results.forEach((result) => cloudUrls.push(result.secure_url));
         saree.imgs = cloudUrls;
-        User.findOneAndUpdate({"_id": ObjectId("5ed37a9904d3e25b98f7911c")}, {$push: {'sarees': saree}})
+        User.findOneAndUpdate({"_id": ObjectId(uid)}, {$push: {'sarees': saree}})
         .then((user) => {
             console.log(user);
             response.status(200).json({msg: "Successful upload"})
@@ -32,4 +33,17 @@ function addSaree(request, response){
     })
     
 };
+
+
+function getUsersSarees(request, response){
+    const uid = authJwt.verifyToken(request.token);
+    User.findOne({"_id": ObjectId(uid)})
+    .then((user) => {
+        response.status(200).json({msg: "success", data: user.sarees})
+    })
+    .catch(
+        response.status(500).json({msg: "Couldn't fetch your sarees"})
+    )
+}
 module.exports.addSaree = addSaree;
+module.exports.getUsersSarees = getUsersSarees;
