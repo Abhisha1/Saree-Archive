@@ -19,7 +19,7 @@ router.post('/auth/getCurrentUser',auth.getCurrentUser)
 router.post('/api/users/addCrowd', users.addCrowd)
 router.post('/api/users/addLocation', users.addLocation)
 router.get('/api/users/getAllUsers', users.getAllUsers)
-router.get('/api/users/addTags', users.addTags)
+router.post('/api/users/addTags', users.addTags)
 
 // Saree api calls
 router.post('/api/sarees/add',upload.array('files', 100), sarees.addSaree)

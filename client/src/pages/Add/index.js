@@ -101,15 +101,15 @@ function Add() {
             formData.append('files', item)
         })
         console.log(formFields.purchase)
-        // formData.set("fields", JSON.stringify(formFields));
-        // formData.set("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZDM3YTk5MDRkM2UyNWI5OGY3OTExYyIsImlhdCI6MTU5NDYxNDU1NywiZXhwIjoxNTk0NzAwOTU3LCJpc3MiOiJHZWV0c1NhcmVlcyIsInN1YiI6InNlc3Npb24tdG9rZW4ifQ.wWW3BBXtiPD-doY-G2tTuF5RD6DB_geN2Bst0kMQss0")
-        // axios.post('http://localhost:5000/api/sarees/add', formData)
-        //     .then(user => {
-        //         console.log(user);
-        //     })
-        //     .catch(err => {
-        //         console.log("Couldn't get user's records");
-        //     })
+        formData.set("fields", JSON.stringify(formFields));
+        formData.set("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZDM3YTk5MDRkM2UyNWI5OGY3OTExYyIsImlhdCI6MTU5NDYxNDU1NywiZXhwIjoxNTk0NzAwOTU3LCJpc3MiOiJHZWV0c1NhcmVlcyIsInN1YiI6InNlc3Npb24tdG9rZW4ifQ.wWW3BBXtiPD-doY-G2tTuF5RD6DB_geN2Bst0kMQss0")
+        axios.post('http://localhost:5000/api/sarees/add', formData)
+            .then(user => {
+                console.log(user);
+            })
+            .catch(err => {
+                console.log("Couldn't get user's records");
+            })
         
     }
     useEffect(() => {
@@ -155,14 +155,32 @@ function Add() {
     }, [locationOptions]);
 
     useEffect(() => {
-        if (!loading && tagOptions.length > 0){
-            axios.post('https://geethasaree.herokuapp.com/api/users/addTags', { token: localStorage.getItem("token"), tags: tagOptions })
-            .then((locs) => console.log(locs))
-            .catch(err => {
-                console.log("Couldn't get user's records");
-            })    
+        if (!loading){
+            let newTags=  [];
+            tags.forEach((item) => {
+                if (!tagOptions.includes(item)){
+                    newTags.push(item);
+                }
+            })
+            console.log(newTags)
+            if (newTags.length > 0){
+                newTags.push(...tagOptions);
+                setTagOptions(...newTags);
+            }
         }
-    }, [tagOptions]);
+    }, [tags]);
+
+    useEffect(() => {
+        console.log(tagOptions);
+        if(!loading && tagOptions.length > 0){
+            axios.post('https://geethasaree.herokuapp.com/api/users/addTags', { token: localStorage.getItem("token"), tags: tagOptions })
+        .then((locs) => console.log(locs))
+        .catch(err => {
+            console.log("Couldn't get user's records");
+        }) 
+        }
+        
+    }, [tagOptions])
 
     const updateList = (list) => {
         console.log(list)
