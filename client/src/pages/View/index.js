@@ -21,11 +21,16 @@ function View(){
                 setLoading(false);
             })
             .then(() => axios.post('https://geethasaree.herokuapp.com/api/sarees/getUsersSarees', { token: localStorage.getItem("token") }))
-            .then(sarees => {
-                console.log(sarees);
-                setSarees(sarees)
+            .then(sareesList => {
+                sareesList.data.data.forEach((saree) => {
+                    saree.imgs.forEach((img) => {
+                        setSarees(sarees => [...sarees, img]);
+                    })
+
+                })
             })
             .catch(err => {
+                console.log(err);
                 console.log("Couldn't get user's records");
             })
     }, [])
@@ -121,7 +126,7 @@ function View(){
             </div>
             <div className="sareeGallery">
                 {sarees.length > 0 && sarees.map((item, index) => (
-                    <img src={item.imgs[0]}></img>
+                    <img className="previewImage" key={index} src={item}></img>
                 ))}
             </div>
         </div>

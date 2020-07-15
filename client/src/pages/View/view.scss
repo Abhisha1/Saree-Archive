@@ -75,3 +75,18 @@ input[type="checkbox"]:checked + label:before {
     border-radius: 0.25rem;
     margin-bottom: 0.5rem
 }
+.sareeGallery{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.previewImage{
+    width: auto;
+    height: 23vw;
+    object-fit: scale-down;
+    border: 1rem solid rgba(255, 255, 255, 0.918);
+    position: relative;
+    text-align: center;
+    margin-bottom: 4vh;
+}
