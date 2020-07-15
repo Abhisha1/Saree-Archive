@@ -22,6 +22,7 @@ function View(){
             })
             .then(() => axios.post('https://geethasaree.herokuapp.com/api/sarees/getUsersSarees', { token: localStorage.getItem("token") }))
             .then(sarees => {
+                console.log(sarees);
                 setSarees(sarees)
             })
             .catch(err => {
