@@ -4,12 +4,13 @@ import Navbar from "../../components/Navbar";
 import axios from 'axios';
 import PreferenceModal from '../../components/PreferenceModal';
 import History from '../../components/History';
-import 'react-toastify/dist/ReactToastify.css';
-import "react-datepicker/dist/react-datepicker.css";
 import ImageUpload from '../../components/ImageUpload';
 import { MdError } from "react-icons/md";
 import SinglePopUp from "../../components/SinglePopUp";
 import MonthPicker from "../../components/MonthPicker";
+import Tagger from "../../components/Tagger";
+
+
 
 function Add() {
     const [showHasEvent, setShowHasEvent] = useState(false);
@@ -22,6 +23,8 @@ function Add() {
     const [locationOptions, setLocationOptions] = useState([]);
     const [crowdOptions, setCrowdOptions] = useState([]);
     const [history, setHistory] = useState([]);
+    const [tagOptions, setTagOptions] = useState([])
+    const [tags, setTags] = useState([]);
     const [loading, setLoading] = useState(true);
     const [progress, setProgress] = useState(0);
     const [showModal, setShowModal] = useState(false);
@@ -35,7 +38,7 @@ function Add() {
             wherePurchased: ''
         },
         location: '',
-        notes: '',
+        tags: [],
         imgs: saree,
         worn: history
     })
@@ -84,6 +87,7 @@ function Add() {
         }
         form.imgs = saree;
         form.worn = history;
+        form.tags = tags;
         setFormFields(form);
         console.log(formFields);
         console.log(saree)
@@ -114,6 +118,9 @@ function Add() {
                 setLocationOptions(user.data.locations);
                 setCrowdOptions(user.data.crowd);
                 setLoading(false);
+                if(user.data.tags){
+                    setTagOptions(user.data.tags);
+                }
                 if (user.data.locations.length === 0 || user.data.crowd.length === 0) {
                     setShowModal(true);
                 }
@@ -147,6 +154,16 @@ function Add() {
         }
     }, [locationOptions]);
 
+    useEffect(() => {
+        if (!loading && tagOptions.length > 0){
+            axios.post('https://geethasaree.herokuapp.com/api/users/addTags', { token: localStorage.getItem("token"), tags: tagOptions })
+            .then((locs) => console.log(locs))
+            .catch(err => {
+                console.log("Couldn't get user's records");
+            })    
+        }
+    }, [tagOptions]);
+
     const updateList = (list) => {
         console.log(list)
         setLocationOptions(list);
@@ -172,7 +189,7 @@ function Add() {
                     </h1>
                     <ImageUpload action={setSaree} saree={saree}></ImageUpload>
                     {showError && <div id="noImageError">
-                        <MdError size={40}></MdError>
+                        <MdError size={30}></MdError>
                         <p id="imageErrorMessage"> Please upload at least one image</p> </div>}
                     <div>
                         <h2 className="addSubHeading">
@@ -275,11 +292,7 @@ function Add() {
                         </div>
 
                     }
-                    <h2 className="addSubHeading">
-                        Additional notes
-                    <p className="descriptionText">Any other comments or notes you want to make about this saree</p>
-                        <textarea field="notes" onChange={onChange} className="form-control" aria-label="Additional notes"></textarea>
-                    </h2>
+                    <Tagger options={tagOptions} tags={tags} action={setTags}></Tagger>
                     <button type="submit" className="btn btn-primary" onClick={uploadSaree}>Add saree</button>
                 </div>
 

@@ -55,7 +55,7 @@ const userSchema = new Schema({
             required: true
         },
         // Any additional general notes about saree
-        notes: {type: String},
+        tags: [{type: String}],
         imgs: [
             { type: String}],
         worn: [{
