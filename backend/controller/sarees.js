@@ -36,9 +36,12 @@ function addSaree(request, response){
 
 
 function getUsersSarees(request, response){
-    const uid = authJwt.verifyToken(request.token);
+    console.log(request.body.token)
+    const uid = authJwt.verifyToken(request.body.token);
+    console.log("line40"+uid);
     User.findOne({"_id": ObjectId(uid)})
     .then((user) => {
+        console.log(user);
         response.status(200).json({msg: "success", data: user.sarees})
     })
     .catch(

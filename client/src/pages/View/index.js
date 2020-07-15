@@ -8,6 +8,7 @@ function View(){
     const node = useRef();
     const [locations, setLocations] = useState([]);
     const [crowd, setCrowd] = useState([]);
+    const [sarees, setSarees] = useState([])
     const [tags, setTags] = useState([]);
 
 
@@ -18,6 +19,10 @@ function View(){
                 setCrowd(user.data.crowd);
                 setTags(user.data.tags)
                 setLoading(false);
+            })
+            .then(() => axios.post('https://geethasaree.herokuapp.com/api/sarees/getUsersSarees', { token: localStorage.getItem("token") }))
+            .then(sarees => {
+                setSarees(sarees)
             })
             .catch(err => {
                 console.log("Couldn't get user's records");
@@ -112,6 +117,11 @@ function View(){
                         <button className="filterButton" type="submit">Filter</button>
                 </div>
                 </form>
+            </div>
+            <div className="sareeGallery">
+                {sarees.length > 0 && sarees.map((item, index) => (
+                    <img src={item.imgs[0]}></img>
+                ))}
             </div>
         </div>
     )
