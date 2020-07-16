@@ -54,7 +54,7 @@ export function Content(props){
                     <input type="text" id="listField" onChange={() => setShowError(false)} className="form-control" placeholder="Press enter to add your tag" aria-label="Edit preferece" onKeyDown={handleKeyDown}></input>
                     <button id="modalButton" className="btn btn-secondary" onClick={(event) => {
                         event.preventDefault();
-                        updatePreferences(document.getElementById("crowdFields").value, "listField");
+                        updatePreferences(document.getElementById("listField").value, "listField");
                         document.getElementById("listField").value = "";
                     }}>Add</button>
                     </div>

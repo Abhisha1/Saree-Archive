@@ -36,7 +36,7 @@ const userSchema = new Schema({
     sarees: [{
         owner: {type: String, required: true},
         // Is the blouse already stitched
-        blouseStitched: {type: Boolean, index:true},
+        blouseStitched: {type: Boolean},
         // Type of saree fabric
         type: {
             type: String,
@@ -45,8 +45,8 @@ const userSchema = new Schema({
         },
         // Where and when saree was purchased
         purchase: {
-            datePurchased: {type: Date, index: true},
-            wherePurchased: {type:String, index: true}
+            datePurchased: {type: Date},
+            wherePurchased: {type:String}
         },
 
         // Current location of saree
@@ -59,8 +59,8 @@ const userSchema = new Schema({
         imgs: [
             { type: String}],
         worn: [{
-            lastWorn: {type: Date, index: true},
-            crowd: {type:String, index: true},
+            lastWorn: {type: Date},
+            crowd: {type:String},
             description: {type: String}
         }]
     }]
@@ -106,6 +106,7 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
         cb(null, isMatch);
     });
 }
-
+userSchema.index({_id: 1,  "sarees.crowd": 1, "sarees.location": 1,
+     "sarees.type": 1,"sarees.tags": 1, blouseStitched: 1}, {name:'allIndex'})
 const User = mongoose.model('User', userSchema);
 module.exports = User;

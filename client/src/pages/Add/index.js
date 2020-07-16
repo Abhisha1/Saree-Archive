@@ -86,6 +86,7 @@ function Add() {
         form.imgs = saree;
         form.worn = history;
         form.tags = tags;
+        form.blouseStitched = form.blouseStitched === "yes" ? true : false;
         setFormFields(form);
         console.log(formFields);
         console.log(saree)

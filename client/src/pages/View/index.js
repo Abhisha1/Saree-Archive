@@ -1,7 +1,9 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {ReactComponent, useState, useRef, useEffect} from 'react';
 import axios from 'axios';
 import Navbar from "../../components/Navbar";
 import './view.scss';
+import {ReactComponent as Spinner} from "../../assets/spinner.svg";
+import AutoComplete from "../../components/AutoComplete";
 
 function View(){
     const [loading, setLoading] = useState(true);
@@ -10,6 +12,7 @@ function View(){
     const [crowd, setCrowd] = useState([]);
     const [sarees, setSarees] = useState([])
     const [tags, setTags] = useState([]);
+    const [chosenTags, setChosenTags] = useState([]);
 
 
     useEffect(() => {
@@ -39,7 +42,7 @@ function View(){
           return;
         }
         // outside click
-        if(e.target.getAttribute('id') === "filterSearchButton"){
+        if(e.target.getAttribute('id') === "filterSearchButton" && e.target.value === "filter"){
             document.querySelector('#collapsibleFilter').classList.toggle('show');
             e.target.classList.toggle("active")
         }
@@ -61,7 +64,7 @@ function View(){
         <div className="viewPage">
             <Navbar />
             <div className="filterAndSearch">
-                <button ref={node} id="filterSearchButton">Filter</button>
+                <button ref={node} id="filterSearchButton" value="filter">Filter</button>
                 <select name="sortDropDown" id="filterSearchButton" placeholder="Sort">
                     <option id="dropDownOptions" value="defaultValue">Sort</option>
                     <option id="dropDownOptions" value="newly-added">Newly Added</option>
@@ -109,19 +112,14 @@ function View(){
                         </div>
                         <div className="filterBlock">
                             <h6 className="filterTitle">Tags</h6>
-                            <div className="filterRow">
-                                {tags.map((item, index) => (
-                                    <div key={index} className="checkBox">
-                                        <input type="checkbox" id={item} name={item} value={item} />
-                                        <label className="checkboxLabel" htmlFor={item}> {item}</label><br />
-                                    </div>
-                                ))}
-                            </div>
                         </div>
-                        <button className="filterButton" type="submit">Filter</button>
+                        <AutoComplete action={setChosenTags} allOptions={tags}></AutoComplete>
+                        <button id="filterButton" type="submit">Filter</button>
                 </div>
                 </form>
             </div>
+            {loading &&
+                <Spinner></Spinner>}
             <div className="sareeGallery">
                 {sarees.length > 0 && sarees.map((item, index) => (
                     <div key={index} className="sareeItem">
@@ -132,7 +130,7 @@ function View(){
                         <div className="sareeDescription">
                             <h6>{item.blouseStitched ? 'Stitched': 'Unstitched'}</h6>
                             {
-                                item.purchase.datePurchased && <h5>{item.purchase.datePurchased.toISOString()}</h5>
+                                item.purchase.datePurchased && <h6>Purchased on {new Date(item.purchase.datePurchased).toLocaleDateString()}</h6>
                             }
                         </div>
                     </div>
