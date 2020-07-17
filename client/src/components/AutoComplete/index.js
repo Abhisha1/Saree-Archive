@@ -1,26 +1,34 @@
 import React, {useState, useEffect} from 'react';
 import * as Validation from '../../validation/stringSanitising.js';
 import Tag from '../../components/Tag';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import "./autoComplete.scss";
 
 function AutoComplete(props){
     const [suggestedTags, setSuggestedTags] = useState(props.allOptions)
     const [tags, setTags] = useState([]);
+    const [tag, setTag] = useState('');
+    const [showCollapsile, setShowCollapsible] = useState("");
     const handleKeyDown = (event) => {
         if(event.key === "Enter"){
-            event.preventDefault();
-            if(!tags.includes(event.target.value)){
-                let value = Validation.cleanTrailingSpaces(event.target.value);
-                if (value.length !== 0){
-                    setTags(tags => [...tags, value]);
+            addEvent(event);
+        }
+    }
+    const addEvent = (event) => {
+        event.preventDefault();
+        if(!tags.includes(event.target.value)){
+            let value = Validation.cleanTrailingSpaces(event.target.value);
+            if (value.length !== 0){
+                setTags(tags => [...tags, value]);
+                if(showCollapsile === ""){
+                    setShowCollapsible("show")
                 }
             }
-            else{
-                toast("You already have entered this tag")
-            }
-            event.target.value = "";
         }
+        else{
+            toast("You already have entered this tag")
+        }
+        setTag("");
     }
     const remove = (index) => {
         let newTags = [...tags];
@@ -32,28 +40,53 @@ function AutoComplete(props){
     }
     const getSuggestions = (event) => {
         let suggestions = [];
+        setTag(event.target.value);
         props.allOptions.forEach((item) => {
             if (item.toLowerCase().startsWith(event.target.value.toString().toLowerCase())){
                 suggestions.push(item);
             }
         })
         setSuggestedTags(suggestions);
-        if (!document.getElementById("autoCompleteCollapsible").classList.contains("show")){
-            document.getElementById("autoCompleteCollapsible").classList.toggle("show")
+        if(showCollapsile === ""){
+            setShowCollapsible("show")
         }
     }
     useEffect(() => {
         props.action(tags);
+        setTag("");
+        setShowCollapsible("")
     }, [tags])
     return(
+        <div>
+        
         <div className="autoCompleteContainer">
-            <ToastContainer />
-        <input id="autoCompleteInput" type="text" placeholder="Enter a tag" className="form-control" aria-label="Tags to filter by" onChange={getSuggestions} onKeyDown={handleKeyDown}></input>
-        <div id="autoCompleteCollapsible">
+            <div className="flexRow">
+            <input id="autoCompleteInput" type="text" value={tag} placeholder="Enter a tag" className="form-control" aria-label="Tags to filter by" onClick={getSuggestions} onChange={getSuggestions} onKeyDown={handleKeyDown}></input>
+            <button id="modalButton" className="addButton btn btn-secondary" onClick={(event) => {event.preventDefault();
+            if(!tags.includes(tag)){
+                let value = Validation.cleanTrailingSpaces(tag);
+                if (value.length !== 0){
+                    setTags(tags => [...tags, tag]);
+                }
+            }
+            else{
+                toast("You already have entered this tag")
+            }
+            setTag("")}}>Add</button>
+        </div>
+        <div id="autoCompleteCollapsible" className={showCollapsile}>
             {suggestedTags.map((item, index) => (
                 <option id="autoCompleteSuggestion" onClick={() => {
-                    document.getElementById("autoCompleteInput").value = item;
-                    document.getElementById("autoCompleteCollapsible").classList.toggle("show")}} key={index}>{item}</option>
+                    setTag(item);
+                    if(!tags.includes(tag)){
+                        let value = Validation.cleanTrailingSpaces(item);
+                        if (value.length !== 0){
+                            setTags(tags => [...tags, item]);
+                        }
+                    }
+                    else{
+                        toast("You already have entered this tag")
+                    }}} key={index}>{item}</option>
             ))}
         </div>
         <div className="tags">
@@ -62,6 +95,7 @@ function AutoComplete(props){
                 <Tag remove={remove} key={index} index={index} item={item}></Tag>
             ))
             }
+        </div>
         </div>
         </div>
     );

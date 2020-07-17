@@ -18,12 +18,21 @@
     overflow: hidden;
     max-height: 0;
 }
+
 #autoCompleteCollapsible.show{
   max-height: 40vh;
 }
 
 #autoCompleteSuggestion{
   cursor: pointer;
-  border: 0.02rem solid grey;
-  border-radius: 0.25rem;
+}
+#autoCompleteSuggestion:hover{
+  color: rgb(121,41,79);
+  background-color: white;
+}
+.flexRow{
+  display: flex;
+}
+.addButton{
+  margin-left: 0.5rem !important;
 }

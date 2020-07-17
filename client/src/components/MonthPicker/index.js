@@ -18,20 +18,25 @@ function MonthPicker(props){
                     "May", "Jun", "Jul", "Aug",
                     "Sep", "Oct", "Nov", "Dec"]
     const years = range(props.minYear, new Date().getFullYear())
+    const [showEdit, setShowEdit] = useState(false);
     const handleClick = e => {
         if (node.current.contains(e.target)) {
           // inside click
           return;
         }
         // outside click
-        let box = node.current;
-
-        if (box.querySelector('.splitContainer').classList.contains('collapsed')){
-            console.log(e.target);
-            box.querySelector('.splitContainer').classList.toggle('collapsed');
-        }
+        setShowEdit(false);
         
       };
+    const toggle = () => {
+        console.log("toglging");
+        if (showEdit){
+            setShowEdit(false);
+        }
+        else{
+            setShowEdit(true);
+        }
+    }
     useEffect(() => {
         document.addEventListener("mousedown", handleClick);
 
@@ -41,10 +46,8 @@ function MonthPicker(props){
     }, []);
   return(
     <div ref={node} className="box">
-        <div className="currentDate" onClick={() => {
-        node.current.querySelector('.splitContainer').classList.toggle('collapsed');
-    }}> {months[month]+" "+year}</div>
-        <div className='splitContainer' >
+        <div className="currentDate" onClick={toggle}> {months[month]+" "+year}</div>
+        <div className={showEdit ? "splitContainer collapsed" : "splitContainer"} >
             <div className="leftMonth">
                 {months.map((item, index) => (
                 <button className={index.toString() === month.toString() ? "monthPickerButton selected": "monthPickerButton"} value={index} onClick={(event) => {

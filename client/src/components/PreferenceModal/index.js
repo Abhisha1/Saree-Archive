@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { toast, ToastContainer } from 'react-toastify';
 import './preferenceModal.scss';
-import { MdClear} from "react-icons/md";
+import 'react-toastify/dist/ReactToastify.min.css';
 import * as Validation from '../../validation/stringSanitising.js';
 import Tag from '../../components/Tag';
 

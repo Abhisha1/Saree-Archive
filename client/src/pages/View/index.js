@@ -4,6 +4,7 @@ import Navbar from "../../components/Navbar";
 import './view.scss';
 import {ReactComponent as Spinner} from "../../assets/spinner.svg";
 import AutoComplete from "../../components/AutoComplete";
+import {ToastContainer} from 'react-toastify';
 
 function View(){
     const [loading, setLoading] = useState(true);
@@ -13,6 +14,10 @@ function View(){
     const [sarees, setSarees] = useState([])
     const [tags, setTags] = useState([]);
     const [chosenTags, setChosenTags] = useState([]);
+    const [chosenBlouse, setChosenBlouse] = useState(null);
+    const [chosenTypes, setChosenTypes] = useState([]);
+    const [chosenCrowd, setChosenCrowd] = useState([]);
+    const [chosenLocations, setChosenLocations] = useState([]);
     const types = ["Kanchipuram", "Soft Silk", "Fancy", "Georgette", "Linen",
     "Cotton", "Pattu"];
 
@@ -32,7 +37,6 @@ function View(){
                 })
             })
             .catch(err => {
-                console.log(err);
                 console.log("Couldn't get user's records");
             })
     }, [])
@@ -47,7 +51,7 @@ function View(){
             e.target.classList.toggle("active")
         }
         else if (document.querySelector('#collapsibleFilter').classList.contains('show')){
-            console.log(e.target);
+            e.target.classList.toggle("active")
             document.querySelector('#collapsibleFilter').classList.toggle('show');
         }
          
@@ -59,41 +63,30 @@ function View(){
             document.removeEventListener("mousedown", handleClick);
         };
     }, []);
-    const addChosenFilter = (filter, field) => {
-        let temp = []
-        console.log(field);
-        if (document.querySelectorAll(`[name=${field}]`).forEach((element) => {
-            if (element.checked){
-                temp.push(element.value);
-            }
-        }))
-        console.log(temp);
-        if(temp.length > 0){
-            console.log(temp);
-            filter[field] = temp
-        }
-    }
 
     const filter = (event) => {
         event.preventDefault();
         let filter = {};
-        if(chosenTags.length>0){
-            filter[tags] = chosenTags;
+        if (chosenBlouse){
+            filter["blouseStitched"] = chosenBlouse
         }
-        if (document.querySelectorAll('[name="blouse"]').forEach((element) => {
-            if (element.checked){
-                filter["blouseStitched"] = element.value === "true" ? true : false;
-            }
-        }))
-        
-        addChosenFilter(filter, "crowd");
-        addChosenFilter(filter, "types");
-        addChosenFilter(filter, "location");
+        if (chosenCrowd.length > 0){
+            filter["crowd"] = chosenCrowd
+        }
+        if (chosenTypes.length > 0){
+            filter["type"] = chosenTypes
+        }
+        if (chosenLocations.length > 0){
+            filter["location"] = chosenLocations
+        }
+        if (chosenTags.length > 0){
+            filter["tags"] = chosenTags
+        }
+        console.log(filter);
         document.querySelector('#collapsibleFilter').classList.toggle('show');
         axios.post('https://geethasaree.herokuapp.com/api/sarees/filterSarees', { token: localStorage.getItem("token"), filters: filter })
         .then(sarees => {
             let filteredSarees = []
-            console.log(sarees);
             sarees.data.sarees.forEach((saree) => {
                 filteredSarees.push(saree.sarees)
             })
@@ -103,6 +96,7 @@ function View(){
     return (
         <div className="viewPage">
             <Navbar />
+            <ToastContainer />
             <div className="filterAndSearch">
                 <button ref={node} id="filterSearchButton" value="filter">Filter</button>
                 <select name="sortDropDown" id="filterSearchButton" placeholder="Sort">
@@ -120,11 +114,19 @@ function View(){
                             <div className="filterRow">
                                 <div className="checkBox">
                                     <input type="radio" id="stitched" name="blouse" value={true} />
-                                    <label className="checkboxLabel" htmlFor="stitched"> Stitched</label><br />
+                                    <label onClick={() => {
+                                        if(chosenBlouse === true){
+                                            setChosenBlouse(null)
+                                        }else{
+                                        setChosenBlouse(true);}}}className="checkboxLabel" htmlFor="stitched"> Stitched</label><br />
                                 </div>
                                 <div className="checkBox">
                                     <input type="radio" id="unstitched" name="blouse" value={false} />
-                                    <label className="checkboxLabel" htmlFor="unstitched"> Unstitched</label><br />
+                                    <label onClick={() => {
+                                        if(chosenBlouse === false){
+                                            setChosenBlouse(null)
+                                        }else{
+                                        setChosenBlouse(false);}}} className="checkboxLabel" htmlFor="unstitched"> Unstitched</label><br />
                                 </div>
                             </div>
                         </div>
@@ -134,7 +136,16 @@ function View(){
                                 {locations.map((item, index) => (
                                     <div key={index} className="checkBox">
                                         <input type="checkbox" id={item} name="location" value={item} />
-                                        <label className="checkboxLabel" htmlFor={item}> {item}</label><br />
+                                        <label onClick={() => {
+                                        if(chosenLocations.length > 0 && chosenLocations.includes(item)){
+                                            let newLocs = chosenLocations;
+                                            let index = chosenLocations.indexOf(item)
+                                            if (index!== -1){
+                                                newLocs.splice(index,1)
+                                                setChosenLocations(newLocs);
+                                            }
+                                        }else{
+                                        setChosenLocations(chosenLocations => [...chosenLocations,item]);}}} className="checkboxLabel" htmlFor={item}> {item}</label><br />
                                     </div>
                                 ))}
                             </div>
@@ -145,7 +156,16 @@ function View(){
                                 {crowd.map((item, index) => (
                                     <div key={index} className="checkBox">
                                         <input type="checkbox" id={item} name="crowd" value={item} />
-                                        <label className="checkboxLabel" htmlFor={item}> {item}</label><br />
+                                        <label onClick={() => {
+                                        if(chosenCrowd.length > 0 && chosenCrowd.includes(item)){
+                                            let newLocs = chosenCrowd;
+                                            let index = chosenCrowd.indexOf(item)
+                                            if (index!== -1){
+                                                newLocs.splice(index,1)
+                                                setChosenCrowd(newLocs);
+                                            }
+                                        }else{
+                                        setChosenCrowd(chosenCrowd => [...chosenCrowd,item]);}}} className="checkboxLabel" htmlFor={item}> {item}</label><br />
                                     </div>
                                 ))}
                             </div>
@@ -156,7 +176,16 @@ function View(){
                                 {types.map((item, index) => (
                                     <div key={index} className="checkBox">
                                         <input type="checkbox" id={item} name="types" value={item} />
-                                        <label className="checkboxLabel" htmlFor={item}> {item}</label><br />
+                                        <label  onClick={() => {
+                                        if(chosenTypes.length > 0 && chosenTypes.includes(item)){
+                                            let newLocs = chosenTypes;
+                                            let index = chosenTypes.indexOf(item)
+                                            if (index!== -1){
+                                                newLocs.splice(index,1)
+                                                setChosenTypes(newLocs);
+                                            }
+                                        }else{
+                                        setChosenTypes(chosenTypes => [...chosenTypes,item]);}}} className="checkboxLabel" htmlFor={item}> {item}</label><br />
                                     </div>
                                 ))}
                             </div>
@@ -181,6 +210,7 @@ function View(){
                                 item.purchase.datePurchased && <h6>Purchased on {new Date(item.purchase.datePurchased).toLocaleDateString()}</h6>
                             }
                         </div>
+                        <button className="viewItem">View this saree</button>
                     </div>
                 ))}
             </div>
