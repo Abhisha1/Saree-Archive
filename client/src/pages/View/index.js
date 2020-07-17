@@ -1,4 +1,4 @@
-import React, {ReactComponent, useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import axios from 'axios';
 import Navbar from "../../components/Navbar";
 import './view.scss';
@@ -13,7 +13,8 @@ function View(){
     const [sarees, setSarees] = useState([])
     const [tags, setTags] = useState([]);
     const [chosenTags, setChosenTags] = useState([]);
-
+    const types = ["Kanchipuram", "Soft Silk", "Fancy", "Georgette", "Linen",
+    "Cotton", "Pattu"];
 
     useEffect(() => {
         axios.post('https://geethasaree.herokuapp.com/auth/getCurrentUser', { token: localStorage.getItem("token") })
@@ -36,7 +37,6 @@ function View(){
             })
     }, [])
     const handleClick = e => {
-        console.log(e.target)
         if (document.getElementById("filterForm").contains(e.target)) {
           // inside click
           return;
@@ -59,7 +59,47 @@ function View(){
             document.removeEventListener("mousedown", handleClick);
         };
     }, []);
+    const addChosenFilter = (filter, field) => {
+        let temp = []
+        console.log(field);
+        if (document.querySelectorAll(`[name=${field}]`).forEach((element) => {
+            if (element.checked){
+                temp.push(element.value);
+            }
+        }))
+        console.log(temp);
+        if(temp.length > 0){
+            console.log(temp);
+            filter[field] = temp
+        }
+    }
 
+    const filter = (event) => {
+        event.preventDefault();
+        let filter = {};
+        if(chosenTags.length>0){
+            filter[tags] = chosenTags;
+        }
+        if (document.querySelectorAll('[name="blouse"]').forEach((element) => {
+            if (element.checked){
+                filter["blouseStitched"] = element.value === "true" ? true : false;
+            }
+        }))
+        
+        addChosenFilter(filter, "crowd");
+        addChosenFilter(filter, "types");
+        addChosenFilter(filter, "location");
+        document.querySelector('#collapsibleFilter').classList.toggle('show');
+        axios.post('https://geethasaree.herokuapp.com/api/sarees/filterSarees', { token: localStorage.getItem("token"), filters: filter })
+        .then(sarees => {
+            let filteredSarees = []
+            console.log(sarees);
+            sarees.data.sarees.forEach((saree) => {
+                filteredSarees.push(saree.sarees)
+            })
+            setSarees(filteredSarees);
+        })
+    }
     return (
         <div className="viewPage">
             <Navbar />
@@ -79,11 +119,11 @@ function View(){
                             <h6 className="filterTitle">Blouse stitched</h6>
                             <div className="filterRow">
                                 <div className="checkBox">
-                                    <input type="checkbox" id="stitched" name="stitched" value="Bike" />
+                                    <input type="radio" id="stitched" name="blouse" value={true} />
                                     <label className="checkboxLabel" htmlFor="stitched"> Stitched</label><br />
                                 </div>
                                 <div className="checkBox">
-                                    <input type="checkbox" id="unstitched" name="unstitched" value="Car" />
+                                    <input type="radio" id="unstitched" name="blouse" value={false} />
                                     <label className="checkboxLabel" htmlFor="unstitched"> Unstitched</label><br />
                                 </div>
                             </div>
@@ -93,7 +133,7 @@ function View(){
                             <div className="filterRow">
                                 {locations.map((item, index) => (
                                     <div key={index} className="checkBox">
-                                        <input type="checkbox" id={item} name={item} value={item} />
+                                        <input type="checkbox" id={item} name="location" value={item} />
                                         <label className="checkboxLabel" htmlFor={item}> {item}</label><br />
                                     </div>
                                 ))}
@@ -104,7 +144,18 @@ function View(){
                             <div className="filterRow">
                                 {crowd.map((item, index) => (
                                     <div key={index} className="checkBox">
-                                        <input type="checkbox" id={item} name={item} value={item} />
+                                        <input type="checkbox" id={item} name="crowd" value={item} />
+                                        <label className="checkboxLabel" htmlFor={item}> {item}</label><br />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="filterBlock">
+                            <h6 className="filterTitle">Types</h6>
+                            <div className="filterRow">
+                                {types.map((item, index) => (
+                                    <div key={index} className="checkBox">
+                                        <input type="checkbox" id={item} name="types" value={item} />
                                         <label className="checkboxLabel" htmlFor={item}> {item}</label><br />
                                     </div>
                                 ))}
@@ -114,7 +165,7 @@ function View(){
                             <h6 className="filterTitle">Tags</h6>
                         </div>
                         <AutoComplete action={setChosenTags} allOptions={tags}></AutoComplete>
-                        <button id="filterButton" type="submit">Filter</button>
+                        <button id="filterButton" type="submit" onClick={filter}>Filter</button>
                 </div>
                 </form>
             </div>
@@ -123,10 +174,7 @@ function View(){
             <div className="sareeGallery">
                 {sarees.length > 0 && sarees.map((item, index) => (
                     <div key={index} className="sareeItem">
-                        {item.imgs.map((image,imgIndex) => (
-                            <img className="previewImage" key={imgIndex} src={image}></img>
-                        ))
-                        }
+                        <img alt="saree" className="previewImage" src={item.imgs[0]}></img>
                         <div className="sareeDescription">
                             <h6>{item.blouseStitched ? 'Stitched': 'Unstitched'}</h6>
                             {

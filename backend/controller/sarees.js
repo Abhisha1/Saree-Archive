@@ -78,7 +78,7 @@ function filterSarees(request, response){
     User.aggregate([{$match: {_id: ObjectId(uid)}}, {$unwind: '$sarees'}, {$match: filter}, {$project: {'sarees': 1}}])
     .then((sarees) => {
         console.log(sarees);
-        response.status(500).json({msg: "got sarees", sarees: sarees})
+        response.status(200).json({msg: "got sarees", sarees: sarees})
     })
     .catch((err) => {
         console.log(err);
