@@ -67,7 +67,7 @@ function View(){
     const filter = (event) => {
         event.preventDefault();
         let filter = {};
-        if (chosenBlouse){
+        if (chosenBlouse !== null){
             filter["blouseStitched"] = chosenBlouse
         }
         if (chosenCrowd.length > 0){
@@ -118,7 +118,8 @@ function View(){
                                         if(chosenBlouse === true){
                                             setChosenBlouse(null)
                                         }else{
-                                        setChosenBlouse(true);}}}className="checkboxLabel" htmlFor="stitched"> Stitched</label><br />
+                                        setChosenBlouse(true);}
+                                        }}className="checkboxLabel" htmlFor="stitched"> Stitched</label><br />
                                 </div>
                                 <div className="checkBox">
                                     <input type="radio" id="unstitched" name="blouse" value={false} />
@@ -126,6 +127,7 @@ function View(){
                                         if(chosenBlouse === false){
                                             setChosenBlouse(null)
                                         }else{
+                                            console.log("false")
                                         setChosenBlouse(false);}}} className="checkboxLabel" htmlFor="unstitched"> Unstitched</label><br />
                                 </div>
                             </div>
@@ -201,7 +203,7 @@ function View(){
             {loading &&
                 <Spinner></Spinner>}
             <div className="sareeGallery">
-                {sarees.length > 0 && sarees.map((item, index) => (
+                {sarees.length > 0 ? sarees.map((item, index) => (
                     <div key={index} className="sareeItem">
                         <img alt="saree" className="previewImage" src={item.imgs[0]}></img>
                         <div className="sareeDescription">
@@ -212,7 +214,9 @@ function View(){
                         </div>
                         <button className="viewItem">View this saree</button>
                     </div>
-                ))}
+                ))
+            :
+            <h6>Sorry, you don't have any sarees matching these filters</h6>}
             </div>
         </div>
     )
