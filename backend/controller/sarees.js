@@ -70,12 +70,28 @@ function filterSanitising(filters){
     return filter;
 }
 
-
+function sortField(sort){
+    let sorter = {};
+    if (sort === ""){
+        sorter["sarees._id"] = 1
+    }
+    if (sort === "new-old"){
+        sorter["sarees.purchase.datePurchased"] = -1
+    }
+    if (sort === "old-new"){
+        sorter["sarees.purchase.datePurchased"] = 1
+    }
+    if (sort === "newly-added"){
+        sorter["sarees._id"] = -1
+    }
+    return sorter
+}
 
 function filterSarees(request, response){
     let filter = filterSanitising(request.body.filters);
     const uid = authJwt.verifyToken(request.body.token);
-    User.aggregate([{$match: {_id: ObjectId(uid)}}, {$unwind: '$sarees'}, {$match: filter}, {$project: {'sarees': 1}}])
+    let sorter = sortField(request.body.sort);
+    User.aggregate([{$match: {_id: ObjectId(uid)}}, {$unwind: '$sarees'}, {$match: filter}, {$project: {'sarees': 1}}, {$sort: sortField(request.body.sort)}])
     .then((sarees) => {
         console.log(sarees);
         response.status(200).json({msg: "got sarees", sarees: sarees})

@@ -9,6 +9,7 @@ import {ToastContainer} from 'react-toastify';
 function View(){
     const [loading, setLoading] = useState(true);
     const node = useRef();
+    const form = useRef();
     const [locations, setLocations] = useState([]);
     const [crowd, setCrowd] = useState([]);
     const [sarees, setSarees] = useState([])
@@ -16,8 +17,12 @@ function View(){
     const [chosenTags, setChosenTags] = useState([]);
     const [chosenBlouse, setChosenBlouse] = useState(null);
     const [chosenTypes, setChosenTypes] = useState([]);
+    const [chosenSort, setChosenSort] = useState('');
     const [chosenCrowd, setChosenCrowd] = useState([]);
     const [chosenLocations, setChosenLocations] = useState([]);
+    const [show, setShow] = useState("");
+    const [active, setActive] = useState("")
+    let showNone = false
     const types = ["Kanchipuram", "Soft Silk", "Fancy", "Georgette", "Linen",
     "Cotton", "Pattu"];
 
@@ -35,24 +40,32 @@ function View(){
                     setSarees(sarees => [...sarees, saree]);
 
                 })
+                if (sareesList.data.data.length === 0){
+                    showNone = true;
+                }
             })
             .catch(err => {
                 console.log("Couldn't get user's records");
             })
     }, [])
+    function toggle(){
+        if (show === ""){
+            setShow("show")
+        }
+        else{
+            setShow("")
+        }
+        active === "" ? setActive("active") : setActive("")
+    }
     const handleClick = e => {
-        if (document.getElementById("filterForm").contains(e.target)) {
+        if (form.current.contains(e.target)) {
           // inside click
           return;
         }
         // outside click
-        if(e.target.getAttribute('id') === "filterSearchButton" && e.target.value === "filter"){
-            document.querySelector('#collapsibleFilter').classList.toggle('show');
-            e.target.classList.toggle("active")
-        }
-        else if (document.querySelector('#collapsibleFilter').classList.contains('show')){
-            e.target.classList.toggle("active")
-            document.querySelector('#collapsibleFilter').classList.toggle('show');
+        console.log("outside")
+        if(e.target === node.current || show === "show"){
+            toggle();
         }
          
       };
@@ -62,10 +75,12 @@ function View(){
         return () => {
             document.removeEventListener("mousedown", handleClick);
         };
-    }, []);
+    }, [show, active]);
 
     const filter = (event) => {
         event.preventDefault();
+        showNone = false;
+        let sort = ''
         let filter = {};
         if (chosenBlouse !== null){
             filter["blouseStitched"] = chosenBlouse
@@ -83,13 +98,23 @@ function View(){
             filter["tags"] = chosenTags
         }
         console.log(filter);
-        document.querySelector('#collapsibleFilter').classList.toggle('show');
-        axios.post('https://geethasaree.herokuapp.com/api/sarees/filterSarees', { token: localStorage.getItem("token"), filters: filter })
+        if(event.target.id === "filterButton"){
+            toggle();
+            sort = chosenSort;
+        }
+        else{
+            sort = event.target.value;
+        }
+        axios.post('http://localhost:5000/api/sarees/filterSarees', { token: localStorage.getItem("token"), filters: filter, sort: sort })
         .then(sarees => {
             let filteredSarees = []
             sarees.data.sarees.forEach((saree) => {
                 filteredSarees.push(saree.sarees)
             })
+            console.log(sarees.data.sarees);
+            if (sarees.data.sarees.length === 0){
+                showNone = true;
+            }
             setSarees(filteredSarees);
         })
     }
@@ -98,17 +123,18 @@ function View(){
             <Navbar />
             <ToastContainer />
             <div className="filterAndSearch">
-                <button ref={node} id="filterSearchButton" value="filter">Filter</button>
-                <select name="sortDropDown" id="filterSearchButton" placeholder="Sort">
-                    <option id="dropDownOptions" value="defaultValue">Sort</option>
+                <button ref={node} id="filterSearchButton" value="filter" className={active}>Filter</button>
+                <select name="sortDropDown" id="filterSearchButton" placeholder="Sort" value={chosenSort} onChange={(event) => {
+                    setChosenSort(event.target.value);
+                    filter(event);}}>
+                    <option hidden id="dropDownOptions" value="Sort">Sort</option>
                     <option id="dropDownOptions" value="newly-added">Newly Added</option>
                     <option id="dropDownOptions" value="new-old">Purchase date ascending</option>
                     <option id="dropDownOptions" value="old-new">Purchase date descending</option>
-                    <option id="dropDownOptions" value="last worn">Last worn</option>
                 </select>
                 
-                    <form id="filterForm">
-                        <div id="collapsibleFilter">
+                    <form ref={form} id="filterForm">
+                        <div id="collapsibleFilter" className={show}>
                         <div className="filterBlock">
                             <h6 className="filterTitle">Blouse stitched</h6>
                             <div className="filterRow">
@@ -200,8 +226,8 @@ function View(){
                 </div>
                 </form>
             </div>
-            {loading &&
-                <Spinner></Spinner>}
+            {loading ?
+                <Spinner></Spinner>:
             <div className="sareeGallery">
                 {sarees.length > 0 ? sarees.map((item, index) => (
                     <div key={index} className="sareeItem">
@@ -218,6 +244,7 @@ function View(){
             :
             <h6>Sorry, you don't have any sarees matching these filters</h6>}
             </div>
+        }
         </div>
     )
 }

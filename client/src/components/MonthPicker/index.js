@@ -29,7 +29,6 @@ function MonthPicker(props){
         
       };
     const toggle = () => {
-        console.log("toglging");
         if (showEdit){
             setShowEdit(false);
         }
@@ -43,7 +42,7 @@ function MonthPicker(props){
         return () => {
             document.removeEventListener("mousedown", handleClick);
         };
-    }, []);
+    }, [showEdit]);
   return(
     <div ref={node} className="box">
         <div className="currentDate" onClick={toggle}> {months[month]+" "+year}</div>
@@ -72,7 +71,6 @@ function MonthPicker(props){
                 </div>
                 <MdKeyboardArrowDown id="scrollDown" onClick={() => {
                     document.getElementById("overflowYear").scrollBy({left:0,top: 50, behavior:'smooth'});
-                    console.log("Scroll"); 
                 }}></MdKeyboardArrowDown>
             </div>
             </div>
