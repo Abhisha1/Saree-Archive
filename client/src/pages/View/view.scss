@@ -1,3 +1,4 @@
+@import '~pretty-checkbox/src/pretty-checkbox.scss';
 .viewPage{
     text-align: center;
     font-family: 'Raleway', sans-serif;
@@ -28,9 +29,12 @@
 }
 #filterForm{
     width: 80vw;
-    margin-left: 10vw;
+    // margin-left: 10vw;
 }
-
+.formPosition{
+    display: flex;
+    justify-content: center;
+}
 #collapsibleFilter{
     -webkit-transition: max-height 1s; 
     -moz-transition: max-height 1s; 
@@ -76,6 +80,9 @@ input[type="checkbox"]:checked + label:before {
     flex-direction: row;
     justify-content: space-evenly;
 }
+.sareeGallery.loading{
+    opacity: 0.4;
+}
 .previewImage{
     width: auto;
     height: 35vw;
@@ -107,64 +114,40 @@ input[type="checkbox"]:checked + label:before {
     text-align-last: center;
     text-align: center;
 }
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% {  transform: rotate(359deg); }
-}
-.mandalaSpinner {
-    animation: spin 5s linear infinite;
-    width: 32vw;
-    height: 32vw;
-
-}
 .boxes {
     margin: auto;
     padding: 50px;
     background: #484848;
   }
-  
-  /*Checkboxes styles from CodePen 
-Custom checkbox
-Valery*/
+
   input[type="checkbox"] { display: none; }
+  input[type="radio"] {display: none}
   
-  input[type="checkbox"] + label {
-    display: block;
-    position: relative;
-    padding-left: 35px;
-    margin-bottom: 20px;
-    font: 14px/20px 'Open Sans', Arial, sans-serif;
-    color: #ddd;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-  }
-  
-  input[type="checkbox"] + label:last-child { margin-bottom: 0; }
-  
-  input[type="checkbox"] + label:before {
-    content: '';
-    display: block;
-    width: 20px;
-    height: 20px;
-    border: 1px solid rgb(121,41,79);
+label.checkboxLabel::before{
+    border-color: gray !important;
+}
+.pretty.p-default input:checked ~ .state label:after{
+    background-color: rgb(121,41,79) !important
+}
+
+.lotus{
+    animation: pulse 2s infinite;
+    width: 10vw;
+    height: 10vw;
     position: absolute;
-    left: 0;
-    top: 0;
-    opacity: .6;
-    -webkit-transition: all .12s, border-color 0.5s;
-    transition: all .12s, border-color 0.5s;
-  }
-  
-  input[type="checkbox"]:checked + label:before {
-    width: 10px;
-    top: -5px;
-    left: 5px;
-    border-radius: 0;
-    opacity: 1;
-    border-top-color: transparent;
-    border-left-color: transparent;
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
-  }
+}
+@keyframes pulse{
+    0%{
+        fill: rgb(241, 235, 235);
+    }
+    50%{
+        fill: rgb(121,41,79)
+    }
+    100%{
+        fill: rgb(241, 235, 235);
+    }
+}
+.lotusWrapper{
+    display: flex;
+    justify-content: center !important;
+}

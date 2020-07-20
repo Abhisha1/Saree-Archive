@@ -2,9 +2,10 @@ import React, {useState, useRef, useEffect} from 'react';
 import axios from 'axios';
 import Navbar from "../../components/Navbar";
 import './view.scss';
-import {ReactComponent as Spinner} from "../../assets/spinner.svg";
+import {ReactComponent as Lotus} from "../../assets/lotus.svg";
 import AutoComplete from "../../components/AutoComplete";
 import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 function View(){
     const [loading, setLoading] = useState(true);
@@ -20,9 +21,9 @@ function View(){
     const [chosenSort, setChosenSort] = useState('');
     const [chosenCrowd, setChosenCrowd] = useState([]);
     const [chosenLocations, setChosenLocations] = useState([]);
+    const [fetching, setFetching] = useState(true);
     const [show, setShow] = useState("");
     const [active, setActive] = useState("")
-    let showNone = false
     const types = ["Kanchipuram", "Soft Silk", "Fancy", "Georgette", "Linen",
     "Cotton", "Pattu"];
 
@@ -38,11 +39,8 @@ function View(){
             .then(sareesList => {
                 sareesList.data.data.forEach((saree) => {
                     setSarees(sarees => [...sarees, saree]);
-
                 })
-                if (sareesList.data.data.length === 0){
-                    showNone = true;
-                }
+                setFetching(false);
             })
             .catch(err => {
                 console.log("Couldn't get user's records");
@@ -79,9 +77,9 @@ function View(){
 
     const filter = (event) => {
         event.preventDefault();
-        showNone = false;
         let sort = ''
         let filter = {};
+        setFetching(true);
         if (chosenBlouse !== null){
             filter["blouseStitched"] = chosenBlouse
         }
@@ -105,17 +103,14 @@ function View(){
         else{
             sort = event.target.value;
         }
-        axios.post('http://localhost:5000/api/sarees/filterSarees', { token: localStorage.getItem("token"), filters: filter, sort: sort })
+        axios.post('https://geethasaree.herokuapp.com/api/sarees/filterSarees', { token: localStorage.getItem("token"), filters: filter, sort: sort })
         .then(sarees => {
             let filteredSarees = []
             sarees.data.sarees.forEach((saree) => {
                 filteredSarees.push(saree.sarees)
             })
-            console.log(sarees.data.sarees);
-            if (sarees.data.sarees.length === 0){
-                showNone = true;
-            }
             setSarees(filteredSarees);
+            setFetching(false);
         })
     }
     return (
@@ -132,29 +127,37 @@ function View(){
                     <option id="dropDownOptions" value="new-old">Purchase date ascending</option>
                     <option id="dropDownOptions" value="old-new">Purchase date descending</option>
                 </select>
-                
+                <div className="formPosition">
                     <form ref={form} id="filterForm">
                         <div id="collapsibleFilter" className={show}>
                         <div className="filterBlock">
                             <h6 className="filterTitle">Blouse stitched</h6>
                             <div className="filterRow">
                                 <div className="checkBox">
+                                <div className="pretty p-default p-round p-smooth">
                                     <input type="radio" id="stitched" name="blouse" value={true} />
+                                    <div className="state">
                                     <label onClick={() => {
                                         if(chosenBlouse === true){
                                             setChosenBlouse(null)
                                         }else{
                                         setChosenBlouse(true);}
-                                        }}className="checkboxLabel" htmlFor="stitched"> Stitched</label><br />
+                                        }} className="checkboxLabel" htmlFor="stitched"> Stitched</label>
+                                        </div>
+                                        </div>
                                 </div>
                                 <div className="checkBox">
+                                <div className="pretty p-default p-round p-smooth">
                                     <input type="radio" id="unstitched" name="blouse" value={false} />
+                                    <div className="state">
                                     <label onClick={() => {
                                         if(chosenBlouse === false){
                                             setChosenBlouse(null)
                                         }else{
                                             console.log("false")
-                                        setChosenBlouse(false);}}} className="checkboxLabel" htmlFor="unstitched"> Unstitched</label><br />
+                                        setChosenBlouse(false);}}} className="checkboxLabel" htmlFor="unstitched"> Unstitched</label>
+                                        </div>
+                                        </div>
                                 </div>
                             </div>
                         </div>
@@ -163,8 +166,10 @@ function View(){
                             <div className="filterRow">
                                 {locations.map((item, index) => (
                                     <div key={index} className="checkBox">
+                                        <div className="pretty p-default p-curve p-smooth">
                                         <input type="checkbox" id={item} name="location" value={item} />
-                                        <label onClick={() => {
+                                            <div className="state">
+                                            <label onClick={() => {
                                         if(chosenLocations.length > 0 && chosenLocations.includes(item)){
                                             let newLocs = chosenLocations;
                                             let index = chosenLocations.indexOf(item)
@@ -173,7 +178,9 @@ function View(){
                                                 setChosenLocations(newLocs);
                                             }
                                         }else{
-                                        setChosenLocations(chosenLocations => [...chosenLocations,item]);}}} className="checkboxLabel" htmlFor={item}> {item}</label><br />
+                                        setChosenLocations(chosenLocations => [...chosenLocations,item]);}}} className="checkboxLabel" htmlFor={item}> {item}</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
@@ -183,8 +190,10 @@ function View(){
                             <div className="filterRow">
                                 {crowd.map((item, index) => (
                                     <div key={index} className="checkBox">
+                                        <div className="pretty p-default p-curve p-smooth">
                                         <input type="checkbox" id={item} name="crowd" value={item} />
-                                        <label onClick={() => {
+                                        <div className="state">
+                                        <label className="checkboxLabel" htmlFor={item} onClick={() => {
                                         if(chosenCrowd.length > 0 && chosenCrowd.includes(item)){
                                             let newLocs = chosenCrowd;
                                             let index = chosenCrowd.indexOf(item)
@@ -193,7 +202,9 @@ function View(){
                                                 setChosenCrowd(newLocs);
                                             }
                                         }else{
-                                        setChosenCrowd(chosenCrowd => [...chosenCrowd,item]);}}} className="checkboxLabel" htmlFor={item}> {item}</label><br />
+                                        setChosenCrowd(chosenCrowd => [...chosenCrowd,item]);}}}> {item}</label><br />
+                                    </div>
+                                    </div>
                                     </div>
                                 ))}
                             </div>
@@ -203,7 +214,9 @@ function View(){
                             <div className="filterRow">
                                 {types.map((item, index) => (
                                     <div key={index} className="checkBox">
+                                        <div className="pretty p-default p-curve p-smooth">
                                         <input type="checkbox" id={item} name="types" value={item} />
+                                        <div className="state">
                                         <label  onClick={() => {
                                         if(chosenTypes.length > 0 && chosenTypes.includes(item)){
                                             let newLocs = chosenTypes;
@@ -215,6 +228,8 @@ function View(){
                                         }else{
                                         setChosenTypes(chosenTypes => [...chosenTypes,item]);}}} className="checkboxLabel" htmlFor={item}> {item}</label><br />
                                     </div>
+                                    </div>
+                                    </div>
                                 ))}
                             </div>
                         </div>
@@ -225,11 +240,13 @@ function View(){
                         <button id="filterButton" type="submit" onClick={filter}>Filter</button>
                 </div>
                 </form>
+                </div>
             </div>
+            {fetching && <div className="lotusWrapper"><Lotus></Lotus></div>}
             {loading ?
-                <Spinner></Spinner>:
-            <div className="sareeGallery">
-                {sarees.length > 0 ? sarees.map((item, index) => (
+                <div className="lotusWrapper"><Lotus></Lotus></div>:
+            <div className={fetching ? "sareeGallery loading": "sareeGallery"}>
+                {sarees.length > 0 && sarees.map((item, index) => (
                     <div key={index} className="sareeItem">
                         <img alt="saree" className="previewImage" src={item.imgs[0]}></img>
                         <div className="sareeDescription">
@@ -241,7 +258,8 @@ function View(){
                         <button className="viewItem">View this saree</button>
                     </div>
                 ))
-            :
+            }
+            {sarees.length === 0 && !fetching &&
             <h6>Sorry, you don't have any sarees matching these filters</h6>}
             </div>
         }
