@@ -26,6 +26,22 @@ function View(){
     const [active, setActive] = useState("")
     const types = ["Kanchipuram", "Soft Silk", "Fancy", "Georgette", "Linen",
     "Cotton", "Pattu"];
+    // const fetchMore = () => {
+    //     console.log("bottom")
+    //     if(!loading){
+    //         axios.post('http://localhost:5000/api/sarees/filterSarees', { token: localStorage.getItem("token"), filters: filter, sort: chosenSort, skip: sarees.length  })
+    //     .then(sarees => {
+    //         let filteredSarees = []
+    //         console.log(sarees)
+    //         sarees.data.sarees.forEach((saree) => {
+    //             filteredSarees.push(saree.sarees)
+    //         })
+    //         setSarees(filteredSarees);
+    //         setFetching(false);
+    //     })
+    //     .catch((err) => console.log(err));
+    //     }
+    // }
 
     useEffect(() => {
         axios.post('https://geethasaree.herokuapp.com/auth/getCurrentUser', { token: localStorage.getItem("token") })
@@ -35,10 +51,11 @@ function View(){
                 setTags(user.data.tags)
                 setLoading(false);
             })
-            .then(() => axios.post('https://geethasaree.herokuapp.com/api/sarees/getUsersSarees', { token: localStorage.getItem("token") }))
+            .then(() => axios.post('http://localhost:5000/api/sarees/getUsersSarees', { token: localStorage.getItem("token"), skip: 0 }))
             .then(sareesList => {
+                console.log(sareesList)
                 sareesList.data.data.forEach((saree) => {
-                    setSarees(sarees => [...sarees, saree]);
+                    setSarees(sarees => [...sarees, saree.sarees]);
                 })
                 setFetching(false);
             })
@@ -74,7 +91,6 @@ function View(){
             document.removeEventListener("mousedown", handleClick);
         };
     }, [show, active]);
-
     const filter = (event) => {
         event.preventDefault();
         let sort = ''
@@ -103,7 +119,7 @@ function View(){
         else{
             sort = event.target.value;
         }
-        axios.post('https://geethasaree.herokuapp.com/api/sarees/filterSarees', { token: localStorage.getItem("token"), filters: filter, sort: sort })
+        axios.post('http://localhost:5000/api/sarees/filterSarees', { token: localStorage.getItem("token"), filters: filter, sort: sort, skip: 0  })
         .then(sarees => {
             let filteredSarees = []
             sarees.data.sarees.forEach((saree) => {
@@ -248,7 +264,7 @@ function View(){
             <div className={fetching ? "sareeGallery loading": "sareeGallery"}>
                 {sarees.length > 0 && sarees.map((item, index) => (
                     <div key={index} className="sareeItem">
-                        <img alt="saree" className="previewImage" src={item.imgs[0]}></img>
+                        <img alt="saree" className="previewImage" src={item.imgs[0]} loading="lazy"></img>
                         <div className="sareeDescription">
                             <h6>{item.blouseStitched ? 'Stitched': 'Unstitched'}</h6>
                             {
