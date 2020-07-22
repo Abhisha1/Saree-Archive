@@ -60,7 +60,6 @@ export function Content(props){
                     </div>
                     </form>
                     <div className="tags">
-                        {console.log(list)}
                         {list.length > 0 &&
                         list.map((item,index) => (
                             <Tag remove={removeItem} key={index} index={index} item={item}></Tag>

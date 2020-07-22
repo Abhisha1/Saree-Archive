@@ -42,7 +42,6 @@ function View(){
             })
             .then(() => axios.post('https://geethasaree.herokuapp.com/api/sarees/getUsersSarees', { token: localStorage.getItem("token"), skip: 0 }))
             .then(sareesList => {
-                console.log(sareesList)
                 sareesList.data.data.forEach((saree) => {
                     setSarees(sarees => [...sarees, saree.sarees]);
                 })
@@ -67,7 +66,6 @@ function View(){
           return;
         }
         // outside click
-        console.log("outside")
         if(e.target === node.current || show === "show"){
             toggle();
         }
@@ -107,7 +105,6 @@ function View(){
         }
         let sort = ''
         let filter = getFilter();
-        console.log(filter);
         if(event.target.id === "filterButton"){
             toggle();
             sort = chosenSort;
@@ -126,7 +123,6 @@ function View(){
         })
     }
     const fetchMore = () => {
-        console.log(loading, gotAll);
         if(!loading && !gotAll){
             let filter = getFilter();
             setFetching(true);
@@ -149,7 +145,6 @@ function View(){
     }
     const handleScroll = (e) => {
         const { offsetHeight, scrollTop, scrollHeight} = e.target
-        console.log(scrollTop, offsetHeight)
         if (Math.round(scrollTop) + offsetHeight >= scrollHeight && sarees.length > 0) {
           fetchMore()
         }
@@ -201,7 +196,6 @@ function View(){
                                         if(chosenBlouse === false){
                                             setChosenBlouse(null)
                                         }else{
-                                            console.log("false")
                                         setChosenBlouse(false);}}} className="checkboxLabel" htmlFor="unstitched"> Unstitched</label>
                                         </div>
                                         </div>
@@ -312,7 +306,6 @@ function View(){
         }
         {showUp && <div id="scrollUp">
             <IoMdArrowRoundUp onClick={() => {
-                console.log("Scroll")
                 document.getElementsByClassName("viewPage")[0].scrollTo({behaviour: "smooth", top: node.current.offsetTop});}} id="scrollButton" size="4em"/>
         </div>}
         </div>

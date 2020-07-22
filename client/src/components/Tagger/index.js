@@ -23,7 +23,6 @@ function Tagger(props){
     }
     const remove = (index) => {
         let newTags = [...tags];
-        console.log(index);
         if (index!== -1){
             newTags.splice(index,1)
             setTags(newTags);

@@ -28,7 +28,6 @@ function History(props) {
         }])
     }
     const updateList = (list) => {
-        console.log(list)
         props.setcrowd(list);
         setPopUp(false);
     }

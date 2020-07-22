@@ -88,18 +88,14 @@ function Add() {
         form.tags = tags;
         form.blouseStitched = form.blouseStitched === "yes" ? true : false;
         setFormFields(form);
-        console.log(formFields);
-        console.log(saree)
         if (saree.length === 0){
             setShowError(true);
-            console.log(showError);
             return;
         }
         const formData = new FormData();
         formFields.imgs.map((item) => {
             formData.append('files', item)
         })
-        console.log(formFields.purchase)
         formData.set("fields", JSON.stringify(formFields));
         formData.set("token", localStorage.getItem("token"))
         axios.post('https://geethasaree.herokuapp.com/api/sarees/add', formData)
@@ -108,7 +104,6 @@ function Add() {
             })
             .catch(err => {
                 console.log(err);
-                console.log("Couldn't add");
             })
         
     }
@@ -124,7 +119,6 @@ function Add() {
                 if (user.data.locations.length === 0 || user.data.crowd.length === 0) {
                     setShowModal(true);
                 }
-                console.log(user)
             })
             .catch(err => {
                 console.log("Couldn't get user's records");
@@ -162,7 +156,6 @@ function Add() {
                     newTags.push(item);
                 }
             })
-            console.log(newTags)
             if (newTags.length > 0){
                 newTags.forEach((item)=> {
                     setTagOptions(tagOptions => [...tagOptions, item])
@@ -184,7 +177,6 @@ function Add() {
     }, [tagOptions])
 
     const updateList = (list) => {
-        console.log(list)
         setLocationOptions(list);
         setShowPopUp(false);
     }

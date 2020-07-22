@@ -58,7 +58,6 @@ function MonthPicker(props){
             <div className="rightYear">
                 <MdKeyboardArrowUp id="scrollUp" onClick={() => {
                     document.getElementById("overflowYear").scrollBy({left:0,top: -50, behavior:'smooth'});
-                    console.log("Scroll"); 
                 }}></MdKeyboardArrowUp>
                 <div id="overflowYear">
                 {years.map((item, index) => (
