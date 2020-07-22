@@ -5,7 +5,10 @@ import './view.scss';
 import {ReactComponent as Lotus} from "../../assets/lotus.svg";
 import AutoComplete from "../../components/AutoComplete";
 import {ToastContainer} from 'react-toastify';
+import {IoMdArrowRoundUp} from 'react-icons/io';
 import 'react-toastify/dist/ReactToastify.min.css';
+import { LazyLoadImage} from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/opacity.css';
 
 function View(){
     const [loading, setLoading] = useState(true);
@@ -23,25 +26,11 @@ function View(){
     const [chosenLocations, setChosenLocations] = useState([]);
     const [fetching, setFetching] = useState(true);
     const [show, setShow] = useState("");
-    const [active, setActive] = useState("")
+    const [gotAll, setGotAll] = useState(false);
+    const [active, setActive] = useState("");
+    const [showUp, setShowUp] = useState(false);
     const types = ["Kanchipuram", "Soft Silk", "Fancy", "Georgette", "Linen",
     "Cotton", "Pattu"];
-    // const fetchMore = () => {
-    //     console.log("bottom")
-    //     if(!loading){
-    //         axios.post('http://localhost:5000/api/sarees/filterSarees', { token: localStorage.getItem("token"), filters: filter, sort: chosenSort, skip: sarees.length  })
-    //     .then(sarees => {
-    //         let filteredSarees = []
-    //         console.log(sarees)
-    //         sarees.data.sarees.forEach((saree) => {
-    //             filteredSarees.push(saree.sarees)
-    //         })
-    //         setSarees(filteredSarees);
-    //         setFetching(false);
-    //     })
-    //     .catch((err) => console.log(err));
-    //     }
-    // }
 
     useEffect(() => {
         axios.post('https://geethasaree.herokuapp.com/auth/getCurrentUser', { token: localStorage.getItem("token") })
@@ -51,7 +40,7 @@ function View(){
                 setTags(user.data.tags)
                 setLoading(false);
             })
-            .then(() => axios.post('http://localhost:5000/api/sarees/getUsersSarees', { token: localStorage.getItem("token"), skip: 0 }))
+            .then(() => axios.post('https://geethasaree.herokuapp.com/api/sarees/getUsersSarees', { token: localStorage.getItem("token"), skip: 0 }))
             .then(sareesList => {
                 console.log(sareesList)
                 sareesList.data.data.forEach((saree) => {
@@ -91,9 +80,7 @@ function View(){
             document.removeEventListener("mousedown", handleClick);
         };
     }, [show, active]);
-    const filter = (event) => {
-        event.preventDefault();
-        let sort = ''
+    const getFilter = () => {
         let filter = {};
         setFetching(true);
         if (chosenBlouse !== null){
@@ -111,6 +98,15 @@ function View(){
         if (chosenTags.length > 0){
             filter["tags"] = chosenTags
         }
+        return filter
+    }
+    const filter = (event) => {
+        event.preventDefault();
+        if(gotAll){
+            setGotAll(false);
+        }
+        let sort = ''
+        let filter = getFilter();
         console.log(filter);
         if(event.target.id === "filterButton"){
             toggle();
@@ -119,7 +115,7 @@ function View(){
         else{
             sort = event.target.value;
         }
-        axios.post('http://localhost:5000/api/sarees/filterSarees', { token: localStorage.getItem("token"), filters: filter, sort: sort, skip: 0  })
+        axios.post('https://geethasaree.herokuapp.com/api/sarees/filterSarees', { token: localStorage.getItem("token"), filters: filter, sort: sort, skip: 0  })
         .then(sarees => {
             let filteredSarees = []
             sarees.data.sarees.forEach((saree) => {
@@ -129,8 +125,43 @@ function View(){
             setFetching(false);
         })
     }
+    const fetchMore = () => {
+        console.log(loading, gotAll);
+        if(!loading && !gotAll){
+            let filter = getFilter();
+            setFetching(true);
+            axios.post('https://geethasaree.herokuapp.com/api/sarees/filterSarees', { token: localStorage.getItem("token"), filters: filter, sort: chosenSort, skip: sarees.length  })
+        .then(newSarees => {
+            let filteredSarees = Array.from(sarees);
+            if (newSarees.data.sarees.length > 0){
+                newSarees.data.sarees.forEach((saree) => {
+                    filteredSarees.push(saree.sarees)
+                })
+                setSarees(filteredSarees);
+            }
+            else{
+                setGotAll(true);
+            }
+            setFetching(false);
+        })
+        .catch((err) => console.log(err));
+        }
+    }
+    const handleScroll = (e) => {
+        const { offsetHeight, scrollTop, scrollHeight} = e.target
+        console.log(scrollTop, offsetHeight)
+        if (Math.round(scrollTop) + offsetHeight >= scrollHeight && sarees.length > 0) {
+          fetchMore()
+        }
+        if(!showUp && scrollTop >= offsetHeight){
+            setShowUp(true);
+        }
+        if (showUp && scrollTop < offsetHeight){
+            setShowUp(false);
+        }
+      }
     return (
-        <div className="viewPage">
+        <div className="viewPage" onScroll={handleScroll}>
             <Navbar />
             <ToastContainer />
             <div className="filterAndSearch">
@@ -263,22 +294,27 @@ function View(){
                 <div className="lotusWrapper"><Lotus></Lotus></div>:
             <div className={fetching ? "sareeGallery loading": "sareeGallery"}>
                 {sarees.length > 0 && sarees.map((item, index) => (
-                    <div key={index} className="sareeItem">
-                        <img alt="saree" className="previewImage" src={item.imgs[0]} loading="lazy"></img>
-                        <div className="sareeDescription">
-                            <h6>{item.blouseStitched ? 'Stitched': 'Unstitched'}</h6>
-                            {
-                                item.purchase.datePurchased && <h6>Purchased on {new Date(item.purchase.datePurchased).toLocaleDateString()}</h6>
-                            }
+                        <div key={index} className="sareeItem">
+                            <LazyLoadImage alt="saree" className="previewImage" src={item.imgs[0]} effect="opacity"></LazyLoadImage>
+                            <div className="sareeDescription">
+                                <h6>{item.blouseStitched ? 'Stitched': 'Unstitched'}</h6>
+                                {
+                                    item.purchase.datePurchased && <h6>Purchased on {new Date(item.purchase.datePurchased).toLocaleDateString()}</h6>
+                                }
+                                <button className="viewItem">View this saree</button>
+                            </div>
                         </div>
-                        <button className="viewItem">View this saree</button>
-                    </div>
-                ))
-            }
+                    ))
+                }
             {sarees.length === 0 && !fetching &&
             <h6>Sorry, you don't have any sarees matching these filters</h6>}
             </div>
         }
+        {showUp && <div id="scrollUp">
+            <IoMdArrowRoundUp onClick={() => {
+                console.log("Scroll")
+                document.getElementsByClassName("viewPage")[0].scrollTo({behaviour: "smooth", top: node.current.offsetTop});}} id="scrollButton" size="4em"/>
+        </div>}
         </div>
     )
 }

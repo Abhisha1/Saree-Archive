@@ -1,7 +1,7 @@
 let User = require('../models/user');
 const cloudinary = require('../cloudinary/cloudinary');
 const { authJwt } = require('../middleware');
-const limitFactor = 50
+const limitFactor = 1
 
 let ObjectId = require('mongodb').ObjectID;
 function addSaree(request, response){
@@ -38,8 +38,9 @@ function addSaree(request, response){
 
 function getUsersSarees(request, response){
     console.log(request.body.token)
-    const uid = authJwt.verifyToken(request.body.token);
-    User.aggregate([{$match: {_id: ObjectId(uid)}}, {$unwind: '$sarees'},{$project: {'sarees': 1}}, {$skip: request.body.skip}, {$limit: limitFactor}])
+    // const uid = authJwt.verifyToken(request.body.token);
+    // console.log("line40"+uid);
+    User.aggregate([{$match: {_id: ObjectId("5ed37a9904d3e25b98f7911c")}}, {$unwind: '$sarees'},{$project: {'sarees': 1}}, {$skip: request.body.skip}, {$limit: limitFactor}])
     .then((sarees) => {
         console.log(sarees);
         response.status(200).json({msg: "success", data: sarees})
@@ -89,9 +90,9 @@ function sortField(sort){
 
 function filterSarees(request, response){
     let filter = filterSanitising(request.body.filters);
-    const uid = authJwt.verifyToken(request.body.token);
+    // const uid = authJwt.verifyToken(request.body.token);
     let sorter = sortField(request.body.sort);
-    User.aggregate([{$match: {_id: ObjectId(uid)}}, {$unwind: '$sarees'},
+    User.aggregate([{$match: {_id: ObjectId("5ed37a9904d3e25b98f7911c")}}, {$unwind: '$sarees'},
      {$match: filter}, {$project: {'sarees': 1}}, {$sort: sortField(request.body.sort)},
       {$skip: request.body.skip}, {$limit: limitFactor}])
 

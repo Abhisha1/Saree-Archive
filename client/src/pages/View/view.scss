@@ -2,6 +2,20 @@
 .viewPage{
     text-align: center;
     font-family: 'Raleway', sans-serif;
+    overflow-y: auto;
+    height: 100vh;
+    scroll-behavior: smooth;
+    position: relative
+}
+@media (max-width: 768px){
+.previewImage {
+    width: auto !important;
+    height: 55vh !important;
+}
+.sareeGallery{
+    flex-direction: column !important;
+    align-content: center !important;
+}
 }
 #filterSearchButton{
     width: 40vw;
@@ -77,7 +91,7 @@ input[type="checkbox"]:checked + label:before {
 .sareeGallery{
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-evenly;
 }
 .sareeGallery.loading{
@@ -85,13 +99,30 @@ input[type="checkbox"]:checked + label:before {
 }
 .previewImage{
     width: auto;
-    height: 105vh;
+    height: 50vh;
     object-fit: scale-down;
     border: 1rem solid rgba(255, 255, 255, 0.918);
     position: relative;
     text-align: center;
     margin-bottom: 0 !important;
+    animation: fadein 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    -moz-animation: fadein 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    -webkit-animation: fadein 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    -o-animation: fadein 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
+#placeholder{
+    background-color: rgb(241, 235, 235);
+}
+
+@keyframes fadein{
+    from {
+        opacity: 0;
+        transform: translateY(-2vh)}
+    to { 
+        opacity: 1;
+    }
+}
+
 .sareeItem{
     width: fit-content;
     cursor: pointer;
@@ -114,6 +145,10 @@ input[type="checkbox"]:checked + label:before {
     text-align-last: center;
     text-align: center;
 }
+.sareeDescription{
+    height: fit-content;
+    margin-bottom: 0.5rem;
+}
 .boxes {
     margin: auto;
     padding: 50px;
@@ -129,7 +164,6 @@ label.checkboxLabel::before{
 .pretty.p-default input:checked ~ .state label:after{
     background-color: rgb(121,41,79) !important
 }
-
 .lotus{
     animation: pulse 2s infinite;
     width: 10vw;
@@ -150,4 +184,52 @@ label.checkboxLabel::before{
 .lotusWrapper{
     display: flex;
     justify-content: center !important;
+}
+#scrollUp{
+    display: flex;
+    justify-content: center !important;
+    font-size: small;
+    flex-direction: row;
+    width: 20vw;
+    position: fixed;
+    margin: 0.5rem;
+    bottom: 20px;
+    cursor: pointer;
+    border-radius: 15rem;
+    animation: fadein 1s linear;
+    -moz-animation: fadein 1s linear;
+    -webkit-animation: fadein 1s linear;
+    -o-animation: fadein 1s linear;
+}
+#scrollButton:hover{
+    animation: moveLeft 1s ease-in;
+    -moz-animation: moveLeft 1s linear;
+    -webkit-animation: moveLeft 1s linear;
+    -o-animation: moveLeft 1s linear;
+}
+@keyframes moveLeft{
+    10%{
+        transform: translateY(2px)
+    }
+    30%{
+        transform: translateY(-10px)
+    }
+    50%{
+        transform: translateY(10px)
+    }
+    70%{
+        transform: translateY(-5px)
+    }
+    80%{
+        transform: translateY(-5px)
+    }
+    100%{
+        transform: translateY(0px)
+    }
+}
+.scrollText{
+    font-size: small;
+    color: black;
+    padding-top: 0.5rem;
+    display: none;
 }
