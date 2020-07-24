@@ -295,7 +295,7 @@ function View(){
                             <div className="sareeDescription">
                                 <h6>{item.blouseStitched ? 'Stitched': 'Unstitched'}</h6>
                                 {
-                                    item.purchase.datePurchased && <h6>Purchased on {new Date(item.purchase.datePurchased).toLocaleDateString()}</h6>
+                                    item.purchase.datePurchased && <h6 id="purchase">Purchased on {new Date(item.purchase.datePurchased).toLocaleDateString()}</h6>
                                 }
                                 <button className="viewItem" onClick={() => history.push(`/edit/${item._id}`)}>View this saree</button>
                             </div>

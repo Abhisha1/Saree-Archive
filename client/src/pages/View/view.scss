@@ -148,6 +148,12 @@ input[type="checkbox"]:checked + label:before {
 .sareeDescription{
     height: fit-content;
     margin-bottom: 0.5rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+#purchase{
+    letter-spacing: normal;
+    text-transform: initial;
 }
 .boxes {
     margin: auto;

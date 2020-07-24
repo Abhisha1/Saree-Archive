@@ -1,0 +1,21 @@
+.lotus{
+    animation: pulse 2s infinite;
+    width: 10vw;
+    height: 10vw;
+    position: absolute;
+}
+@keyframes pulse{
+    0%{
+        fill: rgb(241, 235, 235);
+    }
+    50%{
+        fill: rgb(121,41,79)
+    }
+    100%{
+        fill: rgb(241, 235, 235);
+    }
+}
+.lotusWrapper{
+    display: flex;
+    justify-content: center !important;
+}

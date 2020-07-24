@@ -7,7 +7,7 @@ export default function Tag(props) {
       <div className="tag">
         {props.item}
         <span
-          key={props.index}
+          id="tagSpan" key={props.index}
           onClick={() => {
             props.remove(props.index);
           }}

@@ -1,0 +1,74 @@
+.flexContentContainer{
+    display: flex;
+    justify-content: space-evenly;
+}
+#mainImage{
+    width: 50vw;
+    height: auto;
+}
+#flexRightImage, #flexLeftText{
+    width: 50vw;
+    font-family: 'Raleway', 'sans-serif';
+}
+#flexLeftText{
+    border: 1rem solid rgba(255, 255, 255, 0.918);
+}
+#productHeading, #locationHeading, #purchaseDetail{
+    font-size: larger;
+    width: fit-content;
+}
+#productHeading{
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+#purchaseDate{
+    letter-spacing: 5px;
+}
+.detail{
+    display: flex;
+    justify-content: space-between;
+    width: 30vw;
+}
+#subHeading{
+    letter-spacing: 2px;
+    font-weight: bolder;
+}
+.thinLine{
+    width: 35vw;
+    background-color: rgb(241, 235, 235);
+    height: 0.1rem;
+    margin-bottom: 0.5rem;
+}
+#nonRemovalTags{
+    display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+#nonRemovalTags > .tag > #tagSpan{
+    display: none !important;
+}
+#nonRemovalTags > .tag {
+    background-color: rgb(241, 235, 235);
+    border-color: rgb(241, 235, 235);
+    color: black;
+}
+#editButton{
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    background-color: rgb(241, 235, 235);
+    border: 1px solid rgb(241, 235, 235);
+    text-align-last: center;
+    text-align: center;
+    display: flex;
+}
+#editButton:hover{
+    background-color: rgb(121,41,79);
+    border: 1px solid rgb(121,41,79);
+    color: white;
+}
+.editWrapper{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 2vw;
+}
