@@ -209,7 +209,7 @@ function Add() {
                         <p className="descriptionText" hidden={showHasEvent}>Do you have an event that you want to add?</p>
                         <div className="btn-group btn-group-toggle eventCheck" data-toggle="buttons" hidden={showHasEvent}>
 
-                            <label className="btn btn-secondary active">
+                            <label id="secondaryButton" className="btn btn-secondary active">
                                 <input type="radio" name="options" id="option1" autoComplete="off"/> No
                     </label>
                             <label className="btn btn-secondary">
@@ -277,7 +277,7 @@ function Add() {
                     <p className="descriptionText" hidden={hideAskPurchase}>Do you remember details about the saree's purchasing?</p>
                     <div className="btn-group btn-group-toggle eventCheck" data-toggle="buttons" hidden={hideAskPurchase}>
 
-                        <label className="btn btn-secondary active firstActive">
+                        <label id="secondaryButton" className="btn btn-secondary active firstActive">
                             <input type="radio" name="options" id="option1" autoComplete="off" /> No
                     </label>
                         <label className="btn btn-secondary">

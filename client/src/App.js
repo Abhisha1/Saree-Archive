@@ -7,6 +7,7 @@ import PrivateRoute from "./components/protectedRoutes";
 import Home from "./pages/Home";
 import Add from "./pages/Add";
 import View from './pages/View';
+import Edit from './pages/Edit';
 import './App.css';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <PrivateRoute path="/home" component={Home} exact={true}></PrivateRoute>
         <PrivateRoute path="/add" component={Add} exact={true} /> 
         <PrivateRoute path="/view" component={View} exact={true} />
+        <PrivateRoute path="/edit/:id" component={Edit} exact={true} />
         {/* <PrivateRoute path="/discover" component={Home} exact={true} />
         <Route path="/user" component={Home} exact={true} /> */}
         

@@ -25,7 +25,7 @@ router.post('/api/users/addTags', users.addTags)
 router.post('/api/sarees/add',upload.array('files', 100), sarees.addSaree)
 router.post('/api/sarees/getUsersSarees', sarees.getUsersSarees);
 router.post('/api/sarees/filterSarees', sarees.filterSarees);
-
+router.post('/api/sarees/getSaree', sarees.getSaree);
 
 module.exports = router;
 

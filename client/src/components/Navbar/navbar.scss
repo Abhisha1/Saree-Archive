@@ -1,15 +1,140 @@
+/* Add a black background color to the top navigation */
+.authNav {
+    overflow: hidden;
+    display: flex;
+    justify-content: space-evenly;
+    background-color: rgb(241, 235, 235);
+    margin-bottom: 3rem;
+    font-family: 'Raleway', sans-serif;
+  }
 #customNavBar{
-    background-color: transparent !important;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    align-items: center;
+    font-family: 'Raleway', sans-serif;
 }
-#logo-image{
-    width: 50px;
-    height:auto;
+@media (max-width: 768px){
+    .container{
+        display: block !important;
+        margin: none;
+    }
+    .container.change{
+        background-color: rgb(241, 235, 235);
+        justify-items: left;
+        margin: none !important;
+    }
+    .authNav{
+        display: none
+    }
+    .navTitle{
+        display: none;
+    }
+    .sideBar{
+        height: 0px;
+    }
+    .sideBar.show{
+        display: block !important;
+        overflow-x: hidden; 
+        height: 100vh;
+        width: 75vw;
+    }
+    .sideBar.show a{
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+        animation: fadein 2s;
+        -moz-animation: fadein 2s;
+        -webkit-animation: fadein 2s;
+        -o-animation: fadein 2s;
+    }
+    .sideBar.show a:hover{
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 25px;
+        color: rgb(121,41,79) !important;
+        background-color: white;
+    }
+    
+    @keyframes fadein{
+        from {
+            opacity: 0;
+            transform: translateY(-2vh)}
+        to { 
+            opacity: 1;
+        }
+    }
+    .mobileNav{
+        display: block !important;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        background-color: rgb(241, 235, 235);
+        left: 0;
+        height: 100vh !important;
+        width: 75vw;
+        -webkit-transition: all 0.5s cubic-bezier(0.6, 0.05, 0.28, 0.91);
+    transition: all 0.5s cubic-bezier(0.6, 0.05, 0.28, 0.91);
+    text-align: initial;
+    }
+    @keyframes slidein{
+        from{
+            width: 0 !important;
+        }
+        to{
+            width: 75vw !important;
+        }
+    }
+    .mobileNav.hide{
+        height: 0;
+        width: 0;
+        display: block;
+    }
 }
 
-.navbar-brand{
-    font-weight: 800;
-    color: rgb(39, 39, 46);
+.mobileNav{
+    display: none;
 }
+.sideBar{
+    display: none;
+}
+  /* Style the links inside the navigation bar */
+  .authNav a {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 14px 45px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  /* Change the color of links on hover */
+  .authNav a:hover {
+    background-color: white;
+    color: rgb(121,41,79);
+  }
+  
+  /* Add a color to the active/current link */
+  .authNav a.active {
+    background-color: #4CAF50;
+    color: white;
+  }
+#logo-image{
+    width: 7rem;
+    height:auto;
+}
+.navTitle{
+    font-family: PlaylistScript;
+    color: rgb(121,41,79);
+}
+
 .btn-outline-primary{
     color: black;
     font-weight: 600;
@@ -21,10 +146,6 @@
     padding-left: 1.2em;
     padding-right: 1.2em;
 }
-#logo-image{
-    max-width: 100px;
-    max-height: 100px;
-  }
 .btn-outline-primary:hover, .btn-outline-primary:active{
     color: rgb(121,41,79);
     font-weight: 600;
@@ -36,11 +157,31 @@
     padding-left: 1.2em;
     padding-right: 1.2em;
 }
-
-.w-100{
-    justify-content: space-between;
-}
-
-.mr-auto{
-    justify-content: space-evenly;
-}
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 2px;
+    background-color: #333;
+    margin: 10px 0;
+    transition: 0.4s;
+  }
+  
+  .change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-9px, 6px);
+  }
+  
+  .change .bar2 {opacity: 0;}
+  
+  .change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
+  }
+  .container{
+      display: none;
+    margin-left: 4vw;
+    margin-top: 3vh;
+    width: fit-content;
+    border: 0.1vh solid rgba(241, 235, 235, 0.582);
+    background-color: rgba(241, 235, 235, 0.582);
+    border-radius: 0.25rem;
+  }

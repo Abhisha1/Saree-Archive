@@ -9,6 +9,7 @@ import {IoMdArrowRoundUp} from 'react-icons/io';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { LazyLoadImage} from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
+import { useHistory} from 'react-router-dom';
 
 function View(){
     const [loading, setLoading] = useState(true);
@@ -29,6 +30,7 @@ function View(){
     const [gotAll, setGotAll] = useState(false);
     const [active, setActive] = useState("");
     const [showUp, setShowUp] = useState(false);
+    const history = useHistory();
     const types = ["Kanchipuram", "Soft Silk", "Fancy", "Georgette", "Linen",
     "Cotton", "Pattu"];
 
@@ -295,7 +297,7 @@ function View(){
                                 {
                                     item.purchase.datePurchased && <h6>Purchased on {new Date(item.purchase.datePurchased).toLocaleDateString()}</h6>
                                 }
-                                <button className="viewItem">View this saree</button>
+                                <button className="viewItem" onClick={() => history.push(`/edit/${item._id}`)}>View this saree</button>
                             </div>
                         </div>
                     ))
