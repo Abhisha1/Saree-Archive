@@ -106,7 +106,10 @@ function filterSarees(request, response){
 
 function getSaree(request, response){
     const uid = authJwt.verifyToken(request.body.token);
-    User.findById({_id: ObjectId(uid)}, {sarees: {$elemMatch: {_id: ObjectId(request.body._id)}}})
+    console.log("hello")
+    // User.findById({_id: ObjectId(uid)}, {$elemMatch: {'sarees._id': ObjectId(request.body._id)}})
+    User.aggregate([{$match: {_id: ObjectId(uid)}}, {$unwind: '$sarees'},
+     {$match: {'sarees._id': ObjectId(request.body._id)}}])
     .then((sarees) => {
         console.log(sarees);
         response.status(200).json({msg: "got sarees", item: sarees})
