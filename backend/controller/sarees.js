@@ -119,9 +119,21 @@ function getSaree(request, response){
         response.status(400).json({msg: "We could not fetch your results"})
     })
 }
+function updateSaree(request, response){
+    User.updateOne({'sarees._id': ObjectId(request.body._id)}, {$set: {'sarees.$': request.body.saree}})
+    .then((sarees) => {
+        console.log(sarees);
+        response.status(200).json({msg: "got sarees", item: sarees})
+    })
+    .catch((err) => {
+        console.log(err);
+        response.status(400).json({msg: "We could not fetch your results"})
+    })
+}
 
 
 module.exports.addSaree = addSaree;
 module.exports.getUsersSarees = getUsersSarees;
 module.exports.filterSarees = filterSarees
 module.exports.getSaree = getSaree;
+module.exports.updateSaree = updateSaree

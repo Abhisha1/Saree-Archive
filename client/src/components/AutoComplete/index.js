@@ -45,6 +45,7 @@ function AutoComplete(props){
                 suggestions.push(item);
             }
         })
+        suggestions.length = 5;
         setSuggestedTags(suggestions);
         if(showCollapsile === ""){
             setShowCollapsible("show")

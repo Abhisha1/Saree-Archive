@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect, Route } from "react-router-dom";
-
+import jwt_token from 'jwt-decode';
 
 function PrivateRoute(props) {
     const [isAuth, setAuth] = useState(true);
@@ -8,14 +8,20 @@ function PrivateRoute(props) {
     useEffect(() => {
         setLoading(true);
         async function fetchData() {
-
-            if (!localStorage.getItem('token')) {
-                setLoading(false);
-                setAuth(null);
+            if (localStorage.getItem('token')) {
+                let decoded = jwt_token(localStorage.getItem('token'));
+                if (Date.now() >= decoded.exp*1000){
+                    setLoading(false);
+                    setAuth(null);
+                }
+                else{
+                    setLoading(false);
+                    setAuth("Authorised");
+                }
             }
             else {
                 setLoading(false);
-                setAuth("Authorised");
+                setAuth(null);
             }
 
         }

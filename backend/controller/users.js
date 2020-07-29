@@ -4,7 +4,7 @@ const { authJwt } = require("../middleware");
 
 function getAllUsers(request, response){
     User.find()
-        .then(users => response.json(users))
+        .then(users => response.status(200).json(users))
         .catch(err => response.status(400).json('Error: ' + err));
 };
 

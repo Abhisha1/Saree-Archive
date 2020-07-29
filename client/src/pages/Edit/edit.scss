@@ -56,11 +56,18 @@
 #editButton{
     height: calc(1.5em + .75rem + 2px);
     padding: .375rem .75rem;
-    background-color: rgb(241, 235, 235);
-    border: 1px solid rgb(241, 235, 235);
+    background-color: white;
+    border: 1px solid #79294f;
     text-align-last: center;
     text-align: center;
     display: flex;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    box-shadow: 5px 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
 }
 #editButton:hover{
     background-color: rgb(121,41,79);
@@ -71,4 +78,62 @@
     display: flex;
     justify-content: flex-end;
     padding-right: 2vw;
+}
+.leftBar{
+    height: 100vh;
+    width: 0;
+    display: block;
+    padding: 1rem;
+    // -webkit-transition: all 0.5s cubic-bezier(0.6, 0.05, 0.28, 0.91);
+    // transition: all 0.5s cubic-bezier(0.6, 0.05, 0.28, 0.91);
+}
+.leftBar.show{
+    display: block !important;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    background-color: white;
+    right: 0;
+    min-height: fit-content;
+    width: 75vw;
+    -webkit-transition: all 0.5s cubic-bezier(0.6, 0.05, 0.28, 0.91);
+    transition: all 0.5s cubic-bezier(0.6, 0.05, 0.28, 0.91);
+    text-align: initial;
+    overflow-y: auto;
+}
+.leftBar.show::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .leftBar.show {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+@media (max-width: 768px){
+    .leftBar.show{
+        width: 100vw;
+        overflow-y: auto;
+    }
+}
+.leftBar .leftBarContents{
+    display: none;
+}
+.leftBar.show .leftBarContents{
+    display: block;
+}
+@keyframes fadein{
+    from {
+        opacity: 0;
+        transform: translateY(-2vh)}
+    to { 
+        opacity: 1;
+    }
+}
+#flexRightImage.blur, #flexLeftText.blur{
+    opacity: 0.3;
+}
+.buttonGroup{
+    display: flex;
+    justify-content: space-between;
 }
