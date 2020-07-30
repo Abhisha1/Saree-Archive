@@ -12,8 +12,14 @@ function signUp(request,response) {
         password: password
     });
     newUser.save()
-        .then(() => {
-            response.status(200).json({msg: "User added!", id: newUser._id});
+        .then((user) => {
+            let token = jwt.sign({id: user._id}, process.env.SECRET, {
+                // expires in 24 hours
+                expiresIn:86400,
+                issuer: 'GeetsSarees',
+                subject: 'session-token'
+            })
+            response.status(200).json({msg: "User added!", token: token});
         })
         .catch(err => response.status(500).json({msg: 'Error: ' + err}));
 };

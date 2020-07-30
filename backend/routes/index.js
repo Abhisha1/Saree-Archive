@@ -10,9 +10,8 @@ const sarees = require('../controller/sarees.js');
 
 // Auth api calls
 router.post('/auth/login', auth.signIn)
-router.post('/auth/signup',[
-    verifySignUp.checkDuplicateEmail
-  ], auth.signUp)
+router.post('/auth/signup',
+    verifySignUp(), auth.signUp)
 router.post('/auth/getCurrentUser',auth.getCurrentUser)
 
 // User api calls
