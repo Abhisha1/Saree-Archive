@@ -67,7 +67,6 @@
 .card1{
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 0.2em;
-    width: 25em;
     display: flex;
     flex-direction: column;
     margin-bottom: 1em;
@@ -109,6 +108,23 @@
     }
     .image{
         display: none;
+    }
+    .home-button{
+        color: rgb(121,41,79);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 5vw;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        width: 32vw;
+        border-top: 1px solid #E88873;
+        border-bottom: 1px solid #E88873;
+        transition: padding 0.2s linear;
+    }
+    .mandala{
+        width: 60vw;
+        height: 60vw;
     }
 
 }

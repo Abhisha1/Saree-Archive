@@ -37,7 +37,6 @@
 }
 .filterBlock{
     display: flex;
-    width: 80vw;
     margin-left: 1vw;
     flex-direction: column;
 }
@@ -66,10 +65,33 @@
 .filterRow{
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
+    height: 100%;
+    animation: height 1s ease-in;
+    -moz-animation: height 1s ease-in;
+    -webkit-animation: height 1s ease-in;
+    -o-animation: height 1s ease-in;
+    text-align-last: justify;
+    margin: 0.25em;
 }
+.pretty{
+    margin-bottom: 0.5em;
+}
+#hideRow.filterRow{
+    height: 0px;
+    animation: height 1s ease-in;
+    -moz-animation: height 1s ease-in;
+    -webkit-animation: height 1s ease-in;
+    -o-animation: height 1s ease-in;
+}
+#hideRow.filterRow .checkBox{
+    display: none;
+} 
+.filterRow .checkBox{
+    display: contents;
+} 
 .filterTitle{
     text-align: left;
-    border-bottom: 0.05rem solid black;
 }
 .checkBox{
     margin-right: 1rem
@@ -79,13 +101,14 @@ input[type="checkbox"]:checked + label:before {
     text-align: center;
 }
 #filterButton{
-    width: 70vw;
+    width: 35vw;
     box-shadow: 5px 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     height: calc(1.5em + .75rem + 2px);
     padding: .375rem .75rem;
     border-radius: 0.25rem;
     margin-bottom: 0.5rem;
+    margin-left: 0.5rem;
     margin-top: 0;
 }
 .sareeGallery{
@@ -265,4 +288,9 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 }
 .embellishedBox{
     background-color: rgb(241, 235, 235);
+}
+#filterName{
+    display: flex;
+    justify-content: space-between;
+    
 }

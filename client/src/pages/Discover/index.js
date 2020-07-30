@@ -42,6 +42,7 @@ export default function Discover(){
         {loading ? <Spinner /> :
         (sarees && sarees.map((item, index) => (
             <LazyLoadImage key={index} alt="saree" className="previewImage" src={item.imgs[0]} effect="opacity"></LazyLoadImage>
-        )))}</div></div>
+        )))}</div>
+        </div>
     )
 }

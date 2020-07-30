@@ -6,6 +6,7 @@ import {ReactComponent as Lotus} from "../../assets/lotus.svg";
 import AutoComplete from "../../components/AutoComplete";
 import {ToastContainer} from 'react-toastify';
 import {IoMdArrowRoundUp} from 'react-icons/io';
+import {MdExpandLess, MdExpandMore} from 'react-icons/md';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { LazyLoadImage} from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
@@ -28,6 +29,7 @@ function View(){
     const [chosenLocations, setChosenLocations] = useState([]);
     const [fetching, setFetching] = useState(true);
     const [show, setShow] = useState("");
+    const [shownFilter, setShownFilter] = useState(0)
     const [gotAll, setGotAll] = useState(false);
     const [active, setActive] = useState("");
     const [showUp, setShowUp] = useState(false);
@@ -125,6 +127,14 @@ function View(){
             setFetching(false);
         })
     }
+    const clear  = (event) => {
+        event.preventDefault();
+        setChosenBlouse(null);
+        setChosenCrowd([]);
+        setChosenLocations([]);
+        setChosenTypes([]);
+        setChosenTags([]);
+    }
     const fetchMore = () => {
         if(!loading && !gotAll){
             let filter = getFilter();
@@ -182,11 +192,15 @@ function View(){
                     <form ref={form} id="filterForm">
                         <div id="collapsibleFilter" className={show}>
                         <div className="filterBlock">
-                            <h6 className="filterTitle">Blouse stitched</h6>
-                            <div className="filterRow">
+                            <div id="filterName">
+                                <h6 className="filterTitle">Blouse stitched</h6>
+                                {shownFilter === 0 ? <MdExpandLess onClick={() => setShownFilter(null)}/> : <MdExpandMore onClick={() => setShownFilter(0)}/>}
+                            
+                            </div>
+                            <div className="filterRow" id={shownFilter === 0 ? "": "hideRow"}>
                                 <div className="checkBox">
                                 <div className="pretty p-default p-round p-smooth">
-                                    <input type="radio" id="stitched" name="blouse" value={true} />
+                                    <input type="radio" id="stitched" name="blouse" value={true} checked={chosenBlouse === true} />
                                     <div className="state">
                                     <label onClick={() => {
                                         if(chosenBlouse === true){
@@ -199,7 +213,7 @@ function View(){
                                 </div>
                                 <div className="checkBox">
                                 <div className="pretty p-default p-round p-smooth">
-                                    <input type="radio" id="unstitched" name="blouse" value={false} />
+                                    <input type="radio" id="unstitched" name="blouse" value={false} checked={chosenBlouse === false} />
                                     <div className="state">
                                     <label onClick={() => {
                                         if(chosenBlouse === false){
@@ -212,11 +226,14 @@ function View(){
                             </div>
                         </div>
                         <div className="filterBlock">
+                        <div id="filterName">
                             <h6 className="filterTitle">Location</h6>
-                            <div className="filterRow">
+                            {shownFilter === 1 ? <MdExpandLess onClick={() => setShownFilter(null)}/> : <MdExpandMore onClick={() => setShownFilter(1)}/>}
+                            </div>
+                            <div className="filterRow" id={shownFilter === 1 ? "": "hideRow"}>
                                 {locations.map((item, index) => (
                                     <div key={index} className="checkBox">
-                                        <div className="pretty p-default p-curve p-smooth">
+                                        <div className="pretty p-default p-smooth">
                                         <input type="checkbox" id={item} name="location" value={item} />
                                             <div className="state">
                                             <label onClick={() => {
@@ -236,11 +253,14 @@ function View(){
                             </div>
                         </div>
                         <div className="filterBlock">
+                        <div id="filterName">
                             <h6 className="filterTitle">Crowds</h6>
-                            <div className="filterRow">
+                            {shownFilter === 2 ? <MdExpandLess onClick={() => setShownFilter(null)}/> : <MdExpandMore onClick={() => setShownFilter(2)}/>}
+                            </div>
+                            <div className="filterRow" id={shownFilter === 2 ? "": "hideRow"}>
                                 {crowd.map((item, index) => (
                                     <div key={index} className="checkBox">
-                                        <div className="pretty p-default p-curve p-smooth">
+                                        <div className="pretty p-default p-smooth">
                                         <input type="checkbox" id={item} name="crowd" value={item} />
                                         <div className="state">
                                         <label className="checkboxLabel" htmlFor={item} onClick={() => {
@@ -260,11 +280,14 @@ function View(){
                             </div>
                         </div>
                         <div className="filterBlock">
+                        <div id="filterName">
                             <h6 className="filterTitle">Types</h6>
-                            <div className="filterRow">
+                            {shownFilter === 3 ? <MdExpandLess onClick={() => setShownFilter(null)}/> : <MdExpandMore onClick={() => setShownFilter(3)}/>}
+                            </div>
+                            <div className="filterRow" id={shownFilter === 3 ? "": "hideRow"}>
                                 {types.map((item, index) => (
                                     <div key={index} className="checkBox">
-                                        <div className="pretty p-default p-curve p-smooth">
+                                        <div className="pretty p-default p-smooth">
                                         <input type="checkbox" id={item} name="types" value={item} />
                                         <div className="state">
                                         <label  onClick={() => {
@@ -287,7 +310,9 @@ function View(){
                             <h6 className="filterTitle">Tags</h6>
                         </div>
                         <AutoComplete action={setChosenTags} allOptions={tags}></AutoComplete>
+                        <button id="filterButton" type="submit" onClick={clear}>Clear</button>
                         <button id="filterButton" type="submit" onClick={filter}>Filter</button>
+
                 </div>
                 </form>
                 </div>
