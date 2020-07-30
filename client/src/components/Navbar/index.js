@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import SignOut from '../Signout';
 import './navbar.scss';
 import logo from "../../assets/logo1.png";
 
-const AuthNav =
-    <div className="authNav">
-                <Link id="linkToHome" to="/home">Home</Link>
-                <Link to="/add">Add  a saree</Link>
-                <Link id="linkToView" to="/view">View all</Link>
-                <Link id="linkToDiscover" to="/discover">Discover</Link>
-    </div>
+
 function Navbar() {
     const [isAuth, setAuth] = useState("");
     const [isLoading, setLoading] = useState(true);
     const [close, setClose] = useState(false)
+    const [curr, setCurr] = useState(null);
+    let location = useLocation().pathname;
     useEffect(() => {
         setLoading(true);
         async function fetchData() {
@@ -70,7 +66,12 @@ function Navbar() {
                             <h1 className="navTitle"> Geetha's Saree Inventory</h1>
                             <SignOut></SignOut>
                     </div>
-                    {AuthNav}
+                    {<div className="authNav">
+                <Link id="linkToHome" to="/home" className={location === "/home" ? "activeLink" : ""}>Home</Link>
+                <Link to="/add" className={location === "/add" ? "activeLink" : ""}>Add  a saree</Link>
+                <Link id="linkToView" to="/view" className={location === "/view" ? "activeLink" : ""}>View all</Link>
+                <Link id="linkToDiscover" to="/discover" className={location === "/discover" ? "activeLink" : ""}>Discover</Link>
+    </div>}
                     </div>
                     : <div></div>}
 

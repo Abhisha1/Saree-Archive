@@ -113,6 +113,7 @@
     padding: 14px 45px;
     text-decoration: none;
     font-size: 17px;
+    text-transform: uppercase;
   }
   
   /* Change the color of links on hover */
@@ -184,4 +185,8 @@
     border: 0.1vh solid rgba(241, 235, 235, 0.582);
     background-color: rgba(241, 235, 235, 0.582);
     border-radius: 0.25rem;
+  }
+  .activeLink{
+    font-weight: bolder;
+    color: rgb(121,41,79) !important;
   }
