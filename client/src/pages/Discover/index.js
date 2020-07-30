@@ -33,8 +33,12 @@ export default function Discover(){
         <div id="discoverPage">
         <Navbar />
         <div id="discoverContent">
+        <div className="viewDescBox">
+            </div>
             <h1 id="discoverHeading">Discover</h1>
             <p id="discoverDescription">View an assortment of the best sarees added to our site</p>
+            <div className="viewDescBox">
+            </div>
         {loading ? <Spinner /> :
         (sarees && sarees.map((item, index) => (
             <LazyLoadImage key={index} alt="saree" className="previewImage" src={item.imgs[0]} effect="opacity"></LazyLoadImage>

@@ -162,10 +162,11 @@ function View(){
         <div className="viewPage" ref={page} onScroll={handleScroll}>
             <Navbar />
             <ToastContainer />
-            
+            <div className="viewDescBox">
+            </div>
                 <h1 id="viewHeading">View</h1>
-                <div className="viewDescBox">
                 <p id="viewDesc" >View all of your sarees, and use our sort and filter to help find the details about your sarees.</p>
+                <div className="viewDescBox">
             </div>
             <div className="filterAndSearch">
                 <button ref={node} id="filterSearchButton" value="filter" className={active}>Filter</button>
