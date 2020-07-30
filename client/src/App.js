@@ -9,6 +9,7 @@ import Add from "./pages/Add";
 import View from './pages/View';
 import Edit from './pages/Edit';
 import Discover from "./pages/Discover";
+import SignUp from "./pages/SignUp";
 import './App.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         {/* <NavBar /> */}
           <Route path="/" exact={true} component={LandingPage} />
           <Route path="/login" exact={true} component={Login}/>
+          <Route path="/signup" exact={true} component={SignUp}/>
           <PrivateRoute path="/home" component={Home} exact={true}></PrivateRoute>
         <PrivateRoute path="/add" component={Add} exact={true} /> 
         <PrivateRoute path="/view" component={View} exact={true} />

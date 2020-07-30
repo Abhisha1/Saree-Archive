@@ -12,6 +12,7 @@ function LandingPage(props) {
                 <h1 className="landingMessage">Geetha's</h1>
                 <p>Saree collections </p>
                 <button id="login" className="btn btn-outline-primary my-2 my-sm-0" onClick={() => props.history.push("/login")}>Log In</button>
+                <button id="login" className="btn btn-outline-primary my-2 my-sm-0" onClick={() => props.history.push("/signup")}>Sign Up</button>
             </div>
         </div>
     );

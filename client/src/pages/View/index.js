@@ -15,6 +15,7 @@ function View(){
     const [loading, setLoading] = useState(true);
     const node = useRef();
     const form = useRef();
+    const page = useRef();
     const [locations, setLocations] = useState([]);
     const [crowd, setCrowd] = useState([]);
     const [sarees, setSarees] = useState([])
@@ -158,9 +159,14 @@ function View(){
         }
       }
     return (
-        <div className="viewPage" onScroll={handleScroll}>
+        <div className="viewPage" ref={page} onScroll={handleScroll}>
             <Navbar />
             <ToastContainer />
+            
+                <h1 id="viewHeading">View</h1>
+                <div className="viewDescBox">
+                <p id="viewDesc" >View all of your sarees, and use our sort and filter to help find the details about your sarees.</p>
+            </div>
             <div className="filterAndSearch">
                 <button ref={node} id="filterSearchButton" value="filter" className={active}>Filter</button>
                 <select name="sortDropDown" id="filterSearchButton" placeholder="Sort" value={chosenSort} onChange={(event) => {
@@ -291,7 +297,7 @@ function View(){
             <div className={fetching ? "sareeGallery loading": "sareeGallery"}>
                 {sarees.length > 0 && sarees.map((item, index) => (
                         <div key={index} className="sareeItem">
-                            <LazyLoadImage alt="saree" className="previewImage" src={item.imgs[0]} effect="opacity"></LazyLoadImage>
+                            <LazyLoadImage alt="saree" className="previewImage" src={item.imgs[0]} effect="opacity" onClick={() => history.push(`/edit/${item._id}`)}></LazyLoadImage>
                             <div className="sareeDescription">
                                 <h6>{item.blouseStitched ? 'Stitched': 'Unstitched'}</h6>
                                 {
@@ -306,9 +312,10 @@ function View(){
             <h6>Sorry, you don't have any sarees matching these filters</h6>}
             </div>
         }
-        {showUp && <div id="scrollUp">
+        {gotAll && <div className="embellishedBox"><p id="viewDesc">No more sarees to show.</p></div>}
+        {showUp && <div id="scrollUpBox">
             <IoMdArrowRoundUp onClick={() => {
-                document.getElementsByClassName("viewPage")[0].scrollTo({behaviour: "smooth", top: node.current.offsetTop});}} id="scrollButton" size="4em"/>
+                document.getElementsByClassName("viewPage")[0].scrollTo({behaviour: "smooth", top: page.current.offsetTop});}} id="scrollButton" size="4em"/>
         </div>}
         </div>
     )

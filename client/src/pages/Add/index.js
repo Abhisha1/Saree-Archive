@@ -83,6 +83,9 @@ function Add() {
         if (!showPurchase) {
             form.purchase.datePurchased = null;
         }
+        if (form.location === ""){
+            form["location"] = locationOptions[0];
+        }
         form.imgs = saree;
         form.worn = history;
         form.tags = tags;
@@ -101,6 +104,7 @@ function Add() {
         axios.post('https://geethasaree.herokuapp.com/api/sarees/add', formData)
             .then(user => {
                 console.log(user);
+                window.location = "/view";
             })
             .catch(err => {
                 console.log(err);

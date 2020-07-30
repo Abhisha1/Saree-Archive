@@ -11,6 +11,7 @@ import 'react-lazy-load-image-component/src/effects/opacity.css';
 import './edit.scss';
 import Tagger from "../../components/Tagger";
 import History from "../../components/History";
+import { ReactComponent as Mandala } from '../../assets/homepage.svg';
 
 
 function Edit(props){
@@ -93,6 +94,13 @@ function Edit(props){
             <div className="flexContentContainer">
                 <div id="flexRightImage" className={showLeftBar ? "blur" : ""}>
                     <LazyLoadImage alt="saree" id="mainImage" className="previewImage" src={saree.imgs[currImg]} effect="opacity"></LazyLoadImage>
+                    <div className="imagePickerBox">
+                    {saree.imgs.length > 1 && saree.imgs.map((item, index) => (
+                        <div key={index} customshow={index === currImg ? "hide": "show"} id="selected">
+                        <Mandala id="imagePicker" key={index} onClick={() => setCurrImg(index)}/>
+                        </div>
+                    ))}
+                    </div>
                 </div>
                 <div id="flexLeftText" className={showLeftBar ? "blur" : ""}>
                     <div id="productHeading">

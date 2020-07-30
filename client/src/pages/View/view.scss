@@ -191,7 +191,7 @@ label.checkboxLabel::before{
     display: flex;
     justify-content: center !important;
 }
-#scrollUp{
+#scrollUpBox{
     display: flex;
     justify-content: center !important;
     font-size: small;
@@ -238,4 +238,26 @@ label.checkboxLabel::before{
     color: black;
     padding-top: 0.5rem;
     display: none;
+}
+.viewDescBox{
+    // background-color: #E88873;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+#viewHeading{
+    font-family: 'Raleway', 'sans-serif';
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    text-align: center;
+}
+#viewDesc{
+    font-size: small;
+    color: black;
+    text-transform: initial;
+    text-align: center;
+}
+.embellishedBox{
+    background-color: rgb(241, 235, 235);
 }
