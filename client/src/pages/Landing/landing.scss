@@ -1,6 +1,7 @@
 @font-face {
     font-family: PlaylistScript;
     src: url('../../assets/Fonts/Playlist\ Script.otf');
+    font-display: swap;
 }
 @media (max-width: 768px) {
     .landingMessage{
@@ -13,6 +14,9 @@
         text-transform: uppercase;
         color:white;
         font-size: 30px
+    }
+    #landingOuter{
+        background-image: url('../../assets/768bg.jpg');
     }
 
 }
@@ -54,7 +58,7 @@ p{
 #landingOuter{
     text-align: center;
     font-family: 'Raleway', sans-serif;
-    background-image: url('../../assets/backsilk-2.jpg');
+    background-image: url('../../assets/large-bg.jpg');
       background-size: 100em;
       min-height: 100vh;
       background-attachment: fixed;
@@ -64,3 +68,4 @@ p{
       position: relative;
       align-items: center;
   }
+

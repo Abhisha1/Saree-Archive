@@ -20,6 +20,9 @@
         font-family: PlaylistScript;
         color: white;
     }
+    #landingOuter{
+        background-image: url('../../assets/768bg.jpg');
+    }
 
 }
 @media (max-width: 4000px) {
@@ -63,7 +66,7 @@ label{
 #loginForm{
     text-align: center;
     font-family: 'Raleway', sans-serif;
-    background-image: url('../../assets/backsilk-2.jpg');
+    background-image: url('../../assets/large-bg.jpg');
       background-size: 100em;
       min-height: 100vh;
       background-attachment: fixed;
