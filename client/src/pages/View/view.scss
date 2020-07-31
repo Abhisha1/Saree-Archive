@@ -31,9 +31,26 @@
     border: 1px solid rgb(121,41,79);
     color: white;
 }
+#filterContainerTitle{
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+#collapsibleHeader{
+    border-bottom: 1px solid rgb(121,41,79);
+    display: flex;
+    justify-content: space-between;
+}
+#clearLink{
+    align-self: flex-end;
+    margin-bottom: 0.5rem;
+    color: rgb(121,41,79);
+    text-decoration: underline;
+}
 
 .checkboxLabel{
     color: black !important;
+    font-weight: lighter !important;
+    text-transform: capitalize;
 }
 .filterBlock{
     display: flex;
@@ -48,29 +65,40 @@
     display: flex;
     justify-content: center;
 }
+
 #collapsibleFilter{
-    -webkit-transition: max-height 1s; 
-    -moz-transition: max-height 1s; 
-    -ms-transition: max-height 1s; 
-    -o-transition: max-height 1s; 
-    transition: max-height 1s;  
-    background: #f1ebeb;
     overflow: hidden;
     max-height: 0;
+    height: 100% !important;
+    display: block;
+    -webkit-transition: all 0.5s cubic-bezier(0.6, 0.05, 0.28, 0.91);
+    transition: all 0.5s cubic-bezier(0.6, 0.05, 0.28, 0.91);
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min-content;
+    text-align: initial;
 }
 #collapsibleFilter.show{
-    max-height: 100vh;
-
+    max-height: 100%;
+    display: block !important;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    padding: 2rem;
+    background-color: white;
+    right: 0;
+    height: 100% !important;
+    width: min-content;
+    -webkit-transition: all 0.5s cubic-bezier(0.6, 0.05, 0.28, 0.91);
+    transition: all 0.5s cubic-bezier(0.6, 0.05, 0.28, 0.91);
+    text-align: initial;
 }
 .filterRow{
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     height: 100%;
-    animation: height 1s ease-in;
-    -moz-animation: height 1s ease-in;
-    -webkit-animation: height 1s ease-in;
-    -o-animation: height 1s ease-in;
     text-align-last: justify;
     margin: 0.25em;
 }
@@ -79,10 +107,6 @@
 }
 #hideRow.filterRow{
     height: 0px;
-    animation: height 1s ease-in;
-    -moz-animation: height 1s ease-in;
-    -webkit-animation: height 1s ease-in;
-    -o-animation: height 1s ease-in;
 }
 #hideRow.filterRow .checkBox{
     display: none;
@@ -292,5 +316,5 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 #filterName{
     display: flex;
     justify-content: space-between;
-    
+    text-transform: uppercase;
 }

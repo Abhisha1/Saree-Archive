@@ -134,6 +134,7 @@ function View(){
         setChosenLocations([]);
         setChosenTypes([]);
         setChosenTags([]);
+        document.querySelectorAll("input[type='checkbox']").forEach((item) => item.checked = false);
     }
     const fetchMore = () => {
         if(!loading && !gotAll){
@@ -191,6 +192,11 @@ function View(){
                 <div className="formPosition">
                     <form ref={form} id="filterForm">
                         <div id="collapsibleFilter" className={show}>
+                        <div id="collapsibleHeader">
+                        <h1 id="filterContainerTitle">Filter</h1>
+                        <a id="clearLink" href="#" onClick={clear}>Clear</a>
+
+                        </div>
                         <div className="filterBlock">
                             <div id="filterName">
                                 <h6 className="filterTitle">Blouse stitched</h6>
@@ -200,7 +206,7 @@ function View(){
                             <div className="filterRow" id={shownFilter === 0 ? "": "hideRow"}>
                                 <div className="checkBox">
                                 <div className="pretty p-default p-round p-smooth">
-                                    <input type="radio" id="stitched" name="blouse" value={true} checked={chosenBlouse === true} />
+                                    <input type="radio" id="stitched" name="blouse" readOnly value={true} checked={chosenBlouse === true} />
                                     <div className="state">
                                     <label onClick={() => {
                                         if(chosenBlouse === true){
@@ -213,7 +219,7 @@ function View(){
                                 </div>
                                 <div className="checkBox">
                                 <div className="pretty p-default p-round p-smooth">
-                                    <input type="radio" id="unstitched" name="blouse" value={false} checked={chosenBlouse === false} />
+                                    <input type="radio" id="unstitched" name="blouse" readOnly value={false} checked={chosenBlouse === false} />
                                     <div className="state">
                                     <label onClick={() => {
                                         if(chosenBlouse === false){
@@ -296,6 +302,7 @@ function View(){
                                             let index = chosenTypes.indexOf(item)
                                             if (index!== -1){
                                                 newLocs.splice(index,1)
+                                                console.log("update locs");
                                                 setChosenTypes(newLocs);
                                             }
                                         }else{
@@ -310,7 +317,6 @@ function View(){
                             <h6 className="filterTitle">Tags</h6>
                         </div>
                         <AutoComplete action={setChosenTags} allOptions={tags}></AutoComplete>
-                        <button id="filterButton" type="submit" onClick={clear}>Clear</button>
                         <button id="filterButton" type="submit" onClick={filter}>Filter</button>
 
                 </div>

@@ -11,6 +11,10 @@ function History(props) {
     const [history, setHistory] = useState(props.history);
     const [currentEditEvent, setCurrentEditEvent] = useState(null);
     const [showPopUp, setPopUp] = useState(false);
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
 
     useEffect(() => {
         props.action(history);
@@ -47,17 +51,19 @@ function History(props) {
                 history.length > 0 &&
                 (history.map((item, index) => (
                     <div key={index} className="minimisedRow">
-                        <p className="eventDescriptionMinimised">EVENT {index}</p>
-                        <p hidden={index===currentEditEvent} className="trailingDescription" onClick={() => setCurrentEditEvent(index)}>View the details of the event </p>
+                        <div id="headerHistory">
+                        <p className="eventDescriptionMinimised" onClick={() => setCurrentEditEvent(index)} >EVENT {index}</p>
                         {currentEditEvent === index ? 
-                        <div>
-                        <MdExpandLess className="closeButton" onClick={() => setCurrentEditEvent(null)}></MdExpandLess>
-                        <p className="trailingDescription">DATE: {item.lastWorn.toDateString()}</p>
+                        <MdExpandLess className="closeButton" size="40" onClick={() => setCurrentEditEvent(null)}></MdExpandLess>
+                        :
+                        <MdExpandMore className="expandButton" size="40" onClick={() => setCurrentEditEvent(index)}></MdExpandMore>
+                        }
+                        </div>
+                        {currentEditEvent === index && <div>
+                        <p className="trailingDescription">DATE: {monthNames[item.lastWorn.getMonth()] + " "+ item.lastWorn.getFullYear()}</p>
                         <p className="trailingDescription">CROWD: {item.crowd}</p>
                         <p className="trailingDescription">DESCRIPTION: {item.description}</p>
                         </div>
-                        :
-                        <MdExpandMore className="expandButton" onClick={() => setCurrentEditEvent(index)}></MdExpandMore>
                         }
                     </div>
                     )))

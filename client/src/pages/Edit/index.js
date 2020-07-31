@@ -10,6 +10,7 @@ import { LazyLoadImage} from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
 import './edit.scss';
 import Tagger from "../../components/Tagger";
+import {MdExpandLess, MdExpandMore} from "react-icons/md";
 import History from "../../components/History";
 import { ReactComponent as Mandala } from '../../assets/homepage.svg';
 
@@ -24,7 +25,11 @@ function Edit(props){
     const [crowdOptions, setCrowdOptions] = useState([]);
     const [history, setHistory] = useState([]);
     const [blouse,setBlouse] = useState(null);
-    const [tagOptions, setTagOptions] = useState([])
+    const [currentEditEvent, setCurrentEditEvent] = useState(null);
+    const [tagOptions, setTagOptions] = useState([]);
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
     useEffect(() => {
         axios.post('https://geethasaree.herokuapp.com/api/sarees/getSaree', { token: localStorage.getItem("token"), _id: params.id })
             .then(saree => {
@@ -140,6 +145,30 @@ function Edit(props){
                     : <div> No tags yet</div>}
                         </div>
                     </div>
+                    <div className="thinLine" />
+                    <div id="historyCont">
+                    <div id="subHeading">History</div>
+                    {
+                        saree.worn.length > 0 && (saree.worn.map((item, index) => (
+                            <div key={index} className="minimisedRow">
+                        <div id="headerHistory">
+                        <p className="eventDescriptionMinimised" onClick={() => setCurrentEditEvent(index)} >EVENT {index}</p>
+                        {currentEditEvent === index ? 
+                        <MdExpandLess className="closeButton" size="40" onClick={() => setCurrentEditEvent(null)}></MdExpandLess>
+                        :
+                        <MdExpandMore className="expandButton" size="40" onClick={() => setCurrentEditEvent(index)}></MdExpandMore>
+                        }
+                        </div>
+                        {currentEditEvent === index && <div>
+                        <p className="trailingDescription">DATE: {monthNames[new Date(item.lastWorn).getMonth()] + " "+ new Date(item.lastWorn).getFullYear()}</p>
+                        <p className="trailingDescription">CROWD: {item.crowd}</p>
+                        <p className="trailingDescription">DESCRIPTION: {item.description}</p>
+                        </div>
+                        }
+                    </div>
+                    )))
+                    }
+                    </div>
                     <div className="editWrapper">
                     <button id="editButton" onClick={() => setShowLeftBar(true)}> Edit</button>
                     </div>
@@ -175,8 +204,8 @@ function Edit(props){
                     </h2>
                 <History crowdOptions={crowdOptions} history={history} action={setHistory} setcrowd={setCrowdOptions}></History>
                 <div className="buttonGroup">
-                <button id="editButton" onClick={update}> Update</button>
                 <button id="editButton" onClick={() => setShowLeftBar(false)}> Cancel</button>
+                <button id="editButton" onClick={update}> Update</button>
                 </div>
                 </div>
                 </div>

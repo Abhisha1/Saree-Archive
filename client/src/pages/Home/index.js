@@ -35,6 +35,9 @@ export default class Home extends Component {
                          <p type="button" className="home-button" onClick={() => this.props.history.push("/discover")}>Discover</p>
                     </div>
                 </div>
+                {/* <div className="viewDescBox" id="homeDecorative">
+                    <div id="textBoxDec">This tool will help you keep track of sarees through being able to add sarees, uploading images of the saree, along with customisable tags. Through storing information about the saree, you can later filter and find these sarees easily and make sure you keep your saree storage simple.</div>
+                </div> */}
             </div>
 
         );

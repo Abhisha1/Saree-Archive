@@ -16,6 +16,7 @@
 #productHeading, #locationHeading, #purchaseDetail{
     font-size: larger;
     width: fit-content;
+    text-transform: capitalize;
 }
 #productHeading{
     font-weight: bold;
@@ -63,6 +64,7 @@
     display: flex;
     padding: .375rem .75rem;
     font-size: 1rem;
+    font-family: 'Raleway', 'sans-serif';
     line-height: 1.5;
     border-radius: .25rem;
     box-shadow: 5px 10px;
@@ -115,6 +117,22 @@
         width: 100vw;
         overflow-y: auto;
     }
+    #flexRightImage, #flexLeftText{
+        width: 100%;
+        justify-content: center;
+        text-align-last: center;
+
+    }
+    #productHeading, #locationHeading, #purchaseDetail, .detail, .thinLine{
+        width: 100%;
+    }
+    .flexContentContainer{
+        flex-wrap: wrap;
+    }
+}
+
+#historyCont{
+    margin-bottom: 0.5rem;
 }
 .leftBar .leftBarContents{
     display: none;

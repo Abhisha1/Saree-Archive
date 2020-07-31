@@ -138,19 +138,19 @@
 }
 
 .homeContainer{
-    // background-color: black;
     text-align: center;
     font-family: 'Raleway', sans-serif;
-    // background-size: 100em;
-    // min-height: 100vw;
-    // background-attachment: fixed;
-    // background-position: center;
-    // background-repeat: no-repeat;
-    // background-size: cover;
-    // position: relative;
-    // align-items: center; 
 }
 .elephant{
     width: 55vw;
     height: auto;
+}
+#homeDecorative{
+    height: 400px;
+    width: 100%;
+}
+#textBoxDec{
+    background-color: white;
+    width: 80%;
+    align-self: center;
 }
