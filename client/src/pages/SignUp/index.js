@@ -1,10 +1,21 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import {IoMdEye} from 'react-icons/io'; 
 
 export default function SignUp(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showError, setShowError] = useState(false);
+    const [showPass, setShowPass] = useState(false);
+    
+    const togglePasswordVisibility = () => {
+        if (showPass){
+            setShowPass(false)
+        }
+        if (!showPass && password !== ""){
+            setShowPass(true);
+        }
+    }
 
     const register = (event) => {
         event.preventDefault();
@@ -36,7 +47,8 @@ export default function SignUp(){
                         </div>
                         <div className="form-group">
                             <label>Password</label>
-                            <input type="password"
+                            <IoMdEye size="30" style={{float: 'right'}} onClick={togglePasswordVisibility} />
+                            <input type={showPass ? "text" : "password"}
                                 required
                                 id="password"
                                 className="form-control"
